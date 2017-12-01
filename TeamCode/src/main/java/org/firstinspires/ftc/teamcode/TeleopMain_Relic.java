@@ -63,7 +63,7 @@ public class TeleopMain_Relic extends LinearOpMode
 
         waitForStart();
 
-        //jewelArm.setPosition();
+        jewelArm.setPosition(ARMUP);
 
         //claw1.setPosition(0.2);
         //claw2.setPosition(0.8);

@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="RR_TeleopTest", group="Test")
 
-//@Disabled
+@Disabled
 public class RR_TeleopTest extends LinearOpMode {
 
     /* Declare Motors */

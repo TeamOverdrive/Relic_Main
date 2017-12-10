@@ -17,11 +17,9 @@ public class Auto_R2 extends AutoSuper{
         super.runOpMode();
         waitForStart();
 
-        jewelArm.setPosition(ARMDOWN);
         pushJewel(RED);
         sleep(500);
-        jewelArm.setPosition(ARMUP);
-        sleep(500);
+
         encoderDrive(DRIVE_SPEED,-24,-24,5);
         turnR90();
         encoderDrive(DRIVE_SPEED, 12, 12, 3.0);

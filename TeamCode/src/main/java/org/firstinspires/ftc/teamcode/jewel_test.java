@@ -23,7 +23,7 @@ public class jewel_test extends AutoSuper{
 
         super.runOpMode();
 
-        /*Vuforia*/
+        /*Vuforia*//*
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
@@ -43,13 +43,17 @@ public class jewel_test extends AutoSuper{
         relicTemplate.setName("relicVuMarkTemplate");
 
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-
+*/
         waitForStart();
 
-        //jewelArm.setPosition(...);
+        jewelArm.setPosition(ARMDOWN);
+        sleep(1000);
         pushJewel(RED);
-        //jewelArm.setPosition(...);
-        sleep(500);
+        sleep(1000);
+        jewelArm.setPosition(ARMUP);
+        sleep(1000);
+
+        //encoderDrive(0.6, 5, 5, 10);
 
         /*if (vuMark != RelicRecoveryVuMark.UNKNOWN){
             if(vuMark == RelicRecoveryVuMark.RIGHT) {

@@ -118,8 +118,8 @@ public class Init {
         grabTop = hardwareMap.servo.get("grab_top");
 
         jewelArm.setPosition(0.75);
-        grab1.setPosition(1.0);
-        grab2.setPosition(0.0);
+        grab1.setPosition(0.4);
+        grab2.setPosition(0.4);
         //grabTop.setDirection(0.0);
         //grabBottom.setDirection(0.0);
 

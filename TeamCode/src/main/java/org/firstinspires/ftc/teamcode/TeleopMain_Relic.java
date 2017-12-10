@@ -43,7 +43,11 @@ public class TeleopMain_Relic extends LinearOpMode
     final static double CLAW2OPEN = 0.0;
     final static double CLAW2CLOSED = 1.0;
     final static double ARMUP = 0.75;
-    final static double ARMDOWN = 0.725;
+    final static double ARMDOWN = 0.72;
+    final static double GRAB1OPEN = 0.4;
+    final static double GRAB1CLOSED = 0.0;
+    final static double GRAB2OPEN =0.4;
+    final static double GRAB2CLOSED = 0.95;
 
     @Override
     public void runOpMode()  {
@@ -58,8 +62,8 @@ public class TeleopMain_Relic extends LinearOpMode
         slideMotor = init.getSlideMotor();
         liftMotor = init.getLiftMotor();
         jewelArm = init.getJewelArm();
-        //claw1 = init.getGrab1();
-        //claw2 = init.getGrab2();
+        grab1 = init.getGrab1();
+        grab2 = init.getGrab2();
         grabBottom = init.getGrabBottom();
         grabTop = init.getGrabTop();
 
@@ -73,7 +77,7 @@ public class TeleopMain_Relic extends LinearOpMode
 
         waitForStart();
 
-        jewelArm.setPosition(ARMUP);
+        //jewelArm.setPosition(ARMUP);
 
         //claw1.setPosition(0.2);
         //claw2.setPosition(0.8);
@@ -85,6 +89,7 @@ public class TeleopMain_Relic extends LinearOpMode
             /* Drivetrain Controls */
             float leftThrottle = gamepad1.left_stick_y;
             float rightThrottle = gamepad1.right_stick_y;
+
 
             /* Clip the left and right throttle values so that they never exceed +/- 1.  */
             leftThrottle = Range.clip(leftThrottle,-1,1);
@@ -107,7 +112,36 @@ public class TeleopMain_Relic extends LinearOpMode
                 jewelArm.setPosition(ARMUP);
             }
 
+            //lift motor
+            float liftThrottle = gamepad2.left_stick_y;
+            liftThrottle = Range.clip(liftThrottle, -1, 1);
+            liftThrottle = (float) liftScale(liftThrottle);
+            liftThrottle = liftThrottle * -1;
+            liftMotor.setPower(liftThrottle);
 
+
+
+            //slide motor
+            float slideThrottle = gamepad2.right_stick_y;
+            slideThrottle = Range.clip(slideThrottle, -1, 1);
+            slideThrottle = (float) scaleInput(slideThrottle);
+            slideMotor.setPower(slideThrottle);
+
+            //grab
+            if(gamepad1.right_bumper)
+            {
+                grab1.setPosition(GRAB1CLOSED);
+                grab2.setPosition(GRAB2CLOSED);
+            }
+            else if(gamepad2.right_bumper){
+                grab1.setPosition(GRAB1CLOSED);
+                grab2.setPosition(GRAB2CLOSED);
+            }
+            else
+            {
+                grab1.setPosition(GRAB1OPEN);
+                grab2.setPosition(GRAB2OPEN);
+            }
 
 /*
             if(gamepad2.dpad_up){
@@ -143,6 +177,29 @@ public class TeleopMain_Relic extends LinearOpMode
     }
 
     double scaleInput(double dVal)   {
+        double[] scaleArray = {
+                0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24, 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00
+                //to use a different scale,0 list alternate scale values here and comment out the line above
+        };
+
+        int index = (int) (dVal * 16.0);
+        if (index < 0) {
+            index = -index;
+        } else if (index > 16)  {
+            index = 16;
+        }
+
+        double dScale = 0.0;
+        if (dVal < 0)  {
+            dScale = -scaleArray[index];
+        }  else {
+            dScale = scaleArray[index];
+        }
+
+        return dScale;
+    }
+
+    double liftScale(double dVal)   {
         double[] scaleArray = {
                 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24, 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00
                 //to use a different scale,0 list alternate scale values here and comment out the line above

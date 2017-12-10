@@ -36,6 +36,7 @@ public class AutoSuper extends LinearOpMode{
     static final double TURN_SPEED = 0.3;  //modified turn speed from 0.5
     final static double ARMUP = 0.75;
     final static double ARMDOWN = 0.725;
+    final static int ARMWAIT = 3000;
 
     /*
     static final int UNKNOWN = 0;
@@ -50,8 +51,8 @@ public class AutoSuper extends LinearOpMode{
     public static final String TAG = "Vuforia VuMark Sample";
 
     /*Vuforia*/
-    OpenGLMatrix lastLocation = null;
-    VuforiaLocalizer vuforia;
+    //OpenGLMatrix lastLocation = null;
+    //VuforiaLocalizer vuforia;
 
     /*Motors*/
     protected DcMotor leftMotor;
@@ -103,7 +104,7 @@ public class AutoSuper extends LinearOpMode{
 
         /* Vuforia */
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier
+        /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier
                 ("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
@@ -122,7 +123,7 @@ public class AutoSuper extends LinearOpMode{
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
 
-        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);*/
     }
 
     //Place Auto Functions here
@@ -137,16 +138,24 @@ public class AutoSuper extends LinearOpMode{
 
     public void pushJewel(boolean red) {
 
-        if(!colorJewel(red)) {
+        if (opModeIsActive())
+        {
+            jewelArm.setPosition(ARMDOWN);
+            sleep(ARMWAIT);
+            if(!colorJewel(red)) {
 
-            colorJewel(red);
+                colorJewel(red);
 
-            encoderDrive(0.5, 6, 6, 10);
+                encoderDrive(0.5, -6, -6, 10);
+            }
+            else {
+
+                encoderDrive(0.5, 6, 6, 10);
+            }
+            jewelArm.setPosition(ARMUP);
+            sleep(ARMWAIT);
         }
-        else {
 
-            encoderDrive(0.5, -6, -6, 10);
-        }
 
 
 

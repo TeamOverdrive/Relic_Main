@@ -15,8 +15,8 @@ public class Auto_Park extends AutoSuper{
     public void runOpMode() {
         super.runOpMode();
         waitForStart();
-        encoderDrive(0.75, -36, -36, 10);
-        sleep(500);
+        encoderDrive(0.75, 36, 36, 10);
+        sleep(5000);
     }
 
 

@@ -28,8 +28,12 @@ public class TeleopMain_Relic extends LinearOpMode
     /*Servos*/
 
     private Servo jewelArm;
-    private Servo claw1;
-    private Servo claw2;
+    //private Servo claw1;
+    //private Servo claw2;
+    private Servo grab1;
+    private Servo grab2;
+    private Servo grabUp;
+    private Servo grabDown;
 
     /*Sensors*/
     private ColorSensor jewelColor;
@@ -54,8 +58,10 @@ public class TeleopMain_Relic extends LinearOpMode
         slideMotor = init.getSlideMotor();
         liftMotor = init.getLiftMotor();
         jewelArm = init.getJewelArm();
-        claw1 = init.getGrab1();
-        claw2 = init.getGrab2();
+        //claw1 = init.getGrab1();
+        //claw2 = init.getGrab2();
+        grabDown = init.getGrabDown();
+        grabUp = init.getGrabUp();
 
         //jewelColor = init.getJewelColor();
 
@@ -113,6 +119,8 @@ public class TeleopMain_Relic extends LinearOpMode
                 flipMotor.setPower(0.0);
             }
 */
+
+/*
             if(gamepad2.left_bumper){
                 claw1.setPosition(CLAW1CLOSED);
             }
@@ -126,7 +134,7 @@ public class TeleopMain_Relic extends LinearOpMode
             else{
                 claw2.setPosition(CLAW2OPEN);
             }
-
+*/
 
         }
 

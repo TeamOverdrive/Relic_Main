@@ -32,8 +32,8 @@ public class Init {
 
     /* Servos */
     private Servo jewelArm;
-    private Servo claw1;
-    private Servo claw2;
+    private Servo grab1;
+    private Servo grab2;
 
     /* Sensors */
     private ColorSensor jewelColor;
@@ -46,8 +46,8 @@ public class Init {
         slideMotor = null;
         liftMotor = null;
         jewelArm = null;
-        claw1 = null;
-        claw2 = null;
+        grab1 = null;
+        grab2 = null;
         jewelColor = null;
     }
 
@@ -108,12 +108,12 @@ public class Init {
         liftMotor = hardwareMap.dcMotor.get("lift_motor");
 
         jewelArm = hardwareMap.servo.get("jewel_arm");
-        claw1 = hardwareMap.servo.get("claw1");
-        claw2 = hardwareMap.servo.get("claw2");
+        grab1 = hardwareMap.servo.get("grab1");
+        grab2 = hardwareMap.servo.get("grab2");
 
         jewelArm.setPosition(0.75);
-        claw1.setPosition(1.0);
-        claw2.setPosition(0.0);
+        grab1.setPosition(1.0);
+        grab2.setPosition(0.0);
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -145,9 +145,9 @@ public class Init {
 
     public Servo getJewelArm () {return jewelArm;}
 
-    public Servo getClaw1 () {return claw1;}
+    public Servo getGrab1 () {return grab1;}
 
-    public Servo getClaw2 () {return claw2;}
+    public Servo getGrab2 () {return grab2;}
 
     public ColorSensor getJewelColor() {return jewelColor;}
 

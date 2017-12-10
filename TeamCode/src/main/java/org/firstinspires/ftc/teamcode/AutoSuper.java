@@ -60,8 +60,8 @@ public class AutoSuper extends LinearOpMode{
 
     /*Servos*/
     protected Servo jewelArm;
-    protected Servo claw1;
-    protected Servo claw2;
+    protected Servo grab1;
+    protected Servo grab2;
 
     /*Sensors*/
     //ModernRoboticsI2cColorSensor color;
@@ -87,8 +87,8 @@ public class AutoSuper extends LinearOpMode{
 
         //Define Servos
         jewelArm = init.getJewelArm();
-        claw1 = init.getClaw1();
-        claw2 = init.getClaw2();
+        grab1 = init.getgrab1();
+        grab2 = init.getgrab2();
 
         //Define Sensors
         jewelColor = init.getJewelColor();

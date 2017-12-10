@@ -54,8 +54,9 @@ public class AutoSuper extends LinearOpMode{
     /*Motors*/
     protected DcMotor leftMotor;
     protected DcMotor rightMotor;
-    //protected DcMotor slideMotor;
-    protected DcMotor flipMotor;
+    protected DcMotor slideMotor;
+    //protected DcMotor flipMotor;
+    protected DcMotor liftMotor;
 
     /*Servos*/
     protected Servo jewelArm;
@@ -80,8 +81,9 @@ public class AutoSuper extends LinearOpMode{
         //Define Motors
         leftMotor = init.getLeftMotor();
         rightMotor = init.getRightMotor();
-        //slideMotor = init.getSlideMotor();
-        flipMotor = init.getFlipMotor();
+        slideMotor = init.getSlideMotor();
+        //flipMotor = init.getFlipMotor();
+        liftMotor = init.getLiftMotor();
 
         //Define Servos
         jewelArm = init.getJewelArm();
@@ -92,9 +94,11 @@ public class AutoSuper extends LinearOpMode{
         jewelColor = init.getJewelColor();
 
 
+
         /* Vuforia */
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier
+                ("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
         //constructor not to initialize the camera

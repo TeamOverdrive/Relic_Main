@@ -26,8 +26,9 @@ public class Init {
     /* Motors */
     private DcMotor leftMotor;
     private DcMotor rightMotor;
-    private DcMotor flipMotor;
-    //private DcMotor slideMotor;
+    //private DcMotor flipMotor;
+    private DcMotor slideMotor;
+    private DcMotor liftMotor;
 
     /* Servos */
     private Servo jewelArm;
@@ -41,8 +42,9 @@ public class Init {
     {
         leftMotor = null;
         rightMotor = null;
-        flipMotor = null;
-        //slideMotor = null;
+        //flipMotor = null;
+        slideMotor = null;
+        liftMotor = null;
         jewelArm = null;
         claw1 = null;
         claw2 = null;
@@ -57,8 +59,10 @@ public class Init {
 
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        flipMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //slideMotor.setmode(DcMotor.RunMode.RUN_WITHOUT_)ENCODER);
+        //flipMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     }
 
     public void initAuto(HardwareMap map, Telemetry telemetry, LinearOpMode opMode)
@@ -72,16 +76,18 @@ public class Init {
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        flipMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //flipMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         opMode.idle();
 
         // Set all motors to run with or without encoders.  Switch to use RUN_USING_ENCODERS when encoders are installed.
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //slideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        flipMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //flipMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // Send telemetry message to indicate successful Encoder reset
@@ -97,8 +103,9 @@ public class Init {
     {
         leftMotor = hardwareMap.dcMotor.get("left_drive");
         rightMotor  = hardwareMap.dcMotor.get("right_drive");
-        //slideMotor = hardwareMap.dcMotor.get("slide_motor");
-        flipMotor = hardwareMap.dcMotor.get("flip_motor");
+        slideMotor = hardwareMap.dcMotor.get("slide_motor");
+        //flipMotor = hardwareMap.dcMotor.get("flip_motor");
+        liftMotor = hardwareMap.dcMotor.get("lift_motor");
 
         jewelArm = hardwareMap.servo.get("jewel_arm");
         claw1 = hardwareMap.servo.get("claw1");
@@ -110,14 +117,16 @@ public class Init {
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
-        flipMotor.setDirection(DcMotor.Direction.FORWARD);
-        //slideMotor.setDirection(DcMotor.Direction.FORWARD);
+        //flipMotor.setDirection(DcMotor.Direction.FORWARD);
+        slideMotor.setDirection(DcMotor.Direction.FORWARD);
+        liftMotor.setDirection(DcMotor.Direction.FORWARD);
         //flipMotor.setDirection(DcMotor.Direction.FORWARD);
 
         leftMotor.setPower(0);
         rightMotor.setPower(0);
-        flipMotor.setPower(0);
-        //slideMotor.setPower(0);
+        //flipMotor.setPower(0);
+        slideMotor.setPower(0);
+        liftMotor.setPower(0);
 
         jewelColor = hardwareMap.colorSensor.get("jewel_color");
     }
@@ -128,9 +137,11 @@ public class Init {
 
     public DcMotor getRightMotor() {return rightMotor; }
 
-    public DcMotor getFlipMotor() {return flipMotor; }
+    //public DcMotor getFlipMotor() {return flipMotor; }
 
-    //public DcMotor getSlideMotor () {return slideMotor;}
+    public DcMotor getSlideMotor () {return slideMotor;}
+
+    public DcMotor getLiftMotor () {return liftMotor;}
 
     public Servo getJewelArm () {return jewelArm;}
 

@@ -107,6 +107,8 @@ public class TeleopMain_Relic extends LinearOpMode
                 jewelArm.setPosition(ARMUP);
             }
 
+
+
 /*
             if(gamepad2.dpad_up){
                 flipMotor.setPower(-0.9);

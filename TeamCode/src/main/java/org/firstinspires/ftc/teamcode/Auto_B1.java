@@ -17,10 +17,10 @@ public class Auto_B1 extends AutoSuper{
         super.runOpMode();
         waitForStart();
 
-        /*jewelArm.setPosition(0.8);
+        jewelArm.setPosition(ARMDOWN);
         pushJewel(BLUE);
         sleep(500);
-        jewelArm.setPosition(0.1);*/
+        jewelArm.setPosition(ARMUP);
         sleep(500);
         encoderDrive(DRIVE_SPEED,30,30,5);
 

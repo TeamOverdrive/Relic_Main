@@ -34,6 +34,8 @@ public class AutoSuper extends LinearOpMode{
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.6;  //modified speed from 0.6
     static final double TURN_SPEED = 0.3;  //modified turn speed from 0.5
+    final static double ARMUP = 0.75;
+    final static double ARMDOWN = 0.725;
 
     /*
     static final int UNKNOWN = 0;

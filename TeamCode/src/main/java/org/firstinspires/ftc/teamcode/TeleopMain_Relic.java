@@ -32,8 +32,8 @@ public class TeleopMain_Relic extends LinearOpMode
     //private Servo claw2;
     private Servo grab1;
     private Servo grab2;
-    private Servo grabUp;
-    private Servo grabDown;
+    private Servo grabTop;
+    private Servo grabBottom;
 
     /*Sensors*/
     private ColorSensor jewelColor;
@@ -60,8 +60,8 @@ public class TeleopMain_Relic extends LinearOpMode
         jewelArm = init.getJewelArm();
         //claw1 = init.getGrab1();
         //claw2 = init.getGrab2();
-        grabDown = init.getGrabDown();
-        grabUp = init.getGrabUp();
+        grabBottom = init.getGrabBottom();
+        grabTop = init.getGrabTop();
 
         //jewelColor = init.getJewelColor();
 

@@ -1,9 +1,7 @@
-package org.firstinspires.ftc.teamcode.NewCode;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.NewCode.subsystems.*;
 
 /**
  * This class extends linearopmode and makes it
@@ -15,9 +13,9 @@ import org.firstinspires.ftc.teamcode.NewCode.subsystems.*;
  */
 
 public abstract class Team2753Linear extends LinearOpMode {
-    private Drive Drive = new Drive(); // Drivetrain
-    private Jewel Jewel = new Jewel(); // Jewel mech
-    private Hand Hand = new Hand(); // Claw for glyphs and things
+    private org.firstinspires.ftc.teamcode.NewCode.subsystems.Drive Drive = new org.firstinspires.ftc.teamcode.NewCode.subsystems.Drive(); // Drivetrain
+    private org.firstinspires.ftc.teamcode.NewCode.subsystems.Jewel Jewel = new org.firstinspires.ftc.teamcode.NewCode.subsystems.Jewel(); // Jewel mech
+    private org.firstinspires.ftc.teamcode.NewCode.subsystems.Hand Hand = new org.firstinspires.ftc.teamcode.NewCode.subsystems.Hand(); // Claw for glyphs and things
     private ElapsedTime matchTimer = new ElapsedTime(); // Match Timer thing
     private boolean isAuton = false; // Are we running auto
 
@@ -58,15 +56,15 @@ public abstract class Team2753Linear extends LinearOpMode {
         //requestOpModeStop();
     }
 
-    public org.firstinspires.ftc.teamcode.NewCode.subsystems.Drive getDrive() {
+    public org.firstinspires.ftc.teamcode.subsystems.Drive getDrive() {
         return Drive;
     }
 
-    public org.firstinspires.ftc.teamcode.NewCode.subsystems.Jewel getJewel() {
+    public org.firstinspires.ftc.teamcode.subsystems.Jewel getJewel() {
         return Jewel;
     }
 
-    public org.firstinspires.ftc.teamcode.NewCode.subsystems.Hand getHand() {
+    public org.firstinspires.ftc.teamcode.subsystems.Hand getHand() {
         return Hand;
     }
 }

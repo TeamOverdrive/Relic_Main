@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.NewCode.auto;
+package org.firstinspires.ftc.teamcode.auto;
 
-import org.firstinspires.ftc.teamcode.NewCode.Team2753Linear;
+import org.firstinspires.ftc.teamcode.Team2753Linear;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/11/2017.

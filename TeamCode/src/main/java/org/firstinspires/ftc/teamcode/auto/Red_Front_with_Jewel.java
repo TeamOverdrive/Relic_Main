@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.NewCode.auto;
+package org.firstinspires.ftc.teamcode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.NewCode.Team2753Linear;
+import org.firstinspires.ftc.teamcode.Team2753Linear;
 
 /**
  * Same as Auto_B1, but with new backend

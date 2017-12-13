@@ -1,9 +1,7 @@
-package org.firstinspires.ftc.teamcode.NewCode;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
-
-import static org.firstinspires.ftc.teamcode.NewCode.OverdriveLib.scaleInput;
 
 /**
  * Created by joshua9889 on 12/10/2017.
@@ -29,8 +27,8 @@ public class Teleop extends Team2753Linear {
             rightThrottle = Range.clip(rightThrottle,-1,1);
 
             /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
-            leftThrottle = (float) scaleInput(leftThrottle);
-            rightThrottle = (float) scaleInput(rightThrottle);
+            leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
+            rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
 
             getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
 

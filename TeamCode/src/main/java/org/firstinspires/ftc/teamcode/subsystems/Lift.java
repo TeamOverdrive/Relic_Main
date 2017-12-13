@@ -40,4 +40,8 @@ public class Lift implements Subsystem {
     public void setLiftPower(double power){
         liftMotor.setPower(power);
     }
+
+    public void setSlidePower (double power){
+        slideMotor.setPower(power);
+    }
 }

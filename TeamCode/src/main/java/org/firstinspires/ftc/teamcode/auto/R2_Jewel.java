@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Team2753Linear;
  * Created by joshua9889 on 12/10/2017.
  */
 @Autonomous(group = "9889")
-public class Red_Front_with_Jewel extends Team2753Linear {
+public class R2_Jewel extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart(this, true); // Wait for start

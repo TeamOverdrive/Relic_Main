@@ -13,9 +13,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 public abstract class Team2753Linear extends LinearOpMode {
-    private org.firstinspires.ftc.teamcode.NewCode.subsystems.Drive Drive = new org.firstinspires.ftc.teamcode.NewCode.subsystems.Drive(); // Drivetrain
-    private org.firstinspires.ftc.teamcode.NewCode.subsystems.Jewel Jewel = new org.firstinspires.ftc.teamcode.NewCode.subsystems.Jewel(); // Jewel mech
-    private org.firstinspires.ftc.teamcode.NewCode.subsystems.Hand Hand = new org.firstinspires.ftc.teamcode.NewCode.subsystems.Hand(); // Claw for glyphs and things
+    private org.firstinspires.ftc.teamcode.subsystems.Drive Drive = new org.firstinspires.ftc.teamcode.subsystems.Drive(); // Drivetrain
+    private org.firstinspires.ftc.teamcode.subsystems.Jewel Jewel = new org.firstinspires.ftc.teamcode.subsystems.Jewel(); // Jewel mech
+    private org.firstinspires.ftc.teamcode.subsystems.Hand Hand = new org.firstinspires.ftc.teamcode.subsystems.Hand(); // Claw for glyphs and things
+    private org.firstinspires.ftc.teamcode.subsystems.Lift Lift = new org.firstinspires.ftc.teamcode.subsystems.Lift();
     private ElapsedTime matchTimer = new ElapsedTime(); // Match Timer thing
     private boolean isAuton = false; // Are we running auto
 
@@ -23,6 +24,7 @@ public abstract class Team2753Linear extends LinearOpMode {
         getDrive().init(linearOpMode, auton);
         getJewel().init(linearOpMode, auton);
         getHand().init(linearOpMode, auton);
+        getLift().init(linearOpMode, auton);
 
         // You can add vuforia code here
 
@@ -67,6 +69,8 @@ public abstract class Team2753Linear extends LinearOpMode {
     public org.firstinspires.ftc.teamcode.subsystems.Hand getHand() {
         return Hand;
     }
+
+    public org.firstinspires.ftc.teamcode.subsystems.Lift getLift () {return Lift;}
 }
 
 

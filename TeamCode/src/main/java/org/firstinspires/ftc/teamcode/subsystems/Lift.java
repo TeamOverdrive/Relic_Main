@@ -26,6 +26,7 @@ public class Lift implements Subsystem {
 
     }
 
+
     @Override
     public void stop() {
 
@@ -34,5 +35,9 @@ public class Lift implements Subsystem {
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
 
+    }
+
+    public void setLiftPower(double power){
+        liftMotor.setPower(power);
     }
 }

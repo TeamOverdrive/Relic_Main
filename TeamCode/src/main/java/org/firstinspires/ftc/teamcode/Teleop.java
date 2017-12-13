@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.subsystems.Lift;
+
 /**
  * Created by joshua9889 on 12/10/2017.
  *
@@ -39,12 +41,24 @@ public class Teleop extends Team2753Linear {
                 getJewel().retract();
 
             // Hand
-            if(gamepad1.a)
+            if(gamepad1.dpad_down)
                 getHand().closeBottom();
-            else if(gamepad1.y)
+            else if(gamepad1.dpad_up)
                 getHand().closeTop();
-            else if(gamepad1.b)
+            else if(gamepad1.dpad_left)
                 getHand().openClaw();
+
+            //Lift Control
+            float liftThrottle = gamepad2.left_stick_y;
+
+            //CLip
+            liftThrottle = Range.clip(liftThrottle, -1, 1);
+
+            //Scale
+            liftThrottle = (float) OverdriveLib.scaleInput(liftThrottle);
+            //Invert
+            liftThrottle = liftThrottle * -1;
+            getLift().setLiftPower(liftThrottle);
 
             updateTelemetry(this);
         }

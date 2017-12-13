@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OriginalCode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -14,7 +15,7 @@ import com.qualcomm.robotcore.util.Range;
 /* This program is based off of Vortex_Main-master's TeleopMain_Vortex by S Turner*/
 
 @TeleOp(name = "Teleop Main: Relic Recovery", group = "Relic_Recovery")
-
+@Disabled
 public class TeleopMain_Relic extends LinearOpMode
 {
 

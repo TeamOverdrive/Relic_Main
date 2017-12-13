@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OriginalCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/10/2017.
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 
 @Autonomous(name = "Auto Park", group = "Auto")
-//@Disabled
+@Disabled
 public class Auto_Park extends AutoSuper{
 
     @Override

@@ -39,9 +39,9 @@ public class Hand implements Subsystem {
     @Override
     public void stop() {
         // Just move it a little farther back then normal
-        claw1.setPosition(0.5);
-        claw2.setPosition(0.5);
-        grabBottom.setPosition(0.6);
+        claw1.setPosition(0.6);
+        claw2.setPosition(0.6);
+        grabBottom.setPosition(0.1);
         grabTop.setPosition(0.2);
     }
 
@@ -57,8 +57,8 @@ public class Hand implements Subsystem {
     public void openClaw(){
         claw1.setPosition(CLAWSIDEOPEN);
         claw2.setPosition(CLAWSIDEOPEN);
-        grabBottom.setPosition(0.15);
-        grabTop.setPosition(0.5);
+        grabBottom.setPosition(0.1);
+        grabTop.setPosition(0.5);   
     }
 
     // Close the hand
@@ -68,7 +68,7 @@ public class Hand implements Subsystem {
     }
 
     public void closeTop() throws InterruptedException {
-        grabBottom.setPosition(0.15);
+        grabBottom.setPosition(0.10);
         sleep(100);
         closeSide();
         grabTop.setPosition(1.0);

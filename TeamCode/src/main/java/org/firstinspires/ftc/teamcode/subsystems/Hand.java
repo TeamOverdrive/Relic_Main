@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Subsystem for claw/hand thingy
  * Created by joshua9889 on 12/10/2017.
@@ -15,9 +17,9 @@ public class Hand implements Subsystem {
     private Servo grabBottom, grabTop = null;
 
     // Positions for servos
-    private final static double CLAWOPEN = 0.4;
-    private final static double CLAWCLOSED = 0.0;
-    private final static double GRABCLOSE = 1.0;
+    private final static double CLAWSIDEOPEN = 0.45;
+    private final static double CLAWSIDECLOSED = 0.0;
+    //private final static double CLAWCLOSE = 1.0;
 
 
     @Override
@@ -39,6 +41,8 @@ public class Hand implements Subsystem {
         // Just move it a little farther back then normal
         claw1.setPosition(0.5);
         claw2.setPosition(0.5);
+        grabBottom.setPosition(0.6);
+        grabTop.setPosition(0.2);
     }
 
     @Override
@@ -51,28 +55,30 @@ public class Hand implements Subsystem {
 
     // Open the hand
     public void openClaw(){
-        claw1.setPosition(CLAWOPEN);
-        claw2.setPosition(CLAWOPEN);
-        grabBottom.setPosition(0.66);
+        claw1.setPosition(CLAWSIDEOPEN);
+        claw2.setPosition(CLAWSIDEOPEN);
+        grabBottom.setPosition(0.15);
         grabTop.setPosition(0.5);
     }
 
     // Close the hand
-    public void closeClaw(){
-        claw1.setPosition(CLAWCLOSED);
-        claw2.setPosition(CLAWCLOSED + 0.05);
+    public void closeSide(){
+        claw1.setPosition(CLAWSIDECLOSED);
+        claw2.setPosition(CLAWSIDECLOSED + 0.05);
     }
 
-    public void closeTop(){
-        closeClaw();
-        grabTop.setPosition(GRABCLOSE);
-        grabBottom.setPosition(0.66);
+    public void closeTop() throws InterruptedException {
+        grabBottom.setPosition(0.15);
+        sleep(100);
+        closeSide();
+        grabTop.setPosition(1.0);
+
     }
 
     public void closeBottom() {
-        closeClaw();
+        closeSide();
         grabTop.setPosition(0.5);
-        grabBottom.setPosition(GRABCLOSE - 0.16);
+        grabBottom.setPosition(0.8);
     }
 
 

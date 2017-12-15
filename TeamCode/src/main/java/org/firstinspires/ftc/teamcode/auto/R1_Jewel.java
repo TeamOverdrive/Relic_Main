@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Team2753Linear;
+import org.firstinspires.ftc.teamcode.VuMark;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/12/2017.
@@ -12,6 +13,10 @@ import org.firstinspires.ftc.teamcode.Team2753Linear;
 public class R1_Jewel extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
+
+        //Init
+        //startVuforia();
+
         waitForStart(this, true);
 
         getJewel().deploy();
@@ -29,7 +34,7 @@ public class R1_Jewel extends Team2753Linear{
         getJewel().retract(); // Retract Jewel mech
         sleep(500);
 
-        //park
+        getDrive().encoderDrive(0.8, 35, 35, 10);
 
         finalAction();
     }

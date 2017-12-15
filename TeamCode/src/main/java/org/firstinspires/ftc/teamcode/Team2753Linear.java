@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+
+import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
+
 /**
  * This class extends linearopmode and makes it
  * easier to make code for the robot and not copy
@@ -17,14 +21,29 @@ public abstract class Team2753Linear extends LinearOpMode {
     private org.firstinspires.ftc.teamcode.subsystems.Jewel Jewel = new org.firstinspires.ftc.teamcode.subsystems.Jewel(); // Jewel mech
     private org.firstinspires.ftc.teamcode.subsystems.Hand Hand = new org.firstinspires.ftc.teamcode.subsystems.Hand(); // Claw for glyphs and things
     private org.firstinspires.ftc.teamcode.subsystems.Lift Lift = new org.firstinspires.ftc.teamcode.subsystems.Lift();
+    private VuMark vumark = new VuMark();
     private ElapsedTime matchTimer = new ElapsedTime(); // Match Timer thing
     private boolean isAuton = false; // Are we running auto
+
+
+    public void startVuforia(){
+        this.vumark.setup(FRONT);
+        this.vumark.activateVuforia();
+    }
+
+    /*public void WhatColumnToScoreIn(){
+        return vumark.getOuputVuMark();
+    }*/
 
     public void waitForStart(LinearOpMode linearOpMode, boolean auton) {
         getDrive().init(linearOpMode, auton);
         getJewel().init(linearOpMode, auton);
         getHand().init(linearOpMode, auton);
         getLift().init(linearOpMode, auton);
+
+        //  this.vumark.disableVuforia();
+
+        //this.vumark.setup(VuforiaLocalizer.CameraDirection.FRONT);
 
         // You can add vuforia code here
 
@@ -37,8 +56,17 @@ public abstract class Team2753Linear extends LinearOpMode {
         linearOpMode.telemetry.update();
 
         linearOpMode.waitForStart();
+        firstGrab();
 
         matchTimer.reset();
+    }
+
+    public void firstGrab(){
+        getHand().closeBottom();
+        sleep(300);
+        getLift().setPower(1.0);
+        sleep(500);
+        getLift().brake();
     }
 
     // Should work
@@ -55,6 +83,8 @@ public abstract class Team2753Linear extends LinearOpMode {
         getDrive().stop();
         getJewel().stop();
         getHand().stop();
+
+
         //requestOpModeStop();
     }
 

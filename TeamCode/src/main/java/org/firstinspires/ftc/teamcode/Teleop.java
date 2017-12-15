@@ -35,7 +35,7 @@ public class Teleop extends Team2753Linear {
             getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
 
             // Da Jewel
-            if(gamepad2.left_bumper)
+            if(gamepad1.left_bumper)
                 getJewel().deploy();
             else
                 getJewel().retract();
@@ -57,8 +57,8 @@ public class Teleop extends Team2753Linear {
             //Scale
             liftThrottle = (float) OverdriveLib.scaleInput(liftThrottle);
             //Invert
-            liftThrottle = liftThrottle * -1;
-            getLift().setLiftPower(liftThrottle);
+            liftThrottle = liftThrottle;
+            getLift().setPower(liftThrottle);
 
             updateTelemetry(this);
         }

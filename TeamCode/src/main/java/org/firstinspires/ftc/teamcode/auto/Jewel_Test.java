@@ -5,54 +5,65 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Team2753Linear;
 
 /**
- * Created by David Zheng | FTC 2753 Team Overdrive on 12/12/2017.
+ * Created by David Zheng | FTC 2753 Team Overdrive on 12/16/2017.
  */
 
-@Autonomous(name = "Blue 2 Jewel")
-public class B2_Jewel extends Team2753Linear{
+@Autonomous
+public class Jewel_Test extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
+
+        //Init
+        //startVuforia();
+
         waitForStart(this, true);
+
 
         int i = 0;
 
-        while (opModeIsActive() && i == 0) {
+        while(opModeIsActive() && i == 0) {
 
             getJewel().deploy();
             sleep(300);
 
             // Vote and then hit jewel off
             switch (getJewel().vote(this)) {
+
                 case RED:
-                    //getDrive().encoderDrive(0.2, -5, -5, 5);
-                    //rotate counter-clockwise
-
+                    //rotate clockwise
+                    getDrive().turnCW(30, 4);
 
                     getJewel().retract(); // Retract Jewel arm
-                    sleep(500);
+                    sleep(750);
 
-                    //rotate clockwise
+                    //rotate counter-clockwise
+                    getDrive().turnCCW(30, 4);
                     break;
+
                 case BLUE:
-                    //getDrive().encoderDrive(0.2, 5, 5, 5);
-                    //rotate clockwise
-
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(500);
-
                     //rotate counter-clockwise
-                    break;
-                default:
+                    getDrive().turnCCW(30, 4);
+
                     getJewel().retract(); // Retract Jewel arm
-                    sleep(500);
+                    sleep(750);
+
+                    //rotate clockwise
+                    getDrive().turnCW(30, 4);
+                    break;
+
+                default:
+                    //not used because jewel vote does not have a timeout
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(750);
             }
 
             //park
+            getDrive().encoderDrive(0.8, 35, 35, 10);
 
             i++;
         }
 
-
         finalAction();
+
     }
 }

@@ -53,18 +53,27 @@ public class Teleop extends Team2753Linear {
 
             //Lift Control
             float liftThrottle = gamepad2.left_stick_y;
-
             //CLip
             liftThrottle = Range.clip(liftThrottle, -1, 1);
-
             //Scale
             liftThrottle = (float) OverdriveLib.scaleInput(liftThrottle);
             //Invert
             liftThrottle = liftThrottle;
-            getLift().setPower(liftThrottle);
+            getLift().setLiftPower(liftThrottle);
 
             /*if(abs(liftThrottle) <= 0.6)
                 getLift().setPower(0.6);*/
+
+
+            //Slide Control
+            float slideThrottle = gamepad2.right_stick_y;
+            //CLip
+            slideThrottle = Range.clip(slideThrottle, -1, 1);
+            //Scale
+            slideThrottle = (float) OverdriveLib.scaleInput(slideThrottle);
+            //Invert
+            slideThrottle = slideThrottle;
+            getLift().setSlidePower(slideThrottle);
 
             updateTelemetry(this);
 

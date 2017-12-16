@@ -58,7 +58,7 @@ public class Hand implements Subsystem {
         claw1.setPosition(CLAWSIDEOPEN);
         claw2.setPosition(CLAWSIDEOPEN);
         grabBottom.setPosition(0.1);
-        grabTop.setPosition(0.5);   
+        grabTop.setPosition(0.5);
     }
 
     // Close the hand

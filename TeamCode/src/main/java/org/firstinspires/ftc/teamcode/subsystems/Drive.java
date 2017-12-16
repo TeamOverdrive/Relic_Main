@@ -9,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.lang.Math.PI;
+import static java.lang.Thread.sleep;
 
 /**
  * Created by joshua9889 on 12/10/2017.
@@ -31,6 +33,7 @@ public class Drive implements Subsystem {
     public static final double TURN_SPEED = 0.3;  //modified turn speed from 0.5
     public static final boolean CLOCKWISE = TRUE;
     public static final boolean COUNTER_CLOCKWISE = FALSE;
+    private static final double WHEEL_BASE = 12.25;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
@@ -92,15 +95,46 @@ public class Drive implements Subsystem {
         rightMotor.setZeroPowerBehavior(zeroPowerBehavior);
     }
 
-    public void setTurn(boolean direction, int degrees, double timeoutS){
+    /*public void setTurn(boolean direction, int degrees, double timeoutS){
+
+        double leftPower;
+        double rightPower;
 
         if(direction){
             //clockwise
+            //left +
+            //right -
+            double leftPower = (12.25*PI*degrees)/360;
+            double rightPower = ((12.25*PI*degrees)/360)*-1;
         }
         else if (!direction){
             //counter-clockwise
+            //left -
+            //right +
+            double leftPower = ((12.25*PI*degrees)/360)*-1;
+            double rightPower = (12.25*PI*degrees)/360;
+
         }
-        //encoderDrive(8, , , timeoutS);
+
+        encoderDrive(0.75, leftPower, rightPower, timeoutS);
+    }*/
+
+    public void turnCW(double degrees, double timeoutS){
+
+        double leftPower = (WHEEL_BASE*PI*degrees)/360;
+        double rightPower = ((WHEEL_BASE*PI*degrees)/360)*-1;
+
+        encoderDrive(0.75, leftPower, rightPower, timeoutS);
+
+    }
+
+    public void turnCCW(double degrees, double timeoutS){
+
+        double leftPower = ((WHEEL_BASE*PI*degrees)/360)*-1;
+        double rightPower = (WHEEL_BASE*PI*degrees)/360;
+
+        encoderDrive(0.75, leftPower, rightPower, timeoutS);
+
     }
 
     /**

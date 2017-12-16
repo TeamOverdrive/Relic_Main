@@ -43,6 +43,9 @@ public class R2_Jewel extends Team2753Linear {
 
                     //rotate clockwise
                     break;
+                default:
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(500);
             }
 
 

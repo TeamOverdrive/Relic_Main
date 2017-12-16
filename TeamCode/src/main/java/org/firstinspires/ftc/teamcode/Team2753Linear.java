@@ -27,8 +27,8 @@ public abstract class Team2753Linear extends LinearOpMode {
 
 
     public void startVuforia(){
-        this.vumark.setup(FRONT);
-        this.vumark.activateVuforia();
+            this.vumark.setup(FRONT);
+            this.vumark.activateVuforia();
     }
 
     /*public void WhatColumnToScoreIn(){
@@ -36,56 +36,59 @@ public abstract class Team2753Linear extends LinearOpMode {
     }*/
 
     public void waitForStart(LinearOpMode linearOpMode, boolean auton) {
-        getDrive().init(linearOpMode, auton);
-        getJewel().init(linearOpMode, auton);
-        getHand().init(linearOpMode, auton);
-        getLift().init(linearOpMode, auton);
+            getDrive().init(linearOpMode, auton);
+            getJewel().init(linearOpMode, auton);
+            getHand().init(linearOpMode, auton);
+            getLift().init(linearOpMode, auton);
 
-        //  this.vumark.disableVuforia();
 
-        //this.vumark.setup(VuforiaLocalizer.CameraDirection.FRONT);
+            //  this.vumark.disableVuforia();
 
-        // You can add vuforia code here
+            //this.vumark.setup(VuforiaLocalizer.CameraDirection.FRONT);
+
+            // You can add vuforia code here
 
         if(auton)
             AutoTransitioner.transitionOnStop(linearOpMode, "Teleop"); //Auto Transitioning
 
-        this.isAuton = auton;
+            this.isAuton = auton;
 
-        linearOpMode.telemetry.addData("Waiting for Start","");
-        linearOpMode.telemetry.update();
+            linearOpMode.telemetry.addData("Waiting for Start", "");
+            linearOpMode.telemetry.update();
 
-        linearOpMode.waitForStart();
-        firstGrab();
+            linearOpMode.waitForStart();
+            //firstGrab();
 
-        matchTimer.reset();
+            matchTimer.reset();
     }
 
     public void firstGrab(){
-        getHand().closeBottom();
-        sleep(300);
-        getLift().setPower(1.0);
-        sleep(500);
-        getLift().brake();
+            getHand().closeBottom();
+            sleep(300);
+            getLift().setLiftPower(1.0);
+            sleep(500);
+            getLift().brake();
     }
 
     // Should work
     public void updateTelemetry(LinearOpMode linearOpMode) {
-        if (!isAuton)
-            linearOpMode.telemetry.addData("Match Time", 120-matchTimer.seconds());
-        getDrive().outputToTelemetry(linearOpMode.telemetry);
-        getJewel().outputToTelemetry(linearOpMode.telemetry);
-        getHand().outputToTelemetry(linearOpMode.telemetry);
-        linearOpMode.telemetry.update();
+            if (!isAuton)
+                linearOpMode.telemetry.addData("Match Time", 120 - matchTimer.seconds());
+            getDrive().outputToTelemetry(linearOpMode.telemetry);
+            getJewel().outputToTelemetry(linearOpMode.telemetry);
+            getHand().outputToTelemetry(linearOpMode.telemetry);
+            linearOpMode.telemetry.update();
+
     }
 
     public void finalAction(){
-        getDrive().stop();
-        getJewel().stop();
-        getHand().stop();
+            getDrive().stop();
+            getJewel().stop();
+            getHand().stop();
 
 
-        //requestOpModeStop();
+            //requestOpModeStop();
+
     }
 
     public org.firstinspires.ftc.teamcode.subsystems.Drive getDrive() {

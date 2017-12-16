@@ -14,22 +14,40 @@ public class B1_Jewel extends Team2753Linear{
     public void runOpMode() throws InterruptedException {
         waitForStart(this, true);
 
-        getJewel().deploy();
-        sleep(300);
+        int i =0;
 
-        switch (getJewel().vote(this)){
-            case RED:
-                getDrive().encoderDrive(0.2, 5, 5, 5);
-                break;
-            case BLUE:
-                getDrive().encoderDrive(0.2, -5, -5, 5);
-                break;
+        while(opModeIsActive() && i == 0) {
+
+            getJewel().deploy();
+            sleep(300);
+
+            // Vote and then hit jewel off
+            switch (getJewel().vote(this)) {
+                case RED:
+                    //getDrive().encoderDrive(0.2, -5, -5, 5);
+                    //rotate counter-clockwise
+
+
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(500);
+
+                    //rotate clockwise
+                    break;
+                case BLUE:
+                    //getDrive().encoderDrive(0.2, 5, 5, 5);
+                    //rotate clockwise
+
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(500);
+
+                    //rotate counter-clockwise
+                    break;
+            }
+
+            //park
+
+            i++;
         }
-
-        getJewel().retract();
-        sleep(500);
-
-        //park
 
         finalAction();
     }

@@ -15,23 +15,41 @@ public class R2_Jewel extends Team2753Linear {
     public void runOpMode() throws InterruptedException {
         waitForStart(this, true); // Wait for start
 
-        getJewel().deploy(); // Deploy Jewel mech
-        sleep(300); // Wait for it to get there
+        int i = 0;
 
-        // Vote and then hit it off
-        switch (getJewel().vote(this)){
-            case RED:
-                getDrive().encoderDrive(0.2, -5, -5, 5);
-                break;
-            case BLUE:
-                getDrive().encoderDrive(0.2, 5, 5, 5);
-                break;
+        while(opModeIsActive() && i == 0) {
+
+            getJewel().deploy(); // Deploy Jewel mech
+            sleep(300); // Wait for it to get there
+
+            // Vote and then hit jewel off
+            switch (getJewel().vote(this)) {
+                case RED:
+                    //getDrive().encoderDrive(0.2, -5, -5, 5);
+                    //rotate clockwise
+
+
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(500);
+
+                    //rotate counter-clockwise
+                    break;
+                case BLUE:
+                    //getDrive().encoderDrive(0.2, 5, 5, 5);
+                    //rotate counter-clockwise
+
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(500);
+
+                    //rotate clockwise
+                    break;
+            }
+
+
+            //park
+
+            i++;
         }
-
-        getJewel().retract(); // Retract Jewel mech
-        sleep(500);
-
-        //park
 
         finalAction();
 

@@ -19,22 +19,42 @@ public class R1_Jewel extends Team2753Linear{
 
         waitForStart(this, true);
 
-        getJewel().deploy();
-        sleep(300);
 
-        switch (getJewel().vote(this)){
-            case RED:
-                getDrive().encoderDrive(0.2, -5, -5, 5);
-                break;
-            case BLUE:
-                getDrive().encoderDrive(0.2, 5, 5, 5);
-                break;
+        int i = 0;
+
+        while(opModeIsActive() && i == 0) {
+
+            getJewel().deploy();
+            sleep(300);
+
+            // Vote and then hit jewel off
+            switch (getJewel().vote(this)) {
+                case RED:
+                    //getDrive().encoderDrive(0.2, -5, -5, 5);
+                    //rotate clockwise
+
+
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(500);
+
+                    //rotate counter-clockwise
+                    break;
+                case BLUE:
+                    //getDrive().encoderDrive(0.2, 5, 5, 5);
+                    //rotate counter-clockwise
+
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(500);
+
+                    //rotate clockwise
+                    break;
+            }
+
+            //park
+            getDrive().encoderDrive(0.8, 35, 35, 10);
+
+            i++;
         }
-
-        getJewel().retract(); // Retract Jewel mech
-        sleep(500);
-
-        getDrive().encoderDrive(0.8, 35, 35, 10);
 
         finalAction();
     }

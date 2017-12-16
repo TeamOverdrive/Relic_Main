@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 /**
  * Created by joshua9889 on 12/10/2017.
  * Used for the Drivetrain
@@ -26,6 +29,8 @@ public class Drive implements Subsystem {
     private static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
     public static final double DRIVE_SPEED = 0.6;  //modified speed from 0.6
     public static final double TURN_SPEED = 0.3;  //modified turn speed from 0.5
+    public static final boolean CLOCKWISE = TRUE;
+    public static final boolean COUNTER_CLOCKWISE = FALSE;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
@@ -85,6 +90,17 @@ public class Drive implements Subsystem {
     public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
         leftMotor.setZeroPowerBehavior(zeroPowerBehavior);
         rightMotor.setZeroPowerBehavior(zeroPowerBehavior);
+    }
+
+    public void setTurn(boolean direction, int degrees, double timeoutS){
+
+        if(direction){
+            //clockwise
+        }
+        else if (!direction){
+            //counter-clockwise
+        }
+        //encoderDrive(8, , , timeoutS);
     }
 
     /**

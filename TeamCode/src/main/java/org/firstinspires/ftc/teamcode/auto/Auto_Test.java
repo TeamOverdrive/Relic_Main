@@ -60,12 +60,20 @@ public class Auto_Test extends Team2753Linear{
 
             switch (columnVote()){
                 case LEFT:
+                    telemetry.addData("Column", "Left");
+                    telemetry.update();
                     break;
                 case CENTER:
+                    telemetry.addData("Column", "Center");
+                    telemetry.update();
                     break;
                 case RIGHT:
+                    telemetry.addData("Column", "Right");
+                    telemetry.update();
                     break;
                 case UNKNOWN:
+                    telemetry.addData("Column", "Unknown");
+                    telemetry.update();
                     break;
                 }
 

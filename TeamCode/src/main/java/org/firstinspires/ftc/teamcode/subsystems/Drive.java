@@ -121,8 +121,8 @@ public class Drive implements Subsystem {
 
     public void turnCW(double degrees, double timeoutS){
 
-        double leftPower = (WHEEL_BASE*PI*degrees)/360;
-        double rightPower = ((WHEEL_BASE*PI*degrees)/360)*-1;
+        double leftPower = (WHEEL_BASE*PI*degrees)/-360;
+        double rightPower = (WHEEL_BASE*PI*degrees)/360;
 
         encoderDrive(0.75, leftPower, rightPower, timeoutS);
 
@@ -130,8 +130,8 @@ public class Drive implements Subsystem {
 
     public void turnCCW(double degrees, double timeoutS){
 
-        double leftPower = ((WHEEL_BASE*PI*degrees)/360)*-1;
-        double rightPower = (WHEEL_BASE*PI*degrees)/360;
+        double leftPower = (WHEEL_BASE*PI*degrees)/360;
+        double rightPower = (WHEEL_BASE*PI*degrees)/-360;
 
         encoderDrive(0.75, leftPower, rightPower, timeoutS);
 

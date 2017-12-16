@@ -17,7 +17,7 @@ public class Hand implements Subsystem {
     private Servo grabBottom, grabTop = null;
 
     // Positions for servos
-    private final static double CLAWSIDEOPEN = 0.45;
+    private final static double CLAWSIDEOPEN = 0.5;
     private final static double CLAWSIDECLOSED = 0.0;
     //private final static double CLAWCLOSE = 1.0;
 
@@ -57,7 +57,7 @@ public class Hand implements Subsystem {
     public void openClaw(){
         claw1.setPosition(CLAWSIDEOPEN);
         claw2.setPosition(CLAWSIDEOPEN);
-        grabBottom.setPosition(0.1);
+        grabBottom.setPosition(0.15);
         grabTop.setPosition(0.5);
     }
 
@@ -68,7 +68,7 @@ public class Hand implements Subsystem {
     }
 
     public void closeTop() throws InterruptedException {
-        grabBottom.setPosition(0.10);
+        grabBottom.setPosition(0.15);
         sleep(100);
         closeSide();
         grabTop.setPosition(1.0);
@@ -78,7 +78,7 @@ public class Hand implements Subsystem {
     public void closeBottom() {
         closeSide();
         grabTop.setPosition(0.5);
-        grabBottom.setPosition(0.8);
+        grabBottom.setPosition(1.0);
     }
 
 

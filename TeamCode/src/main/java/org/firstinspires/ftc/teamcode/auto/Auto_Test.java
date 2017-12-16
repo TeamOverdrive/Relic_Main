@@ -9,15 +9,15 @@ import org.firstinspires.ftc.teamcode.Team2753Linear;
  */
 
 @Autonomous
-public class Jewel_Test extends Team2753Linear{
+public class Auto_Test extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //Init
-        //startVuforia();
+        this.startVuforia();
 
         waitForStart(this, true);
 
+        //glyphLoad();
 
         int i = 0;
 
@@ -31,34 +31,49 @@ public class Jewel_Test extends Team2753Linear{
 
                 case RED:
                     //rotate clockwise
-                    getDrive().turnCW(30, 4);
+                    getDrive().turnCW(40, 4);
 
                     getJewel().retract(); // Retract Jewel arm
                     sleep(750);
 
                     //rotate counter-clockwise
-                    getDrive().turnCCW(30, 4);
+                    getDrive().turnCCW(40, 4);
                     break;
 
                 case BLUE:
                     //rotate counter-clockwise
-                    getDrive().turnCCW(30, 4);
+                    getDrive().turnCCW(40, 4);
 
                     getJewel().retract(); // Retract Jewel arm
                     sleep(750);
 
                     //rotate clockwise
-                    getDrive().turnCW(30, 4);
+                    getDrive().turnCW(40, 4);
                     break;
 
                 default:
                     //not used because jewel vote does not have a timeout
                     getJewel().retract(); // Retract Jewel arm
                     sleep(750);
+                    break;
             }
 
+            switch (columnVote()){
+                case LEFT:
+                    break;
+                case CENTER:
+                    break;
+                case RIGHT:
+                    break;
+                case UNKNOWN:
+                    break;
+                }
+
+
+
             //park
-            getDrive().encoderDrive(0.8, 35, 35, 10);
+            //getDrive().encoderDrive(0.8, 35, 35, 10);
+            //getDrive().turnCW(90, 4);
 
             i++;
         }

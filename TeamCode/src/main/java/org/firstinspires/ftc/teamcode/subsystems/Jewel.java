@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -22,7 +23,7 @@ public class Jewel implements Subsystem {
     }
 
     final private static double ARMUP = 0.76;
-    final private static double ARMDOWN = 0.725;
+    final private static double ARMDOWN = 0.72;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
@@ -39,7 +40,7 @@ public class Jewel implements Subsystem {
 
     @Override
     public void stop() {
-        retract();
+        //retract();
     }
 
     @Override
@@ -68,31 +69,35 @@ public class Jewel implements Subsystem {
             return JewelColor.UNKNOWN;
     }
 
+    protected ElapsedTime runtime = new ElapsedTime();
     // Counts "votes" based on how many times it sees red/blue
-    public JewelColor vote(LinearOpMode linearOpMode){
+    public JewelColor vote(LinearOpMode linearOpMode, double timeoutS) {
         int redVotes = 0;
         int blueVotes = 0;
-        while (linearOpMode.opModeIsActive()&&
-                redVotes<200 &&
-                blueVotes<200){
-            switch (jewelColor()){
-                case RED:
-                    redVotes++;
-                    break;
-                case BLUE:
-                    blueVotes++;
-                    break;
+            runtime.reset();
+            while (linearOpMode.opModeIsActive()
+                    &&redVotes < 200 && blueVotes < 200
+                    && runtime.seconds() < timeoutS) {
+                switch (jewelColor()) {
+                    case RED:
+                        redVotes++;
+                        break;
+                    case BLUE:
+                        blueVotes++;
+                        break;
+                }
+                linearOpMode.telemetry.addData("Red Votes", redVotes);
+                linearOpMode.telemetry.addData("Blue Votes", blueVotes);
+                linearOpMode.telemetry.addData("Red Value", jewelColor.red());
+                linearOpMode.telemetry.addData("Blue Value", jewelColor.blue());
+                linearOpMode.telemetry.update();
             }
-            linearOpMode.telemetry.addData("Red Votes", redVotes);
-            linearOpMode.telemetry.addData("Blue Votes", blueVotes);
-            linearOpMode.telemetry.addData("Red Value", jewelColor.red());
-            linearOpMode.telemetry.addData("Blue Value", jewelColor.blue());
-            linearOpMode.telemetry.update();
-        }
 
-        if (redVotes>blueVotes)
-            return JewelColor.RED;
-        else
-            return JewelColor.BLUE;
+            if (redVotes == 200)
+                return JewelColor.RED;
+            else if (blueVotes == 200)
+                return JewelColor.BLUE;
+            else
+                return JewelColor.UNKNOWN;
     }
 }

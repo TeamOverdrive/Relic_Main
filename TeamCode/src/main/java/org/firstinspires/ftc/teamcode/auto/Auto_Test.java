@@ -27,7 +27,7 @@ public class Auto_Test extends Team2753Linear{
             sleep(300);
 
             // Vote and then hit jewel off
-            switch (getJewel().vote(this)) {
+            switch (getJewel().vote(this, 7)) {
 
                 case RED:
                     //rotate clockwise

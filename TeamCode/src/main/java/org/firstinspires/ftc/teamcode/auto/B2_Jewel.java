@@ -22,25 +22,32 @@ public class B2_Jewel extends Team2753Linear{
             sleep(300);
 
             // Vote and then hit jewel off
-            switch (getJewel().vote(this)) {
+            switch (getJewel().vote(this, 10)) {
                 case RED:
                     //getDrive().encoderDrive(0.2, -5, -5, 5);
                     //rotate counter-clockwise
-
+                    getDrive().turnCCW(jewelTurn, 4);
 
                     getJewel().retract(); // Retract Jewel arm
                     sleep(500);
 
                     //rotate clockwise
+                    getDrive().turnCW(jewelTurn, 4);
                     break;
                 case BLUE:
                     //getDrive().encoderDrive(0.2, 5, 5, 5);
                     //rotate clockwise
+                    getDrive().turnCW(jewelTurn, 4);
 
                     getJewel().retract(); // Retract Jewel arm
                     sleep(500);
 
                     //rotate counter-clockwise
+                    getDrive().turnCCW(jewelTurn, 4);
+                    break;
+                case UNKNOWN:
+                    getJewel().retract(); // Retract Jewel arm
+                    sleep(750);
                     break;
                 default:
                     getJewel().retract(); // Retract Jewel arm
@@ -48,6 +55,9 @@ public class B2_Jewel extends Team2753Linear{
             }
 
             //park
+            getDrive().encoderDrive(0.8, -24, -24, 4);
+            getDrive().turnCW(45, 4);
+            getDrive().encoderDrive(0.8, -17, -17, 4);
 
             i++;
         }

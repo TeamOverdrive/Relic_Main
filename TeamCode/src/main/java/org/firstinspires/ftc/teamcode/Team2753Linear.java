@@ -27,6 +27,7 @@ public abstract class Team2753Linear extends LinearOpMode {
     private VuMark vumark = new VuMark();
     private ElapsedTime matchTimer = new ElapsedTime(); // Match Timer thing
     private boolean isAuton = false; // Are we running auto
+    public static final double jewelTurn = 30;
 
 
     public void startVuforia(){
@@ -96,11 +97,80 @@ public abstract class Team2753Linear extends LinearOpMode {
     }
 
     public void glyphLoad(){
-            getHand().closeBottom();
+            getHand().closeSide();
             sleep(300);
-            getLift().setLiftPower(1.0);
-            sleep(500);
-            getLift().brake();
+            getHand().closeBottom();
+            getLift().setLiftPower(0.8);
+            sleep(1000);
+    }
+
+    public void jewelBlue(){
+        switch (getJewel().vote(this, 10)) {
+            case RED:
+                //getDrive().encoderDrive(0.2, -5, -5, 5);
+                //rotate counter-clockwise
+                getDrive().turnCCW(30, 4);
+
+                getJewel().retract(); // Retract Jewel arm
+                sleep(500);
+
+                //rotate clockwise
+                getDrive().turnCW(30, 4);
+                break;
+            case BLUE:
+                //getDrive().encoderDrive(0.2, 5, 5, 5);
+                //rotate clockwise
+                getDrive().turnCW(30, 4);
+
+                getJewel().retract(); // Retract Jewel arm
+                sleep(500);
+
+                //rotate counter-clockwise
+                getDrive().turnCCW(30, 4);
+                break;
+            case UNKNOWN:
+                getJewel().retract(); // Retract Jewel arm
+                sleep(750);
+                break;
+            default:
+                getJewel().retract(); // Retract Jewel arm
+                sleep(500);
+        }
+    }
+
+    public void jewelRed(){
+
+        switch (getJewel().vote(this, 10)) {
+            case RED:
+                //getDrive().encoderDrive(0.4, -5, -5, 5);
+                //rotate clockwise
+                getDrive().turnCW(30, 4);
+
+
+                getJewel().retract(); // Retract Jewel arm
+                sleep(750);
+
+                //rotate counter-clockwise
+                getDrive().turnCCW(30, 4);
+                break;
+            case BLUE:
+                //getDrive().encoderDrive(0.4, 5, 5, 5);
+                //rotate counter-clockwise
+                getDrive().turnCCW(30, 4);
+
+                getJewel().retract(); // Retract Jewel arm
+                sleep(750);
+
+                //rotate clockwise
+                break;
+            case UNKNOWN:
+                getJewel().retract(); // Retract Jewel arm
+                sleep(750);
+                break;
+            default:
+                getJewel().retract(); // Retract Jewel arm
+                sleep(750);
+        }
     }
 
     // Should work
@@ -118,6 +188,7 @@ public abstract class Team2753Linear extends LinearOpMode {
             getDrive().stop();
             getJewel().stop();
             getHand().stop();
+            //vumark.disableVuforia();
 
 
             //requestOpModeStop();

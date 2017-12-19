@@ -44,12 +44,23 @@ public class Teleop extends Team2753Linear {
                 getJewel().retract();
 
             // Hand
-            if(gamepad1.dpad_down)
+            /*if(gamepad1.dpad_down)
                 getHand().closeBottom();
             else if(gamepad1.dpad_up)
                 getHand().closeTop();
             else if(gamepad1.dpad_left)
                 getHand().openClaw();
+            else if(gamepad1.dpad_right)
+                getHand().bottomHold();*/
+
+            if(gamepad2.right_bumper)
+                getHand().closeBottom();
+            else if(gamepad2.right_trigger>0)
+                getHand().closeTop();
+            else if(gamepad2.left_bumper)
+                getHand().openClaw();
+            //else if(gamepad2.dpad_right)
+            //   getHand().bottomHold();
 
             //Lift Control
             float liftThrottle = gamepad2.left_stick_y;
@@ -72,8 +83,7 @@ public class Teleop extends Team2753Linear {
             slideThrottle = Range.clip(slideThrottle, -1, 1);
             //Scale
             slideThrottle = (float) OverdriveLib.scaleInput(slideThrottle);
-            //Invert
-            slideThrottle = slideThrottle;
+            //set to slide motor
             getLift().setSlidePower(slideThrottle);
 
             updateTelemetry(this);

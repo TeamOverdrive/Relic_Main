@@ -71,6 +71,15 @@ public class Jewel implements Subsystem {
 
     protected ElapsedTime runtime = new ElapsedTime();
     // Counts "votes" based on how many times it sees red/blue
+
+    /**
+     * Returns the jewel color as an enum.  Values are RED and BLUE.
+     * If a timeout occurs and the sensor has not recognized a color, the method returns UNKOWN.
+     *
+     * @param linearOpMode  linearOpMode (in an opmode just use the keyword "this".
+     * @param timeoutS      The amount of time this method is allowed to execute.
+     * @return              The color of the jewel.
+     */
     public JewelColor vote(LinearOpMode linearOpMode, double timeoutS) {
         int redVotes = 0;
         int blueVotes = 0;

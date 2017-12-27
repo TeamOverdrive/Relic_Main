@@ -42,11 +42,15 @@ public abstract class Team2753Linear extends LinearOpMode {
         return currentVumark;
     }
 
-    public RelicRecoveryVuMark columnVote(){
+
+    protected ElapsedTime runtime = new ElapsedTime();
+    public RelicRecoveryVuMark columnVote(LinearOpMode linearOpMode, double timeoutS){
         int leftVotes = 0;
         int centerVotes = 0;
         int rightVotes = 0;
-        while(opModeIsActive()  &&  leftVotes < 300  &&  centerVotes < 300 && rightVotes < 300){
+        while(linearOpMode.opModeIsActive()
+                &&  leftVotes < 300  &&  centerVotes < 300 && rightVotes < 300
+                && runtime.seconds() < timeoutS){
             switch (vumark.targetColumn()){
                 case LEFT:
                     leftVotes++;
@@ -58,10 +62,10 @@ public abstract class Team2753Linear extends LinearOpMode {
                     rightVotes++;
                     break;
             }
-            telemetry.addData("Left Votes", leftVotes);
-            telemetry.addData("Center Votes", centerVotes);
-            telemetry.addData("Right Votes", rightVotes);
-            telemetry.update();
+            linearOpMode.telemetry.addData("Left Votes", leftVotes);
+            linearOpMode.telemetry.addData("Center Votes", centerVotes);
+            linearOpMode.telemetry.addData("Right Votes", rightVotes);
+            linearOpMode.telemetry.update();
         }
         if(leftVotes == 300)
             return RelicRecoveryVuMark.LEFT;

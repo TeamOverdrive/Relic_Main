@@ -66,6 +66,5 @@ public class R2_Jewel extends Team2753Linear {
         }
 
         finalAction();
-
     }
 }

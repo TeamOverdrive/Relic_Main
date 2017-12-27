@@ -77,6 +77,12 @@ public class Drive implements Subsystem {
         telemetry.addData("Right Pos", rightMotor.getCurrentPosition());
     }
 
+    /**
+     * Basic setPower method for both sides of the drive train.
+     *
+     * @param left  left power
+     * @param right right power
+     */
     public void setLeftRightPowers(double left, double right){
         left = Range.clip(left, -1., 1.);
         right = Range.clip(right, -1., 1.);
@@ -119,6 +125,12 @@ public class Drive implements Subsystem {
         encoderDrive(0.75, leftPower, rightPower, timeoutS);
     }*/
 
+    /**
+     * Method to perform a Clockwise turn
+     *
+     * @param degrees       The degrees (in a circle to turn.
+     * @param timeoutS      The amount of time this method is allowed to execute.
+     */
     public void turnCW(double degrees, double timeoutS){
 
         double leftPower = (WHEEL_BASE*PI*degrees)/-360;
@@ -127,6 +139,13 @@ public class Drive implements Subsystem {
         encoderDrive(0.75, leftPower, rightPower, timeoutS);
 
     }
+
+    /**
+     * Method to perform a Counter-clockwise turn
+     *
+     * @param degrees       The degrees (in a circle) to turn.
+     * @param timeoutS      The amount of time this method is allowed to execute.
+     */
 
     public void turnCCW(double degrees, double timeoutS){
 

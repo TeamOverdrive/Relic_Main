@@ -13,7 +13,7 @@ public class Auto_Test extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        this.startVuforia();
+        //this.startVuforia();
 
         waitForStart(this, true);
 
@@ -26,39 +26,12 @@ public class Auto_Test extends Team2753Linear{
             getJewel().deploy();
             sleep(300);
 
-            // Vote and then hit jewel off
-            switch (getJewel().vote(this, 7)) {
+            jewelRed();
 
-                case RED:
-                    //rotate clockwise
-                    getDrive().turnCW(40, 4);
+            getJewel().retract();
+            sleep(300);
 
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(750);
-
-                    //rotate counter-clockwise
-                    getDrive().turnCCW(40, 4);
-                    break;
-
-                case BLUE:
-                    //rotate counter-clockwise
-                    getDrive().turnCCW(40, 4);
-
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(750);
-
-                    //rotate clockwise
-                    getDrive().turnCW(40, 4);
-                    break;
-
-                default:
-                    //not used because jewel vote does not have a timeout
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(750);
-                    break;
-            }
-
-            switch (columnVote()){
+            switch (columnVote(this, 7)){
                 case LEFT:
                     telemetry.addData("Column", "Left");
                     telemetry.update();
@@ -76,12 +49,6 @@ public class Auto_Test extends Team2753Linear{
                     telemetry.update();
                     break;
                 }
-
-
-
-            //park
-            //getDrive().encoderDrive(0.8, 35, 35, 10);
-            //getDrive().turnCW(90, 4);
 
             i++;
         }

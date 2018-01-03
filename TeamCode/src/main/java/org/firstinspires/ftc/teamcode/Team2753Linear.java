@@ -113,24 +113,24 @@ public abstract class Team2753Linear extends LinearOpMode {
             case RED:
                 //getDrive().encoderDrive(0.2, -5, -5, 5);
                 //rotate counter-clockwise
-                getDrive().turnCCW(30, 4);
+                getDrive().turnCCW(jewelTurn, 4);
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(500);
 
                 //rotate clockwise
-                getDrive().turnCW(30, 4);
+                getDrive().turnCW(jewelTurn, 4);
                 break;
             case BLUE:
                 //getDrive().encoderDrive(0.2, 5, 5, 5);
                 //rotate clockwise
-                getDrive().turnCW(30, 4);
+                getDrive().turnCW(jewelTurn, 4);
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(500);
 
                 //rotate counter-clockwise
-                getDrive().turnCCW(30, 4);
+                getDrive().turnCCW(jewelTurn, 4);
                 break;
             case UNKNOWN:
                 getJewel().retract(); // Retract Jewel arm
@@ -148,24 +148,25 @@ public abstract class Team2753Linear extends LinearOpMode {
             case RED:
                 //getDrive().encoderDrive(0.4, -5, -5, 5);
                 //rotate clockwise
-                getDrive().turnCW(30, 4);
+                getDrive().turnCW(jewelTurn, 4);
 
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(750);
 
                 //rotate counter-clockwise
-                getDrive().turnCCW(30, 4);
+                getDrive().turnCCW(jewelTurn, 4);
                 break;
             case BLUE:
                 //getDrive().encoderDrive(0.4, 5, 5, 5);
                 //rotate counter-clockwise
-                getDrive().turnCCW(30, 4);
+                getDrive().turnCCW(jewelTurn, 4);
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(750);
 
                 //rotate clockwise
+                getDrive().turnCW(jewelTurn, 4);
                 break;
             case UNKNOWN:
                 getJewel().retract(); // Retract Jewel arm
@@ -177,7 +178,7 @@ public abstract class Team2753Linear extends LinearOpMode {
         }
     }
 
-    // Should work
+
     public void updateTelemetry(LinearOpMode linearOpMode) {
             if (!isAuton)
                 linearOpMode.telemetry.addData("Match Time", 120 - matchTimer.seconds());
@@ -195,7 +196,7 @@ public abstract class Team2753Linear extends LinearOpMode {
             //vumark.disableVuforia();
 
 
-            //requestOpModeStop();
+            requestOpModeStop();
 
     }
 

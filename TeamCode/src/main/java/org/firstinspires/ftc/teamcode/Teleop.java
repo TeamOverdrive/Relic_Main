@@ -11,7 +11,8 @@ import static java.lang.Math.round;
 /**
  * Created by joshua9889 on 12/10/2017.
  *
- * Replicated TeleopMain_Relic with new backend
+ * Replicated 2753's TeleopMain_Relic with new backend.
+ *Edited by David Zheng | 2753 Team Overdrive
  */
 
 @TeleOp
@@ -21,9 +22,14 @@ public class Teleop extends Team2753Linear {
         // Use this in place of waitForStart();
         waitForStart(this, false);
 
-        // Loop while we are running teleop
+        // Loop while we are running Teleop
         while (opModeIsActive()){
-            /* Drivetrain Controls */
+
+
+
+            /*Gamepad 1 Controls*/
+
+            /* Drivetrain Controls */ //Gamepad 1 joysticks
             float leftThrottle = gamepad1.left_stick_y;
             float rightThrottle = gamepad1.right_stick_y;
 
@@ -37,32 +43,25 @@ public class Teleop extends Team2753Linear {
 
             getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
 
-            // Da Jewel
+            //Jewel Test  Gamepad 1 LB
             if(gamepad1.left_bumper)
                 getJewel().deploy();
             else
                 getJewel().retract();
 
-            // Hand
-            /*if(gamepad1.dpad_down)
-                getHand().closeBottom();
-            else if(gamepad1.dpad_up)
-                getHand().closeTop();
-            else if(gamepad1.dpad_left)
-                getHand().openClaw();
-            else if(gamepad1.dpad_right)
-                getHand().bottomHold();*/
 
+
+            /*Gamepad 2 Controls*/
+
+            // Hand Gamepad 2 RB and RT for top and bottom and LB to open
             if(gamepad2.right_bumper)
                 getHand().closeBottom();
             else if(gamepad2.right_trigger>0)
                 getHand().closeTop();
             else if(gamepad2.left_bumper)
                 getHand().openClaw();
-            //else if(gamepad2.dpad_right)
-            //   getHand().bottomHold();
 
-            //Lift Control
+            //Lift Control  Gamepad 2 Left Joystick
             float liftThrottle = gamepad2.left_stick_y;
             //CLip
             liftThrottle = Range.clip(liftThrottle, -1, 1);
@@ -73,11 +72,8 @@ public class Teleop extends Team2753Linear {
 
             getLift().setLiftPower(liftThrottle);
 
-            /*if(abs(liftThrottle) <= 0.6)
-                getLift().setPower(0.6);*/
 
-
-            //Slide Control
+            //Slide Control Gamepad 2 Right Joystick
             float slideThrottle = gamepad2.right_stick_y;
             //Clip
             slideThrottle = Range.clip(slideThrottle, -1, 1);

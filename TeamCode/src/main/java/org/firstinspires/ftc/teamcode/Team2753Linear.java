@@ -31,7 +31,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
 
     public void startVuforia(){
-            this.vumark.setup(BACK, TRUE);
+            this.vumark.setup(BACK);
             //this.vumark.updateTarget();
             //this.telemetry.addData("Vuforia Target", "%s visible", vumark.getOuputVuMark());
             //this.telemetry.update();
@@ -48,8 +48,9 @@ public abstract class Team2753Linear extends LinearOpMode {
         int leftVotes = 0;
         int centerVotes = 0;
         int rightVotes = 0;
+        runtime.reset();
         while(linearOpMode.opModeIsActive()
-                &&  leftVotes < 300  &&  centerVotes < 300 && rightVotes < 300
+                &&  leftVotes < 200  &&  centerVotes < 200 && rightVotes < 200
                 && runtime.seconds() < timeoutS){
             switch (vumark.targetColumn()){
                 case LEFT:
@@ -66,12 +67,13 @@ public abstract class Team2753Linear extends LinearOpMode {
             linearOpMode.telemetry.addData("Center Votes", centerVotes);
             linearOpMode.telemetry.addData("Right Votes", rightVotes);
             linearOpMode.telemetry.update();
+            //sleep(5     );
         }
-        if(leftVotes == 300)
+        if(leftVotes == 200)
             return RelicRecoveryVuMark.LEFT;
-        else if (centerVotes == 300)
+        else if (centerVotes == 200)
             return RelicRecoveryVuMark.CENTER;
-        else if(rightVotes ==300)
+        else if(rightVotes ==200)
             return RelicRecoveryVuMark.RIGHT;
         else
             return RelicRecoveryVuMark.UNKNOWN;
@@ -83,21 +85,23 @@ public abstract class Team2753Linear extends LinearOpMode {
         getHand().init(linearOpMode, auton);
         getLift().init(linearOpMode, auton);
 
-        if(auton)
+        if(auton) {
             AutoTransitioner.transitionOnStop(linearOpMode, "Teleop"); //Auto Transitioning
 
             this.isAuton = auton;
 
             //startVuforia();
+            this.vumark.setup(BACK);
 
             linearOpMode.telemetry.addData("Waiting for Start", "");
             //linearOpMode.telemetry.addData("Vuforia Target", "%s visible", vumark.getOuputVuMark());
             linearOpMode.telemetry.update();
+        }
 
-            linearOpMode.waitForStart();
-            //firstGrab();
+        linearOpMode.waitForStart();
+        //firstGrab();
 
-            matchTimer.reset();
+        matchTimer.reset();
     }
 
     public void glyphLoad(){
@@ -109,7 +113,7 @@ public abstract class Team2753Linear extends LinearOpMode {
     }
 
     public void jewelBlue(){
-        switch (getJewel().vote(this, 10)) {
+        switch (getJewel().vote(this, 5)) {
             case RED:
                 //getDrive().encoderDrive(0.2, -5, -5, 5);
                 //rotate counter-clockwise
@@ -144,7 +148,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
     public void jewelRed(){
 
-        switch (getJewel().vote(this, 10)) {
+        switch (getJewel().vote(this, 5)) {
             case RED:
                 //getDrive().encoderDrive(0.4, -5, -5, 5);
                 //rotate clockwise
@@ -178,6 +182,45 @@ public abstract class Team2753Linear extends LinearOpMode {
         }
     }
 
+    public void scoreGlyph(){
+        switch (columnVote(this, 7)){
+            case LEFT:
+                telemetry.addData("Column", "Left");
+                telemetry.update();
+
+                getDrive().turnCW(360, 5);
+                //sleep(5000);
+
+                //put glyph into left column
+                break;
+            case CENTER:
+                telemetry.addData("Column", "Center");
+                telemetry.update();
+
+                getDrive().turnCCW(90, 5);
+                //sleep(5000);
+
+                //put glyph into center column
+                break;
+            case RIGHT:
+                telemetry.addData("Column", "Right");
+                telemetry.update();
+
+                getDrive().turnCW(280, 5);
+                //sleep(5000);
+
+                //put glyph into right column
+                break;
+            case UNKNOWN:
+                telemetry.addData("Column", "Unknown");
+                telemetry.update();
+                //sleep(5000);
+
+                //put glyph into center column
+                break;
+        }
+    }
+
 
     public void updateTelemetry(LinearOpMode linearOpMode) {
             if (!isAuton)
@@ -193,7 +236,7 @@ public abstract class Team2753Linear extends LinearOpMode {
             getDrive().stop();
             getJewel().stop();
             getHand().stop();
-            //vumark.disableVuforia();
+           //this.vumark.disableVuforia();
 
 
             requestOpModeStop();

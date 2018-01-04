@@ -25,59 +25,10 @@ public abstract class Team2753Linear extends LinearOpMode {
     private org.firstinspires.ftc.teamcode.subsystems.Hand Hand = new org.firstinspires.ftc.teamcode.subsystems.Hand(); // Claw for glyphs and things
     private org.firstinspires.ftc.teamcode.subsystems.Lift Lift = new org.firstinspires.ftc.teamcode.subsystems.Lift();
     private VuMark vumark = new VuMark();
+    protected ElapsedTime runtime = new ElapsedTime();
     private ElapsedTime matchTimer = new ElapsedTime(); // Match Timer thing
     private boolean isAuton = false; // Are we running auto
     public static final double jewelTurn = 30;
-
-
-    public void startVuforia(){
-            this.vumark.setup(BACK);
-            //this.vumark.updateTarget();
-            //this.telemetry.addData("Vuforia Target", "%s visible", vumark.getOuputVuMark());
-            //this.telemetry.update();
-    }
-
-    public RelicRecoveryVuMark glyphColumn(){
-        RelicRecoveryVuMark currentVumark = vumark.getOuputVuMark();
-        return currentVumark;
-    }
-
-
-    protected ElapsedTime runtime = new ElapsedTime();
-    public RelicRecoveryVuMark columnVote(LinearOpMode linearOpMode, double timeoutS){
-        int leftVotes = 0;
-        int centerVotes = 0;
-        int rightVotes = 0;
-        runtime.reset();
-        while(linearOpMode.opModeIsActive()
-                &&  leftVotes < 200  &&  centerVotes < 200 && rightVotes < 200
-                && runtime.seconds() < timeoutS){
-            switch (vumark.targetColumn()){
-                case LEFT:
-                    leftVotes++;
-                    break;
-                case CENTER:
-                    centerVotes++;
-                    break;
-                case RIGHT:
-                    rightVotes++;
-                    break;
-            }
-            linearOpMode.telemetry.addData("Left Votes", leftVotes);
-            linearOpMode.telemetry.addData("Center Votes", centerVotes);
-            linearOpMode.telemetry.addData("Right Votes", rightVotes);
-            linearOpMode.telemetry.update();
-            //sleep(5     );
-        }
-        if(leftVotes == 200)
-            return RelicRecoveryVuMark.LEFT;
-        else if (centerVotes == 200)
-            return RelicRecoveryVuMark.CENTER;
-        else if(rightVotes ==200)
-            return RelicRecoveryVuMark.RIGHT;
-        else
-            return RelicRecoveryVuMark.UNKNOWN;
-    }
 
     public void waitForStart(LinearOpMode linearOpMode, boolean auton) {
         getDrive().init(linearOpMode, auton);
@@ -102,14 +53,6 @@ public abstract class Team2753Linear extends LinearOpMode {
         //firstGrab();
 
         matchTimer.reset();
-    }
-
-    public void glyphLoad(){
-            getHand().closeSide();
-            sleep(300);
-            getHand().closeBottom();
-            getLift().setLiftPower(0.8);
-            sleep(1000);
     }
 
     public void jewelBlue(){
@@ -144,6 +87,41 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getJewel().retract(); // Retract Jewel arm
                 sleep(500);
         }
+    }
+
+    public RelicRecoveryVuMark columnVote(LinearOpMode linearOpMode, double timeoutS){
+        int leftVotes = 0;
+        int centerVotes = 0;
+        int rightVotes = 0;
+        runtime.reset();
+        while(linearOpMode.opModeIsActive()
+                &&  leftVotes < 200  &&  centerVotes < 200 && rightVotes < 200
+                && runtime.seconds() < timeoutS){
+            switch (vumark.targetColumn()){
+                case LEFT:
+                    leftVotes++;
+                    break;
+                case CENTER:
+                    centerVotes++;
+                    break;
+                case RIGHT:
+                    rightVotes++;
+                    break;
+            }
+            linearOpMode.telemetry.addData("Left Votes", leftVotes);
+            linearOpMode.telemetry.addData("Center Votes", centerVotes);
+            linearOpMode.telemetry.addData("Right Votes", rightVotes);
+            linearOpMode.telemetry.update();
+            //sleep(5     );
+        }
+        if(leftVotes == 200)
+            return RelicRecoveryVuMark.LEFT;
+        else if (centerVotes == 200)
+            return RelicRecoveryVuMark.CENTER;
+        else if(rightVotes ==200)
+            return RelicRecoveryVuMark.RIGHT;
+        else
+            return RelicRecoveryVuMark.UNKNOWN;
     }
 
     public void jewelRed(){

@@ -24,7 +24,17 @@ public class Teleop extends Team2753Linear {
 
         // Loop while we are running Teleop
         while (opModeIsActive()){
-
+/*
+                  ______                                    ______
+               __/______\____                       ______/______\__
+             /               \                     /                 \
+            /                 \___________________/                   \
+           |        __                                                |
+           |     __|  |__                                ( Y )        |
+           |    |__    __|                          ( X )     ( B )   |
+          |        |__|                                  ( A )         |
+          |                                                            |
+          |                                                            |
 
 
             /*Gamepad 1 Controls*/

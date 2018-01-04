@@ -35,18 +35,26 @@ public class Auto_Test extends Team2753Linear{
                 case LEFT:
                     telemetry.addData("Column", "Left");
                     telemetry.update();
+
+                    //put glyph into left column
                     break;
                 case CENTER:
                     telemetry.addData("Column", "Center");
                     telemetry.update();
+
+                    //put glyph into center column
                     break;
                 case RIGHT:
                     telemetry.addData("Column", "Right");
                     telemetry.update();
+
+                    //put glyph into right column
                     break;
                 case UNKNOWN:
                     telemetry.addData("Column", "Unknown");
                     telemetry.update();
+
+                    //put glyph into center column
                     break;
                 }
 

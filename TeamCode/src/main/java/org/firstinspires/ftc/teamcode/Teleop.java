@@ -19,22 +19,22 @@ import static java.lang.Math.round;
 public class Teleop extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
-        // Use this in place of waitForStart();
+
         waitForStart(this, false);
 
         // Loop while we are running Teleop
         while (opModeIsActive()){
 /*
-                  _______                                   _______
-               __/_______\____                       ______/_______\__
-             /                \                     /                  \
-            /                  \___________________/                    \
-           |         __                                                  |
-           |      __|  |__                                ( Y )          |
-           |     |__    __|                          ( X )     ( B )     |
-          |         |__|                                  ( A )           |
-          |                                                               |
-          |                                                               |
+                  _______                                    _______
+               __/_______\_____                       ______/_______\__
+             /                 \                     /                  \
+            /                   \___________________/                    \
+           |         __                                                   |
+           |      __|  |__                                 ( Y )          |
+           |     |__    __|                           ( X )     ( B )     |
+          |         |__|                                   ( A )           |
+          |                                                                |
+          |                                                                |
 
 
             /*Gamepad 1 Controls*/
@@ -61,15 +61,22 @@ public class Teleop extends Team2753Linear {
 
 
 
+
             /*Gamepad 2 Controls*/
 
             // Hand Gamepad 2 RB and RT for top and bottom and LB to open
+            /*
             if(gamepad2.right_bumper)
-                getHand().closeBottom();
+                getHand().backClose();
             else if(gamepad2.right_trigger>0)
-                getHand().closeTop();
+                getHand().backOpen();
             else if(gamepad2.left_bumper)
-                getHand().openClaw();
+                getHand().frontClose();
+            else if(gamepad2.right_trigger>0)
+                getHand().frontOpen();
+                */
+
+            if(gamepad1.right_bumper){}
 
             //Lift Control  Gamepad 2 Left Joystick
             float liftThrottle = gamepad2.left_stick_y;

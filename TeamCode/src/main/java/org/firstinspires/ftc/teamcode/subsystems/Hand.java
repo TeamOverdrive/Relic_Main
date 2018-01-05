@@ -15,40 +15,21 @@ import static java.lang.Thread.sleep;
  */
 
 public class Hand implements Subsystem {
-    private Servo claw1, claw2 = null;
-    private Servo grabBottom, grabTop = null;
-    //private Servo clawf1, clawf2 = null;
-    //private Servo clawb1, clawb2 = null;
+    private Servo grabf1, grabf2 = null;
+    private Servo grabb1, grabb2 = null;
 
     // Positions for servos
-    private final static double CLAWSIDEOPEN = 0.5;
-    private final static double CLAWSIDECLOSED = 0.0;
-    //private final static double CLAWCLOSE = 1.0;
-
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        claw1 = linearOpMode.hardwareMap.servo.get("grab1");
-        claw2 = linearOpMode.hardwareMap.servo.get("grab2");
-        claw2.setDirection(Servo.Direction.REVERSE);
 
 
-        /*
-        clawf1 = linearOpMode.hardwareMap.servo.get("grab_front1");
-        clawf2 = linearOpMode.hardwareMap.servo.get("grab_front2");
-        clawb1 = linearOpMode.hardwareMap.servo.get("grab_back1");
-        clawb2 = linearOpMode.hardwareMap.servo.get("grab_back2");
+        grabf1 = linearOpMode.hardwareMap.servo.get("grab_front1");
+        grabf2 = linearOpMode.hardwareMap.servo.get("grab_front2");
+        grabb1 = linearOpMode.hardwareMap.servo.get("grab_back1");
+        grabb2 = linearOpMode.hardwareMap.servo.get("grab_back2");
 
-        clawf2.setDirection(Servo.Direction.REVERSE);
-        clawb2.setDirection(Servo.Direction.REVERSE);
-        */
-
-
-        grabBottom = linearOpMode.hardwareMap.servo.get("grab_bottom");
-        grabTop = linearOpMode.hardwareMap.servo.get("grab_top");
         stop();
-
-
     }
 
     @Override
@@ -56,53 +37,93 @@ public class Hand implements Subsystem {
 
     @Override
     public void stop() {
-        // Just move it a little farther back then normal
-        claw1.setPosition(0.6);
-        claw2.setPosition(0.6);
-        grabBottom.setPosition(0);
-        grabTop.setPosition(0);
+
+        grabf1.setPosition(0.7);
+        grabf2.setPosition(0.7);
+        grabb1.setPosition(0.7);
+        grabb2.setPosition(0.7);
+
+        /*
+
+        */
+
+    }
+
+    public void clawTest() throws InterruptedException {
+
+        grabf1.setPosition(1.0);
+        sleep(3000);
+        grabf1.setPosition(0.75);
+        sleep(3000);
+        grabf1.setPosition(0.5);
+        sleep(3000);
+        grabf1.setPosition(0.25);
+        sleep(3000);
+        grabf1.setPosition(0);
+        sleep(3000);
+
+        grabf2.setPosition(1.0);
+        sleep(3000);
+        grabf2.setPosition(0.75);
+        sleep(3000);
+        grabf2.setPosition(0.5);
+        sleep(3000);
+        grabf2.setPosition(0.25);
+        sleep(3000);
+        grabf2.setPosition(0);
+        sleep(3000);
+
+        grabb1.setPosition(1.0);
+        sleep(3000);
+        grabb1.setPosition(0.75);
+        sleep(3000);
+        grabb1.setPosition(0.5);
+        sleep(3000);
+        grabb1.setPosition(0.25);
+        sleep(3000);
+        grabb1.setPosition(0);
+        sleep(3000);
+
+        grabb2.setPosition(1.0);
+        sleep(3000);
+        grabb2.setPosition(0.75);
+        sleep(3000);
+        grabb2.setPosition(0.5);
+        sleep(3000);
+        grabb2.setPosition(0.25);
+        sleep(3000);
+        grabb2.setPosition(0);
+        sleep(3000);
 
     }
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-        telemetry.addData("Grab1", claw1.getPosition());
-        telemetry.addData("Grab2", claw2.getPosition());
-        telemetry.addData("GrabTop", grabTop.getPosition());
-        telemetry.addData("GrabBottom", grabBottom.getPosition());
+        telemetry.addData("Grab Front 1", grabf1.getPosition());
+        telemetry.addData("Grab Front 2", grabf2.getPosition());
+        telemetry.addData("Grab Back 1", grabb1.getPosition());
+        telemetry.addData("Grab Back 2", grabb2.getPosition());
     }
 
-    // Open the hand
-    public void openClaw(){
-        claw1.setPosition(CLAWSIDEOPEN);
-        claw2.setPosition(CLAWSIDEOPEN);
-        grabBottom.setPosition(0.3);
-        grabTop.setPosition(0.35);
-    }
+    public void frontOpen(){
 
-    // Close the hand
-    public void closeSide(){
-        claw1.setPosition(CLAWSIDECLOSED);
-        claw2.setPosition(CLAWSIDECLOSED + 0.05);
-    }
-
-    public void closeTop() throws InterruptedException {
-        grabBottom.setPosition(0.3);
-        sleep(100);
-        closeSide();
-        grabTop.setPosition(1.0);
+        grabf1.setPosition(0.1);
+        grabf2.setPosition(0.9);
 
     }
 
-    public void closeBottom() {
-        closeSide();
-        grabTop.setPosition(0.5);
-        grabBottom.setPosition(1.0);
+    public void frontClose(){
+        stop();
     }
 
-    public void bottomHold(){
-        grabBottom.setPosition(0);
+    public void backOpen(){
+
+        grabb1.setPosition(0.9);
+        grabb2.setPosition(0.1);
+
     }
 
-
+    public void backClose(){
+        stop();
+    }
 }

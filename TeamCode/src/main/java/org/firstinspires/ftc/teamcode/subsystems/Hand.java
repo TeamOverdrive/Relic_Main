@@ -62,8 +62,8 @@ public class Hand implements Subsystem {
     }
 
     public void grabBackClose(){
-        grabb1.setPosition(0.6);
-        grabb2.setPosition(0.15);
+        grabb1.setPosition(0.63);
+        grabb2.setPosition(0.12);
     }
 
 
@@ -79,7 +79,7 @@ public class Hand implements Subsystem {
     }
 
     public void grabFrontClose(){
-        grabf1.setPosition(0.37);
-        grabf2.setPosition(0.83);
+        grabf1.setPosition(0.33);
+        grabf2.setPosition(0.87);
     }
 }

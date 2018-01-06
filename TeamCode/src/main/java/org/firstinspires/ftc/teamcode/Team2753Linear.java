@@ -58,6 +58,12 @@ public abstract class Team2753Linear extends LinearOpMode {
         runtime.reset();
     }
 
+    public void initialLift(){
+        getLift().setLiftPower(0.4);
+        sleep(500);
+        getLift().setLiftPower(0);
+    }
+
     public RelicRecoveryVuMark columnVote(LinearOpMode linearOpMode, double timeoutS){
         int leftVotes = 0;
         int centerVotes = 0;
@@ -207,9 +213,11 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Left");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, 42, 42, 4);
+                getDrive().encoderDrive(0.3, 42, 42, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
+
+                getHand().grabBackOpen();
 
                 //put glyph into left column
                 break;
@@ -218,10 +226,12 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Center");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, 36, 36, 4);
+                getDrive().encoderDrive(0.3, 36, 36, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
                 //sleep(5000);
+
+                getHand().grabBackOpen();
 
                 //put glyph into center column
                 break;
@@ -230,9 +240,11 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Right");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, 30, 30, 4);
+                getDrive().encoderDrive(0.3, 30, 30, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
+
+                getHand().grabBackOpen();
 
                 //sleep(5000);
 
@@ -242,9 +254,11 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Unknown");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, 36, 36, 4);
+                getDrive().encoderDrive(0.3, 36, 36, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
+
+                getHand().grabBackOpen();
 
                 //sleep(5000);
 
@@ -261,9 +275,11 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Left");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, -42, -42, 4);
+                getDrive().encoderDrive(0.3, -42, -42, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
+
+                getHand().grabFrontOpen();
 
                 //put glyph into left column
                 break;
@@ -272,9 +288,12 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Center");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, -36, -36, 4);
+                getDrive().encoderDrive(0.3, -36, -36, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
+
+                getHand().grabFrontOpen();
+
                 //sleep(5000);
 
                 //put glyph into center column
@@ -284,9 +303,11 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Right");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, -30, -30, 4);
+                getDrive().encoderDrive(0.3, -30, -30, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
+
+                getHand().grabFrontOpen();
 
                 //sleep(5000);
 
@@ -296,9 +317,11 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Unknown");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.7, -36, -36, 4);
+                getDrive().encoderDrive(0.3, -36, -36, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.5, 20, 20, 4);
+                getDrive().encoderDrive(0.3, 20, 20, 4);
+
+                getHand().grabBackOpen();
 
                 //sleep(5000);
 

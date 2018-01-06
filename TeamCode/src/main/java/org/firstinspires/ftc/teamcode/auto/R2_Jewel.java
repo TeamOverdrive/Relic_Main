@@ -15,14 +15,16 @@ import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurn;
 public class R2_Jewel extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart(this, true); // Wait for start
+
+        waitForStart(this, true);
 
         int i = 0;
 
         while(opModeIsActive() && i == 0) {
 
-            getHand().grabFrontClose();
+            getHand().grabBackClose();
             sleep(300);
+            initialLift();
 
             getJewel().deploy(); // Deploy Jewel mech
             sleep(300); // Wait for it to get there

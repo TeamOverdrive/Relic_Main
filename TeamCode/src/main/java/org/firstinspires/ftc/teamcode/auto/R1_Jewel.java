@@ -16,11 +16,7 @@ public class R1_Jewel extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //Init
-        //startVuforia();
-
         waitForStart(this, true);
-
 
         int i = 0;
 
@@ -28,15 +24,13 @@ public class R1_Jewel extends Team2753Linear{
 
             getHand().grabBackClose();
             sleep(300);
-
+            initialLift();
 
             getJewel().deploy();
             sleep(300);
 
             // Vote and then hit jewel off
             jewelRed();
-
-            //park
             getJewel().retract();
             sleep(1000);
 

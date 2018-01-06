@@ -14,6 +14,7 @@ import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurn;
 public class B2_Jewel extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
+
         waitForStart(this, true);
 
         int i = 0;
@@ -22,7 +23,7 @@ public class B2_Jewel extends Team2753Linear{
 
             getHand().grabFrontClose();
             sleep(300);
-
+            initialLift();
 
             getJewel().deploy();
             sleep(300);

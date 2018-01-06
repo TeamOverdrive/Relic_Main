@@ -26,48 +26,17 @@ public class Auto_Test extends Team2753Linear{
 
             getHand().grabBackClose();
             sleep(300);
+            initialLift();
 
             getJewel().deploy();
             sleep(jewelArmDelayMS);
 
-            /*
-            switch (getJewel().vote(this, 5)) {
-                case RED:
-                    //getDrive().encoderDrive(0.4, -5, -5, 5);
-                    //rotate clockwise
-                    getDrive().turnCW(jewelTurn, jewelTurnTimeoutS);
-
-
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(750);
-
-                    //rotate counter-clockwise
-                    getDrive().turnCCW(jewelTurn, jewelTurnTimeoutS);
-                    break;
-                case BLUE:
-                    //getDrive().encoderDrive(0.4, 5, 5, 5);
-                    //rotate counter-clockwise
-                    getDrive().turnCCW(jewelTurn, jewelTurnTimeoutS);
-
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(750);
-
-                    //rotate clockwise
-                    getDrive().turnCW(jewelTurn, jewelTurnTimeoutS);
-                    break;
-                case UNKNOWN:
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(750);
-                    break;
-                default:
-                    getJewel().retract(); // Retract Jewel arm
-                    sleep(750);
-            }
-            */
             jewelRed();
 
             getJewel().retract();
             sleep(jewelArmDelayMS);
+
+
 
             switch (columnVote(this, 7)){
 
@@ -119,6 +88,12 @@ public class Auto_Test extends Team2753Linear{
                     //put glyph into center column
                     break;
             }
+
+            getDrive().encoderDrive(0.3, -36, -36, 4);
+            getHand().grabFrontClose();
+            getDrive().encoderDrive(0.3, 6, 6, 2);
+            getDrive().turnCCW(180, 0.3, 3);
+
 
             i++;
         }

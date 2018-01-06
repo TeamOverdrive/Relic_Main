@@ -10,19 +10,14 @@ import static java.lang.Thread.sleep;
 /**
  * Subsystem for claw/hand thingy
  * Created by joshua9889 on 12/10/2017.
- *
- * edited by David Zheng
  */
 
 public class Hand implements Subsystem {
     private Servo grabf1, grabf2 = null;
     private Servo grabb1, grabb2 = null;
 
-    // Positions for servos
-
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-
 
         grabf1 = linearOpMode.hardwareMap.servo.get("grab_front1");
         grabf2 = linearOpMode.hardwareMap.servo.get("grab_front2");
@@ -33,67 +28,16 @@ public class Hand implements Subsystem {
     }
 
     @Override
-    public void zeroSensors() {}
+    public void zeroSensors() {
+    }
 
     @Override
     public void stop() {
 
-        grabf1.setPosition(0.7);
-        grabf2.setPosition(0.7);
-        grabb1.setPosition(0.7);
-        grabb2.setPosition(0.7);
+        grabFrontStop();
+        grabBackStop();
 
-        /*
-
-        */
-
-    }
-
-    public void clawTest() throws InterruptedException {
-
-        grabf1.setPosition(1.0);
-        sleep(3000);
-        grabf1.setPosition(0.75);
-        sleep(3000);
-        grabf1.setPosition(0.5);
-        sleep(3000);
-        grabf1.setPosition(0.25);
-        sleep(3000);
-        grabf1.setPosition(0);
-        sleep(3000);
-
-        grabf2.setPosition(1.0);
-        sleep(3000);
-        grabf2.setPosition(0.75);
-        sleep(3000);
-        grabf2.setPosition(0.5);
-        sleep(3000);
-        grabf2.setPosition(0.25);
-        sleep(3000);
-        grabf2.setPosition(0);
-        sleep(3000);
-
-        grabb1.setPosition(1.0);
-        sleep(3000);
-        grabb1.setPosition(0.75);
-        sleep(3000);
-        grabb1.setPosition(0.5);
-        sleep(3000);
-        grabb1.setPosition(0.25);
-        sleep(3000);
-        grabb1.setPosition(0);
-        sleep(3000);
-
-        grabb2.setPosition(1.0);
-        sleep(3000);
-        grabb2.setPosition(0.75);
-        sleep(3000);
-        grabb2.setPosition(0.5);
-        sleep(3000);
-        grabb2.setPosition(0.25);
-        sleep(3000);
-        grabb2.setPosition(0);
-        sleep(3000);
+        //full open
 
     }
 
@@ -105,25 +49,37 @@ public class Hand implements Subsystem {
         telemetry.addData("Grab Back 2", grabb2.getPosition());
     }
 
-    public void frontOpen(){
 
-        grabf1.setPosition(0.1);
-        grabf2.setPosition(0.9);
 
+    public void grabBackStop(){
+        grabb1.setPosition(0.07);
+        grabb2.setPosition(0.75);
     }
 
-    public void frontClose(){
-        stop();
+    public void grabBackOpen(){
+        grabb1.setPosition(0.3);
+        grabb2.setPosition(0.4);
     }
 
-    public void backOpen(){
-
-        grabb1.setPosition(0.9);
-        grabb2.setPosition(0.1);
-
+    public void grabBackClose(){
+        grabb1.setPosition(0.6);
+        grabb2.setPosition(0.15);
     }
 
-    public void backClose(){
-        stop();
+
+
+    public void grabFrontStop(){
+        grabf1.setPosition(0.79);
+        grabf2.setPosition(0.44);
+    }
+
+    public void grabFrontOpen(){
+        grabf1.setPosition(0.65);
+        grabf2.setPosition(0.65);
+    }
+
+    public void grabFrontClose(){
+        grabf1.setPosition(0.37);
+        grabf2.setPosition(0.83);
     }
 }

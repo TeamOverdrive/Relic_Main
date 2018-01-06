@@ -26,7 +26,7 @@ public class R1_Jewel extends Team2753Linear{
 
         while(opModeIsActive() && i == 0) {
 
-            getHand().frontClose();
+            getHand().grabBackClose();
             sleep(300);
 
 

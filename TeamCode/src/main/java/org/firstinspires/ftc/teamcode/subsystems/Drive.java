@@ -131,12 +131,12 @@ public class Drive implements Subsystem {
      * @param degrees       The degrees (in a circle to turn.
      * @param timeoutS      The amount of time this method is allowed to execute.
      */
-    public void turnCW(double degrees, double timeoutS){
+    public void turnCW(double degrees, double speed, double timeoutS){
 
-        double leftPower = (WHEEL_BASE*PI*degrees)/-360;
-        double rightPower = (WHEEL_BASE*PI*degrees)/360;
+        double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
+        double rightDistance = (WHEEL_BASE*PI*degrees)/360;
 
-        encoderDrive(0.75, leftPower, rightPower, timeoutS);
+        encoderDrive(speed, leftDistance, rightDistance, timeoutS);
 
     }
 
@@ -147,12 +147,12 @@ public class Drive implements Subsystem {
      * @param timeoutS      The amount of time this method is allowed to execute.
      */
 
-    public void turnCCW(double degrees, double timeoutS){
+    public void turnCCW(double degrees, double speed, double timeoutS){
 
-        double leftPower = (WHEEL_BASE*PI*degrees)/360;
-        double rightPower = (WHEEL_BASE*PI*degrees)/-360;
+        double leftDistance = (WHEEL_BASE*PI*degrees)/360;
+        double rightDistance = (WHEEL_BASE*PI*degrees)/-360;
 
-        encoderDrive(0.75, leftPower, rightPower, timeoutS);
+        encoderDrive(speed, leftDistance, rightDistance, timeoutS);
 
     }
 

@@ -27,10 +27,11 @@ public abstract class Team2753Linear extends LinearOpMode {
     private org.firstinspires.ftc.teamcode.subsystems.Hand Hand = new org.firstinspires.ftc.teamcode.subsystems.Hand(); // Claw for glyphs and things
     private org.firstinspires.ftc.teamcode.subsystems.Lift Lift = new org.firstinspires.ftc.teamcode.subsystems.Lift();
     private VuMark vumark = new VuMark();
-    protected ElapsedTime runtime = new ElapsedTime();
-    private ElapsedTime matchTimer = new ElapsedTime(); // Match Timer thing
+    private ElapsedTime runtime = new ElapsedTime();
     private boolean isAuton = false; // Are we running auto
     //public static final double jewelTurn = 30;
+
+
 
     public void waitForStart(LinearOpMode linearOpMode, boolean auton) {
         getDrive().init(linearOpMode, auton);
@@ -44,17 +45,17 @@ public abstract class Team2753Linear extends LinearOpMode {
             this.isAuton = auton;
 
             //startVuforia();
-            this.vumark.setup(BACK);
+            this.vumark.setup(FRONT);
+        }
 
             linearOpMode.telemetry.addData("Waiting for Start", "");
-            //linearOpMode.telemetry.addData("Vuforia Target", "%s visible", vumark.getOuputVuMark());
             linearOpMode.telemetry.update();
-        }
+
 
         linearOpMode.waitForStart();
         //firstGrab();
 
-        matchTimer.reset();
+        runtime.reset();
     }
 
     public RelicRecoveryVuMark columnVote(LinearOpMode linearOpMode, double timeoutS){
@@ -98,25 +99,25 @@ public abstract class Team2753Linear extends LinearOpMode {
             case RED:
                 //getDrive().encoderDrive(0.4, -5, -5, 5);
                 //rotate clockwise
-                getDrive().turnCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCW(jewelTurn,0.3, jewelTurnTimeoutS);
 
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(750);
 
                 //rotate counter-clockwise
-                getDrive().turnCCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCCW(jewelTurn, 0.3, jewelTurnTimeoutS);
                 break;
             case BLUE:
                 //getDrive().encoderDrive(0.4, 5, 5, 5);
                 //rotate counter-clockwise
-                getDrive().turnCCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCCW(jewelTurn, 0.3, jewelTurnTimeoutS);
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(750);
 
                 //rotate clockwise
-                getDrive().turnCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCW(jewelTurn, 0.3, jewelTurnTimeoutS);
                 break;
             case UNKNOWN:
                 getJewel().retract(); // Retract Jewel arm
@@ -133,24 +134,24 @@ public abstract class Team2753Linear extends LinearOpMode {
             case RED:
                 //getDrive().encoderDrive(0.2, -5, -5, 5);
                 //rotate counter-clockwise
-                getDrive().turnCCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCCW(jewelTurn, 0.3, jewelTurnTimeoutS);
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(500);
 
                 //rotate clockwise
-                getDrive().turnCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCW(jewelTurn, 0.3, jewelTurnTimeoutS);
                 break;
             case BLUE:
                 //getDrive().encoderDrive(0.2, 5, 5, 5);
                 //rotate clockwise
-                getDrive().turnCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCW(jewelTurn, 0.3, jewelTurnTimeoutS);
 
                 getJewel().retract(); // Retract Jewel arm
                 sleep(500);
 
                 //rotate counter-clockwise
-                getDrive().turnCCW(jewelTurn, jewelTurnTimeoutS);
+                getDrive().turnCCW(jewelTurn, 0.3, jewelTurnTimeoutS);
                 break;
             case UNKNOWN:
                 getJewel().retract(); // Retract Jewel arm
@@ -174,7 +175,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Center");
                 telemetry.update();
 
-                getDrive().turnCCW(90, 5);
+                getDrive().turnCCW(90, 0.3, 5);
                 //sleep(5000);
 
                 //put glyph into center column
@@ -183,7 +184,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Right");
                 telemetry.update();
 
-                getDrive().turnCW(180, 5);
+                getDrive().turnCW(180, 0.3, 5);
                 //sleep(5000);
 
                 //put glyph into right column
@@ -207,7 +208,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, 42, 42, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
 
                 //put glyph into left column
@@ -218,7 +219,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, 36, 36, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
                 //sleep(5000);
 
@@ -230,7 +231,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, 30, 30, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
 
                 //sleep(5000);
@@ -242,7 +243,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, 36, 36, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
 
                 //sleep(5000);
@@ -261,7 +262,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, -42, -42, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
 
                 //put glyph into left column
@@ -272,7 +273,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, -36, -36, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
                 //sleep(5000);
 
@@ -284,7 +285,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, -30, -30, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
 
                 //sleep(5000);
@@ -296,7 +297,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.update();
 
                 getDrive().encoderDrive(0.7, -36, -36, 4);
-                getDrive().turnCW(90, 4);
+                getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.5, 20, 20, 4);
 
                 //sleep(5000);
@@ -309,7 +310,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
     public void updateTelemetry(LinearOpMode linearOpMode) {
             if (!isAuton)
-                linearOpMode.telemetry.addData("Match Time", 120 - matchTimer.seconds());
+                linearOpMode.telemetry.addData("Match Time", 120 - runtime.seconds());
             getDrive().outputToTelemetry(linearOpMode.telemetry);
             getJewel().outputToTelemetry(linearOpMode.telemetry);
             getHand().outputToTelemetry(linearOpMode.telemetry);

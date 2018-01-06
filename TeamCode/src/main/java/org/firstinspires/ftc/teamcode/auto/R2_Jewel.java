@@ -21,7 +21,7 @@ public class R2_Jewel extends Team2753Linear {
 
         while(opModeIsActive() && i == 0) {
 
-            getHand().frontClose();
+            getHand().grabFrontClose();
             sleep(300);
 
             getJewel().deploy(); // Deploy Jewel mech
@@ -32,7 +32,7 @@ public class R2_Jewel extends Team2753Linear {
 
             //park
             getDrive().encoderDrive(0.8, 24, 24, 7);
-            getDrive().turnCCW(45, 4);
+            getDrive().turnCCW(45, 0.3,4);
             getDrive().encoderDrive(0.7, 17, 17, 4);
 
             i++;

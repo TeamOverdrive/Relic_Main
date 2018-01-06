@@ -20,7 +20,7 @@ public class B2_Jewel extends Team2753Linear{
 
         while (opModeIsActive() && i == 0) {
 
-            getHand().frontClose();
+            getHand().grabFrontClose();
             sleep(300);
 
 
@@ -32,7 +32,7 @@ public class B2_Jewel extends Team2753Linear{
 
             //park
             getDrive().encoderDrive(0.8, -24, -24, 4);
-            getDrive().turnCW(45, 4);
+            getDrive().turnCW(45, 0.3,4);
             getDrive().encoderDrive(0.8, -17, -17, 4);
 
             i++;

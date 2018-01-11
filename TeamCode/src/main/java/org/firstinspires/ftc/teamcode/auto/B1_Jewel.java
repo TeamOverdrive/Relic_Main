@@ -10,7 +10,7 @@ import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurn;
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/12/2017.
  */
 
-@Autonomous(name = "Blue 1 Jewel")
+@Autonomous(name = "Blue 1 Jewel", group = "Stable")
 public class B1_Jewel extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -36,8 +36,6 @@ public class B1_Jewel extends Team2753Linear{
             //raise jewel arm
             getJewel().retract();
             sleep(300);
-            getDrive().encoderDrive(0.3, 6 ,6, 3);
-
 
             //score cryptokey
             //glyphScoreB1();

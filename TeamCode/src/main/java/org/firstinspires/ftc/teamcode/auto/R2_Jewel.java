@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurn;
  * See this for an example(it's a little jank, but it works OK): http://bit.ly/2AtqtkR
  * Created by joshua9889 on 12/10/2017.
  */
-@Autonomous(name = "Red 2 Jewel")
+@Autonomous(name = "Red 2 Jewel", group = "Stable")
 public class R2_Jewel extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {

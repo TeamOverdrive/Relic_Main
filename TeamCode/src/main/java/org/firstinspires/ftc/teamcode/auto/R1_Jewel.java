@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurn;
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/12/2017.
  */
 
-@Autonomous(name = "Red 1 Jewel")
+@Autonomous(name = "Red 1 Jewel", group = "Stable")
 public class R1_Jewel extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {

@@ -53,6 +53,21 @@ public class Teleop extends Team2753Linear {
 
             getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
 
+            if (Math.abs(leftThrottle) == 0 && Math.abs(rightThrottle) == 0) {
+                if (gamepad1.dpad_up) {
+                    getDrive().setLeftRightPowers(-0.3, -0.3);
+                    sleep(250);
+                }
+                else if (gamepad1.dpad_down) {
+                    getDrive().setLeftRightPowers(0.3, 0.3);
+                    sleep(250);
+                }
+                else {
+                    getDrive().setLeftRightPowers(0,0);
+                }
+            }
+
+
             //Jewel Test  Gamepad 1 LB
             if(gamepad1.left_bumper)
                 getJewel().deploy();
@@ -73,6 +88,10 @@ public class Teleop extends Team2753Linear {
             else if (gamepad2.left_bumper){getHand().grabBackOpen();}
 
             else if (gamepad2.left_trigger>0){getHand().grabBackClose();}
+
+            else if (gamepad2.b){getHand().grabFrontStop();}
+
+            else if (gamepad2.x){getHand().grabBackStop();}
 
 
             //Lift Control  Gamepad 2 Left Joystick

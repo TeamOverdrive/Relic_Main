@@ -22,20 +22,37 @@ public class R2_Jewel extends Team2753Linear {
 
         while(opModeIsActive() && i == 0) {
 
+            //grab cryptokey
             getHand().grabBackClose();
-            sleep(300);
+            sleep(500);
             initialLift();
 
-            getJewel().deploy(); // Deploy Jewel mech
-            sleep(300); // Wait for it to get there
+            //lower jewel arm
+            getJewel().deploy();
+            sleep(300);
 
             // Vote and then hit jewel off
             jewelRed();
 
+            //raise jewel arm
+            getJewel().retract();
+
+            //score cryptokey
+            //glyphScoreR2();
+            getDrive().encoderDrive(0.3, 24, 24, 4);
+            getDrive().turnCCW(90, 0.3, 4);
+            getDrive().encoderDrive(0.3, 8, 8, 4);
+            getDrive().turnCW(90, 0.3, 3);
+            getDrive().encoderDrive(0.3, 15, 15, 4);
+
+            getHand().grabBackOpen();
+
+            getDrive().encoderDrive(0.3, -6 ,-6, 3);
+
+
+            //score 2nd glyph
+
             //park
-            getDrive().encoderDrive(0.8, 24, 24, 7);
-            getDrive().turnCCW(45, 0.3,4);
-            getDrive().encoderDrive(0.7, 17, 17, 4);
 
             i++;
             getJewel().retract();

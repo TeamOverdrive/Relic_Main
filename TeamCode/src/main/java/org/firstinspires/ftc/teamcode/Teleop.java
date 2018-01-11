@@ -66,13 +66,13 @@ public class Teleop extends Team2753Linear {
 
             // Hand
 
-            if(gamepad2.left_bumper){getHand().grabFrontOpen();}
+            if(gamepad2.right_bumper){getHand().grabFrontOpen();}
 
-            else if(gamepad2.left_trigger>0){getHand().grabFrontClose();}
+            else if(gamepad2.right_trigger>0){getHand().grabFrontClose();}
 
-            else if (gamepad2.right_bumper){getHand().grabBackOpen();}
+            else if (gamepad2.left_bumper){getHand().grabBackOpen();}
 
-            else if (gamepad2.right_trigger>0){getHand().grabBackClose();}
+            else if (gamepad2.left_trigger>0){getHand().grabBackClose();}
 
 
             //Lift Control  Gamepad 2 Left Joystick

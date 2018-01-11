@@ -21,20 +21,37 @@ public class B1_Jewel extends Team2753Linear{
 
         while(opModeIsActive() && i == 0) {
 
+            //grab cryptokey
             getHand().grabFrontClose();
-            sleep(300);
+            sleep(500);
             initialLift();
 
+            //lower jewel arm
             getJewel().deploy();
             sleep(300);
 
             // Vote and then hit jewel off
             jewelBlue();
 
-            //park
-            //getDrive().encoderDrive(0.8, -30, -30, 7);
-            glyphScoreB1();
+            //raise jewel arm
+            getJewel().retract();
+            sleep(300);
+            getDrive().encoderDrive(0.3, 6 ,6, 3);
 
+
+            //score cryptokey
+            //glyphScoreB1();
+
+            getDrive().encoderDrive(0.3, -36, -36, 4);
+            getDrive().turnCCW(90, 0.3, 4);
+            getDrive().encoderDrive(0.3, -12, -12, 4);
+
+            getHand().grabFrontOpen();
+
+            getDrive().encoderDrive(0.3, 6, 6, 4);
+            //score 2nd glyph
+
+            //park
 
             i++;
         }

@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode;
 public class AutoParams {
 
     public static final int jewelArmDelayMS = 500;
-    public static final int jewelTurn = 30;
+    public static final int jewelTurn = 10;
     public static final double jewelTurnTimeoutS = 1.5;
 
 

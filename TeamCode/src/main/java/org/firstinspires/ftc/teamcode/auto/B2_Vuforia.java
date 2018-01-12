@@ -35,7 +35,7 @@ public class B2_Vuforia extends Team2753Linear{
             //raise jewel arm
             getJewel().retract();
 
-            //score cryptokey
+            //score cryptokey0
             glyphScoreB2();
             sleep(300);
 

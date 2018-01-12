@@ -215,9 +215,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
                 getDrive().encoderDrive(0.3, 42, 42, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
+                glyphRedScore();
 
                 //put glyph into left column
                 break;
@@ -228,10 +226,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
                 getDrive().encoderDrive(0.3, 36, 36, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-                //sleep(5000);
-
-                getHand().grabBackOpen();
+                glyphRedScore();
 
                 //put glyph into center column
                 break;
@@ -242,11 +237,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
                 getDrive().encoderDrive(0.3, 30, 30, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
-
-                //sleep(5000);
+                glyphRedScore();
 
                 //put glyph into right column
                 break;
@@ -256,11 +247,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
                 getDrive().encoderDrive(0.3, 36, 36, 4);
                 getDrive().turnCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
-
-                //sleep(5000);
+                glyphRedScore();
 
                 //put glyph into center column
                 break;
@@ -275,11 +262,9 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Left");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.3, -42, -42, 4);
+                getDrive().encoderDrive(0.3, -30, -30, 4);
                 getDrive().turnCCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabFrontOpen();
+                glyphBlueScore();
 
                 //put glyph into left column
                 break;
@@ -290,11 +275,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
                 getDrive().encoderDrive(0.3, -36, -36, 4);
                 getDrive().turnCCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabFrontOpen();
-
-                //sleep(5000);
+                glyphBlueScore();
 
                 //put glyph into center column
                 break;
@@ -303,13 +284,9 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Column", "Right");
                 telemetry.update();
 
-                getDrive().encoderDrive(0.3, -30, -30, 4);
+                getDrive().encoderDrive(0.3, -42, -42, 4);
                 getDrive().turnCCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabFrontOpen();
-
-                //sleep(5000);
+                glyphBlueScore();
 
                 //put glyph into right column
                 break;
@@ -319,11 +296,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
                 getDrive().encoderDrive(0.3, -36, -36, 4);
                 getDrive().turnCCW(90, 0.3, 4);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
-
-                //sleep(5000);
+                glyphBlueScore();
 
                 //put glyph into center column
                 break;
@@ -341,9 +314,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, 12, 12, 4);
                 getDrive().turnCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
+                glyphRedScore();
 
                 //put glyph into left column
                 break;
@@ -356,11 +327,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, 6, 6, 4);
                 getDrive().turnCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
-
-                //sleep(5000);
+                glyphRedScore();
 
                 //put glyph into center column
                 break;
@@ -373,11 +340,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, 18, 18, 4);
                 getDrive().turnCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
-
-                //sleep(5000);
+                glyphRedScore();
 
                 //put glyph into right column
                 break;
@@ -389,11 +352,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, 6, 6, 4);
                 getDrive().turnCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, 15, 15, 4);
-
-                getHand().grabBackOpen();
-
-                //sleep(5000);
+                glyphRedScore();
 
                 //put glyph into center column
                 break;
@@ -411,9 +370,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, -12, -12, 4);
                 getDrive().turnCCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, -15, -15, 4);
-
-                getHand().grabFrontOpen();
+                glyphBlueScore();
 
                 //put glyph into left column
                 break;
@@ -426,11 +383,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, -6, -6, 4);
                 getDrive().turnCCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, -15, -15, 4);
-
-                getHand().grabFrontOpen();
-
-                //sleep(5000);
+                glyphBlueScore();
 
                 //put glyph into center column
                 break;
@@ -443,11 +396,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, -18, -18, 4);
                 getDrive().turnCCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, -15, -15, 4);
-
-                getHand().grabFrontOpen();
-
-                //sleep(5000);
+                glyphBlueScore();
 
                 //put glyph into right column
                 break;
@@ -459,15 +408,38 @@ public abstract class Team2753Linear extends LinearOpMode {
                 getDrive().turnCW(90, 0.3, 4);
                 getDrive().encoderDrive(0.3, -6, -6, 4);
                 getDrive().turnCCW(90, 0.3, 3);
-                getDrive().encoderDrive(0.3, -15, -15, 4);
-
-                getHand().grabFrontOpen();
-
-                //sleep(5000);
+                glyphBlueScore();
 
                 //put glyph into center column
                 break;
         }
+    }
+
+    public void glyphRedScore(){
+
+        getDrive().encoderDrive(0.3, 6, 6, 4);
+
+        getHand().grabBackOpen();
+
+        getDrive().encoderDrive(0.3, 4, 4, 2);
+
+        sleep(300);
+
+        getDrive().encoderDrive(0.3, -4, -4, 2);
+    }
+
+    public void glyphBlueScore(){
+
+        getDrive().encoderDrive(0.3, -6, -6, 4);
+
+        getHand().grabFrontOpen();
+
+        getDrive().encoderDrive(0.3, -4, -4, 2);
+
+        sleep(300);
+
+        getDrive().encoderDrive(0.3, 4, 4, 2);
+
     }
 
 

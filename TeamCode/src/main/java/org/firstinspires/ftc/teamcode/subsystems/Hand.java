@@ -37,8 +37,6 @@ public class Hand implements Subsystem {
         grabFrontStop();
         grabBackStop();
 
-        //full open
-
     }
 
     @Override
@@ -50,10 +48,27 @@ public class Hand implements Subsystem {
     }
 
 
+    //Front Grabber Positions
+    public void grabFrontStop(){
+        grabf1.setPosition(0.73);
+        grabf2.setPosition(0.2);
+    }
 
+    public void grabFrontOpen(){
+        grabf1.setPosition(0.5);
+        grabf2.setPosition(0.45);
+    }
+
+    public void grabFrontClose(){
+        grabf1.setPosition(0.18);
+        grabf2.setPosition(0.77);
+    }
+
+
+    //Back Grabber Positions
     public void grabBackStop(){
         grabb1.setPosition(0.07);
-        grabb2.setPosition(0.75);
+        grabb2.setPosition(0.73);
     }
 
     public void grabBackOpen(){
@@ -64,22 +79,5 @@ public class Hand implements Subsystem {
     public void grabBackClose(){
         grabb1.setPosition(0.63);
         grabb2.setPosition(0.12);
-    }
-
-
-
-    public void grabFrontStop(){
-        grabf1.setPosition(0.79);
-        grabf2.setPosition(0.44);
-    }
-
-    public void grabFrontOpen(){
-        grabf1.setPosition(0.65);
-        grabf2.setPosition(0.65);
-    }
-
-    public void grabFrontClose(){
-        grabf1.setPosition(0.33);
-        grabf2.setPosition(0.87);
     }
 }

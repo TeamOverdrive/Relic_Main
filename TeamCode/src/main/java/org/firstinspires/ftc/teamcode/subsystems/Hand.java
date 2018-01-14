@@ -8,7 +8,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import static java.lang.Thread.sleep;
 
 /**
- * Subsystem for claw/hand thingy
+ * Subsystem for grabbers
+ *
  * Created by joshua9889 on 12/10/2017.
  */
 

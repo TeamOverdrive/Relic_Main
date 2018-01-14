@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Team2753Linear;
 
 import static java.lang.Thread.sleep;
+import static org.firstinspires.ftc.teamcode.AutoParams.RED;
 import static org.firstinspires.ftc.teamcode.AutoParams.jewelArmDelayMS;
 import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurn;
 import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurnTimeoutS;
@@ -14,6 +16,7 @@ import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurnTimeoutS;
  */
 
 @Autonomous
+@Disabled
 public class Auto_Test extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException{
@@ -26,7 +29,7 @@ public class Auto_Test extends Team2753Linear{
 
             getHand().grabBackClose();
             sleep(300);
-            initialLift();
+            initialLift(RED);
 
             getJewel().deploy();
             sleep(jewelArmDelayMS);

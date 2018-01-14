@@ -15,7 +15,7 @@ import static java.lang.Math.round;
  *Edited by David Zheng | 2753 Team Overdrive
  */
 
-@TeleOp
+@TeleOp(name = "Teleop_Main")
 public class Teleop extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,16 +25,27 @@ public class Teleop extends Team2753Linear {
         // Loop while we are running Teleop
         while (opModeIsActive()){
 /*
-                  _______                                    _______
-               __/_______\_____                       ______/_______\__
-             /                 \                     /                  \
-            /                   \___________________/                    \
-           |         __                                                   |
-           |      __|  |__                                 ( Y )          |
-           |     |__    __|                           ( X )     ( B )     |
-          |         |__|                                   ( A )           |
-          |                                                                |
-          |                                                                |
+                   _______                                    _______
+                __/_______\_____                       ______/_______\__
+              /                 \                     /                  \
+             /                   \___________________/                    \
+            |         __                                                   |
+            |      __|  |__                                 ( Y )          |
+            |     |__    __|                           ( X )     ( B )     |
+           |         |__|                                   ( A )           |
+           |                                                                |
+           |                                                                |
+           |                                                                |
+          |                                                                  |
+          |                                                                  |
+          |                                                                  |
+          |                                                                  |
+         |                                                                    |
+         |                                                                    |
+         |                                                                    |
+         |                                                                    |
+         |                                                                    |
+          \________/                                                \________/
 
 
             /*Gamepad 1 Controls*/
@@ -53,6 +64,7 @@ public class Teleop extends Team2753Linear {
 
             getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
 
+            //D-pad controls for more precise movement
             if (Math.abs(leftThrottle) == 0 && Math.abs(rightThrottle) == 0) {
                 if (gamepad1.dpad_up) {
                     getDrive().setLeftRightPowers(-0.3, -0.3);
@@ -68,33 +80,21 @@ public class Teleop extends Team2753Linear {
             }
 
 
-            //Jewel Test  Gamepad 1 LB
-            if(gamepad1.left_bumper)
-                getJewel().deploy();
-            else
-                getJewel().retract();
-
-
-
 
             /*Gamepad 2 Controls*/
 
-            // Hand
-
+            /*Grabber Controls*/
             if(gamepad2.right_bumper){getHand().grabFrontOpen();}
+            if(gamepad2.right_trigger>0){getHand().grabFrontClose();}
 
-            else if(gamepad2.right_trigger>0){getHand().grabFrontClose();}
+            if (gamepad2.left_bumper){getHand().grabBackOpen();}
+            if (gamepad2.left_trigger>0){getHand().grabBackClose();}
 
-            else if (gamepad2.left_bumper){getHand().grabBackOpen();}
-
-            else if (gamepad2.left_trigger>0){getHand().grabBackClose();}
-
-            else if (gamepad2.b){getHand().grabFrontStop();}
-
-            else if (gamepad2.x){getHand().grabBackStop();}
+            if (gamepad2.b){getHand().grabFrontStop();}
+            if (gamepad2.x){getHand().grabBackStop();}
 
 
-            //Lift Control  Gamepad 2 Left Joystick
+            /*Lift Control  Gamepad 2 Left Joystick*/
             float liftThrottle = gamepad2.left_stick_y;
             //CLip
             liftThrottle = Range.clip(liftThrottle, -1, 1);
@@ -102,18 +102,9 @@ public class Teleop extends Team2753Linear {
             liftThrottle = (float) OverdriveLib.scaleInput(liftThrottle);
             //Invert
             liftThrottle = liftThrottle*-1;
-
+            //Apply power to motor
             getLift().setLiftPower(liftThrottle);
 
-
-            //Slide Control Gamepad 2 Right Joystick
-            float slideThrottle = gamepad2.right_stick_y;
-            //Clip
-            slideThrottle = Range.clip(slideThrottle, -1, 1);
-            //Scale
-            slideThrottle = (float) OverdriveLib.scaleInput(slideThrottle);
-            //set to slide motor
-            getLift().setSlidePower(slideThrottle);
 
             updateTelemetry(this);
 

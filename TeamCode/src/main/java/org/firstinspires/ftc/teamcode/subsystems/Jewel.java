@@ -85,7 +85,7 @@ public class Jewel implements Subsystem {
         int blueVotes = 0;
             runtime.reset();
             while (linearOpMode.opModeIsActive()
-                    &&redVotes < 200 && blueVotes < 200
+                    &&redVotes < 300 && blueVotes < 300
                     && runtime.seconds() < timeoutS) {
                 switch (jewelColor()) {
                     case RED:
@@ -102,9 +102,9 @@ public class Jewel implements Subsystem {
                 linearOpMode.telemetry.update();
             }
 
-            if (redVotes == 200)
+            if (redVotes == 300)
                 return JewelColor.RED;
-            else if (blueVotes == 200)
+            else if (blueVotes == 300)
                 return JewelColor.BLUE;
             else
                 return JewelColor.UNKNOWN;

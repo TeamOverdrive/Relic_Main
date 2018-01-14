@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Team2753Linear;
 
+import static org.firstinspires.ftc.teamcode.AutoParams.BLUE;
 import static org.firstinspires.ftc.teamcode.AutoParams.jewelTurn;
 
 /**
@@ -23,9 +24,7 @@ public class B2_Jewel extends Team2753Linear{
         while (opModeIsActive() && i == 0) {
 
             //grab cryptokey
-            getHand().grabFrontClose();
-            sleep(500);
-            initialLift();
+            initialLift(BLUE);
 
             //lower jewel arm
             getJewel().deploy();
@@ -45,12 +44,7 @@ public class B2_Jewel extends Team2753Linear{
             getDrive().turnCW(90, 0.3, 4);
             getDrive().encoderDrive(0.3, -6, -6, 4);
             getDrive().turnCCW(90, 0.3, 3);
-            getDrive().encoderDrive(0.3, -15, -15, 4);
-
-            getHand().grabFrontOpen();
-
-            getDrive().encoderDrive(0.3, 6 ,6, 3);
-
+            glyphBlueScore();
 
             //score 2nd glyph
 

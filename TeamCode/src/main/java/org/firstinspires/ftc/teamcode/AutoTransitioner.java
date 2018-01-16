@@ -64,6 +64,7 @@ public class AutoTransitioner extends Thread {
 
     /**
      * Setup the next transition
+     *
      * @param onStop The program you'll be transitioning from (usually 'this')
      * @param transitionTo The name of the program you want to transition to
      */

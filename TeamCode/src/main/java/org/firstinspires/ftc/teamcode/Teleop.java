@@ -15,7 +15,7 @@ import static java.lang.Math.round;
  *Edited by David Zheng | 2753 Team Overdrive
  */
 
-@TeleOp(name = "Teleop_Main")
+@TeleOp(name = "Teleop")
 public class Teleop extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {

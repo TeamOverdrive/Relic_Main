@@ -25,14 +25,11 @@ public class Drive implements Subsystem {
     private LinearOpMode linearOpMode = null;
 
     protected ElapsedTime runtime = new ElapsedTime();// FORWARD_SPEED was running the robot in reverse to the TeleOp program setup.  Speed is reversed to standardize the robot orientation.
+
     private static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     private static final double DRIVE_GEAR_REDUCTION = 0.75;     // This is < 1.0 if geared UP
     private static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     private static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
-    public static final double DRIVE_SPEED = 0.6;  //modified speed from 0.6
-    public static final double TURN_SPEED = 0.3;   //modified turn speed from 0.5
-    public static final boolean CLOCKWISE = TRUE;
-    public static final boolean COUNTER_CLOCKWISE = FALSE;
     private static final double WHEEL_BASE = 12.25;
 
     @Override
@@ -83,6 +80,7 @@ public class Drive implements Subsystem {
      * @param left  left power
      * @param right right power
      */
+
     public void setLeftRightPowers(double left, double right){
         left = Range.clip(left, -1., 1.);
         right = Range.clip(right, -1., 1.);
@@ -100,30 +98,6 @@ public class Drive implements Subsystem {
         leftMotor.setZeroPowerBehavior(zeroPowerBehavior);
         rightMotor.setZeroPowerBehavior(zeroPowerBehavior);
     }
-
-    /*public void setTurn(boolean direction, int degrees, double timeoutS){
-
-        double leftPower;
-        double rightPower;
-
-        if(direction){
-            //clockwise
-            //left +
-            //right -
-            double leftPower = (12.25*PI*degrees)/360;
-            double rightPower = ((12.25*PI*degrees)/360)*-1;
-        }
-        else if (!direction){
-            //counter-clockwise
-            //left -
-            //right +
-            double leftPower = ((12.25*PI*degrees)/360)*-1;
-            double rightPower = (12.25*PI*degrees)/360;
-
-        }
-
-        encoderDrive(0.75, leftPower, rightPower, timeoutS);
-    }*/
 
     /**
      * Method to perform a Clockwise turn

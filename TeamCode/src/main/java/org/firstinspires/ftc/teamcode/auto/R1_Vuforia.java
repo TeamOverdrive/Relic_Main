@@ -43,6 +43,7 @@ public class R1_Vuforia extends Team2753Linear{
             glyphScoreR1();
 
             //grab more glyphs
+            multiGlyphR1(13);
 
             //score extra glyphs
 

@@ -31,7 +31,6 @@ public abstract class Team2753Linear extends LinearOpMode {
     private org.firstinspires.ftc.teamcode.subsystems.Jewel Jewel = new org.firstinspires.ftc.teamcode.subsystems.Jewel(); // Jewel mech
     private org.firstinspires.ftc.teamcode.subsystems.Hand Hand = new org.firstinspires.ftc.teamcode.subsystems.Hand(); // Claw for glyphs and things
     private org.firstinspires.ftc.teamcode.subsystems.Lift Lift = new org.firstinspires.ftc.teamcode.subsystems.Lift();
-    private org.firstinspires.ftc.teamcode.subsystems.Relic Relic = new org.firstinspires.ftc.teamcode.subsystems.Relic();
     private VuMark vumark = new VuMark();
     private ElapsedTime runtime = new ElapsedTime();
     private boolean isAuton = false; // Are we running auto
@@ -460,9 +459,9 @@ public abstract class Team2753Linear extends LinearOpMode {
 
         getDrive().encoderDrive(0.3, -8, -8, 2);
         sleep(300);
-        //getDrive().encoderDrive(autoSpeed, 6, 6, 2);
-
     }
+
+
 
     //use timeoutS to ensure we have enough time to park before the end of autonomous
     public void multiGlyphB1(double timeoutS){
@@ -486,6 +485,16 @@ public abstract class Team2753Linear extends LinearOpMode {
     }
 
     public void multiGlyphR1(double timeoutS){
+        getDrive().encoderDrive(autoSpeed, -24, -24, 5);
+
+        //double grab
+        getDrive().encoderDrive(autoSpeed + 0.1, -6, -6, 3);
+
+        getHand().grabBackClose();
+        getDrive().encoderDrive(autoSpeed, -5, -5, 4);
+        getDrive().turnCW(180, autoTurnSpeed, 4);
+        getDrive().encoderDrive(0.7, -6, -6, 3);
+        getHand().grabFrontClose();
 
     }
 
@@ -530,8 +539,6 @@ public abstract class Team2753Linear extends LinearOpMode {
     }
 
     public org.firstinspires.ftc.teamcode.subsystems.Lift getLift () {return Lift;}
-
-    public org.firstinspires.ftc.teamcode.subsystems.Relic getRelic () {return Relic;}
 }
 
 

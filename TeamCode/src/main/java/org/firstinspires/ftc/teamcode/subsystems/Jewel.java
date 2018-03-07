@@ -7,29 +7,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import static org.firstinspires.ftc.teamcode.auto.AutoParams.jewelVotes;
+
 /**
  * Created by joshua9889 on 12/10/2017.
  */
 
 public class Jewel implements Subsystem {
 
-    // Robot Hardware
+    private LinearOpMode linearOpMode = null;
     private Servo jewelArm = null;
-    private ColorSensor jewelColor = null;
 
-    // Used for color jewel
-    public enum JewelColor{
-        RED, BLUE, UNKNOWN
-    }
-
-    final private static double ARMUP = 0.76;
-    final private static double ARMDOWN = 0.72;
+    final private static double ARMUP = 0.94;
+    final private static double ARMDOWN = 0.25;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
+        this.linearOpMode = linearOpMode;
         jewelArm = linearOpMode.hardwareMap.servo.get("jewel_arm");
-        jewelColor = linearOpMode.hardwareMap.colorSensor.get("jewel_color");
-        jewelColor.enableLed(true);
         retract();
     }
 
@@ -40,13 +35,12 @@ public class Jewel implements Subsystem {
 
     @Override
     public void stop() {
-        //retract();
+        retract();
     }
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-        telemetry.addData("Jewel arm pos", jewelArm.getPosition());
-        telemetry.addData("Jewel Color", this.jewelColor());
+        telemetry.addData("Jewel Arm Position", jewelArm.getPosition());
     }
 
     // Deploy jewel mech
@@ -59,7 +53,15 @@ public class Jewel implements Subsystem {
         jewelArm.setPosition(ARMUP);
     }
 
+
+
+    /**
+     * Old code for color sensor
+     */
+
     // Get current Jewel color
+
+    /*
     public JewelColor jewelColor() {
         if(jewelColor.red()>jewelColor.blue())
             return JewelColor.RED;
@@ -68,8 +70,10 @@ public class Jewel implements Subsystem {
         else
             return JewelColor.UNKNOWN;
     }
+    */
 
-    protected ElapsedTime runtime = new ElapsedTime();
+
+
     // Counts "votes" based on how many times it sees red/blue
 
     /**
@@ -80,12 +84,15 @@ public class Jewel implements Subsystem {
      * @param timeoutS      The amount of time this method is allowed to execute.
      * @return              The color of the jewel.
      */
+
+    /*
+    protected ElapsedTime runtime = new ElapsedTime();
     public JewelColor vote(LinearOpMode linearOpMode, double timeoutS) {
         int redVotes = 0;
         int blueVotes = 0;
             runtime.reset();
             while (linearOpMode.opModeIsActive()
-                    &&redVotes < 300 && blueVotes < 300
+                    &&redVotes < jewelVotes && blueVotes < jewelVotes
                     && runtime.seconds() < timeoutS) {
                 switch (jewelColor()) {
                     case RED:
@@ -102,11 +109,12 @@ public class Jewel implements Subsystem {
                 linearOpMode.telemetry.update();
             }
 
-            if (redVotes == 300)
+            if (redVotes == jewelVotes)
                 return JewelColor.RED;
-            else if (blueVotes == 300)
+            else if (blueVotes == jewelVotes)
                 return JewelColor.BLUE;
             else
                 return JewelColor.UNKNOWN;
     }
+    */
 }

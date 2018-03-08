@@ -7,13 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 import static java.lang.Math.PI;
-import static java.lang.Thread.sleep;
-import static org.firstinspires.ftc.teamcode.auto.AutoParams.Kd;
-import static org.firstinspires.ftc.teamcode.auto.AutoParams.Ki;
-import static org.firstinspires.ftc.teamcode.auto.AutoParams.Kp;
 
 /**
  * Created by joshua9889 on 12/10/2017.
@@ -27,7 +21,7 @@ public class Drive implements Subsystem {
     // Used to output telemetry and to stop when stop is pressed
     private LinearOpMode linearOpMode = null;
 
-    protected ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
     // FORWARD_SPEED was running the robot in reverse to the TeleOp program setup.  Speed is reversed to standardize the robot orientation.
 
     private static final double COUNTS_PER_MOTOR_REV = 1120;     // AndyMark NeveRest 40

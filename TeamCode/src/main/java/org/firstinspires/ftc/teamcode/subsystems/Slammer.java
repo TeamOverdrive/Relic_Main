@@ -20,7 +20,6 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 
 public class Slammer implements Subsystem{
 
-    private LinearOpMode linearOpMode = null;
     private DcMotor slamMotor = null;
     private Servo stopServo = null;
 
@@ -34,7 +33,6 @@ public class Slammer implements Subsystem{
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        this.linearOpMode = linearOpMode;
         slamMotor = linearOpMode.hardwareMap.dcMotor.get("slammer");
         slamMotor.setDirection(FORWARD);
         setRunMode(RUN_WITHOUT_ENCODER);

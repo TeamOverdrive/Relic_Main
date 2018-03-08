@@ -11,13 +11,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Relic implements Subsystem{
 
-    private LinearOpMode linearOpMode = null;
     private Servo turretServo = null;
     private Servo relicServo = null;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        this.linearOpMode = linearOpMode;
         turretServo = linearOpMode.hardwareMap.servo.get("relic_turret");
         relicServo = linearOpMode.hardwareMap.servo.get("relic_elbow");
         stop();

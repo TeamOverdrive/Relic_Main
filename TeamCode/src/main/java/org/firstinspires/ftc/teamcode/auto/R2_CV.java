@@ -24,62 +24,25 @@ public class R2_CV extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //Set up telemetry
-        telemetry.setAutoClear(false);
-        Telemetry.Item status = telemetry.addData("Status", "Initializing");
-        Telemetry.Item currentOpMode = telemetry.addData("Running", "UNKNOWN");
-        Telemetry.Item phase = telemetry.addData("Phase", "Init Routine");
-        telemetry.update();
-
-        //Initialize
-        status.setValue("Initializing...");
-        currentOpMode.setValue("R2 CV");
-        telemetry.update();
-        initializeRobot(this, AUTO);
-        startVuforia(BACK);
-
-        //Waiting for start
-        status.setValue("Initialized, Waiting for Start");
-        telemetry.update();
-
-        waitForStart(this);
-        status.setValue("Running OpMode");
-
-        int i = 0;
-
-        while(opModeIsActive() && i == 0) {
-
-            columnVote(this);
-            closeVuforia();
-
-            //Jewel Phase
-            phase.setValue("Jewel");
-            telemetry.update();
-
-            initJewelDetector();
-            enableJewelDetector();
-            jewelRed(this);
-            disableJewelDetector();
-
-            //score cryptokey
-            phase.setValue("Cryptokey");
-            telemetry.update();
-            glyphScoreR2();
-
-            //grab more glyphs
-            phase.setValue("Multiglyph");
-            telemetry.update();
-            //multiGlyphPos2(13);
-
-            //score extra glyphs
-
-            //park
-            phase.setValue("Parking");
-            telemetry.update();
+        waitForStart("R2 CV", AUTO, true);
 
 
-            i++;
-        }
+
+
+        //score cryptokey
+        SetStatus("Cryptokey");
+        glyphScoreR2();
+
+        //grab more glyphs
+        SetStatus("Multiglyph");
+        //multiGlyphPos2(13);
+
+        //score extra glyphs
+
+        //park
+        SetStatus("Parking");
+
+
 
         finalAction();
 

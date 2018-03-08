@@ -12,26 +12,8 @@ import static org.firstinspires.ftc.teamcode.auto.AutoParams.AUTO;
 public class PIDTest extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
-        //Set up telemetry
-        telemetry.setAutoClear(false);
-        Telemetry.Item status = telemetry.addData("Status", "Initializing");
-        Telemetry.Item currentOpMode = telemetry.addData("Running", "UNKNOWN");
-        Telemetry.Item phase = telemetry.addData("Phase", "Init Routine");
-        telemetry.update();
 
-        //Initialize Robot
-        status.setValue("Initializing...");
-        currentOpMode.setValue("PID Test");
-        telemetry.update();
-        initializeRobot(this, AUTO);
-
-        //Waiting for start
-        status.setValue("Initialized, Waiting for Start");
-        telemetry.update();
-        waitForStart(this);
-
-        status.setValue("Running OpMode");
-        telemetry.update();
+        waitForStart("PID Test", AUTO, false);
 
         int i = 0;
 

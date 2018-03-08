@@ -13,7 +13,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 //For the phone servo only lel
 public class Phone implements Subsystem{
 
-    private LinearOpMode linearOpMode = null;
     private Servo phoneServo = null;
 
     private static final double INITPOS = 0.77;
@@ -23,7 +22,6 @@ public class Phone implements Subsystem{
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        this.linearOpMode = linearOpMode;
         phoneServo = linearOpMode.hardwareMap.servo.get("phone_servo");
        initPosition();
     }

@@ -167,19 +167,21 @@ public class Teleop extends Team2753Linear {
             */
 
             //Jewel Arm
-//            if (Ryan.left_trigger > 0)
-//                getJewel().deploy();
-//            else
-            getJewel().retract();
+            if (Ryan.left_trigger > 0)
+                getJewel().deploy(false);
+            else
+                getJewel().retract(true);
 
 
             //Intake Release
 
             if (Ryan.y) {
                 getIntake().releaseIntake();
+                //getJewel().leftHit();
             }
             else if (Ryan.x){
                 getIntake().releaseLock();
+                //getJewel().rightHit();
             }
 
             /*  Gamepad 2 Controls  */

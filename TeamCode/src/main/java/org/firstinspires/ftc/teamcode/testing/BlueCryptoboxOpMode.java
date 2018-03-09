@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp(name="Blue Cryptobox Detector", group="DogeCV")
-//@Disabled
+@Disabled
 public class BlueCryptoboxOpMode extends OpMode
 {
     // Declare OpMode members.

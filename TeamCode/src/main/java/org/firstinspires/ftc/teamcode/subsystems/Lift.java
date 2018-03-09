@@ -28,7 +28,7 @@ public class Lift implements Subsystem {
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
         liftMotor = linearOpMode.hardwareMap.get(DcMotor.class, "lift_motor");
-        limitSwitch = linearOpMode.hardwareMap.get(DigitalChannel.class, "limit");
+        //limitSwitch = linearOpMode.hardwareMap.get(DigitalChannel.class, "limit");
 
         liftMotor.setDirection(REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -56,7 +56,7 @@ public class Lift implements Subsystem {
         telemetry.addData("Intake Power", liftMotor.getPower());
         telemetry.addData("Current Lift Position", liftMotor.getCurrentPosition());
         telemetry.addData("Current Lift State", currentState);
-        telemetry.addData("Lift Limit Switch Voltage", limitSwitch.getState());
+        //telemetry.addData("Lift Limit Switch Voltage", limitSwitch.getState());
     }
 
     public void setRunMode(DcMotor.RunMode runMode){

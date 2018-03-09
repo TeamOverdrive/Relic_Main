@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -17,6 +19,10 @@ import static java.lang.Math.PI;
 public class Drive implements Subsystem {
     /* Motors */
     private DcMotor leftMotor, rightMotor = null;
+
+    private ModernRoboticsI2cGyro gyroLeft, gyroRight = null;
+    private I2cAddr leftAddr = new I2cAddr(0x98);
+    private I2cAddr rightAddr = new I2cAddr(0x20);
 
     // Used to output telemetry and to stop when stop is pressed
     private LinearOpMode linearOpMode = null;
@@ -35,6 +41,11 @@ public class Drive implements Subsystem {
         this.linearOpMode = linearOpMode;
         leftMotor = linearOpMode.hardwareMap.dcMotor.get("left_drive");
         rightMotor  = linearOpMode.hardwareMap.dcMotor.get("right_drive");
+
+        gyroLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_l");
+        gyroRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_r");
+        gyroLeft.setI2cAddress(leftAddr);
+        gyroRight.setI2cAddress(rightAddr);
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -108,6 +119,14 @@ public class Drive implements Subsystem {
     public boolean leftIsBusy(){return leftMotor.isBusy();}
 
     public boolean rightIsBusy(){return rightMotor.isBusy();}
+
+    public double getGyroAngleDegrees(){
+        return (gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
+    }
+
+    public double getGyroAngleRadians(){
+        return Math.toRadians(getGyroAngleDegrees());
+    }
 
     /**
      * Method to perform a Clockwise turn

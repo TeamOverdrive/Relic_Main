@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -18,6 +19,8 @@ public class Intake implements Subsystem{
 
     private DcMotor leftIntake, rightIntake = null;
     private Servo intakeRelease = null;
+
+    private ModernRoboticsI2cRangeSensor intakeDistanceLeft = null;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {

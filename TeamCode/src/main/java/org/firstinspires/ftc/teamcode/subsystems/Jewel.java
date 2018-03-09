@@ -20,17 +20,15 @@ public class Jewel implements Subsystem {
     final private static double ARMUP = 0.94;
     final private static double ARMDOWN = 0.25;
 
-    final private static double CenterJewelWrist = 0.52;
+    final private static double CenterJewelWrist = 0.49;
     final private static double LeftJewelWrist = 0.0;
     final private static double RightJewelWrist = 1.0;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
         arm = linearOpMode.hardwareMap.get(Servo.class, "jewel_arm");
-        wrist = linearOpMode.hardwareMap.get(Servo.class, "TBD");
-
-        if(auto)
-            retract();
+        wrist = linearOpMode.hardwareMap.get(Servo.class, "jewel_flicker");
+        stop();
     }
 
     @Override
@@ -40,7 +38,7 @@ public class Jewel implements Subsystem {
 
     @Override
     public void stop() {
-        retract();
+        retract(true);
     }
 
     @Override
@@ -50,16 +48,20 @@ public class Jewel implements Subsystem {
     }
 
     // Deploy jewel mech
-    public void deploy(){
+    public void deploy(boolean center){
         arm.setPosition(ARMDOWN);
-        wrist.setPosition(CenterJewelWrist);
+        if(center)
+            center();
     }
 
     // Retract jewel mech
-    public void retract(){
+    public void retract(boolean center){
         arm.setPosition(ARMUP);
-        wrist.setPosition(CenterJewelWrist);
+        if(center)
+            center();
     }
+
+    public void center(){wrist.setPosition(CenterJewelWrist);}
 
     public void left(){
         wrist.setPosition(LeftJewelWrist);

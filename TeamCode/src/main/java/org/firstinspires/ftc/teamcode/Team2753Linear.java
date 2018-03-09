@@ -79,6 +79,10 @@ public abstract class Team2753Linear extends LinearOpMode {
     //Init Methods
 
     public void waitForStart(String OpModeName, boolean auton, boolean camera) {
+
+        Ryan = gamepad1;
+        Seth = gamepad2;
+
         telemetry.setAutoClear(false);
         status = telemetry.addData("Status", "Initializing...");
         Telemetry.Item currentOpMode = telemetry.addData("Running", OpModeName);
@@ -170,7 +174,7 @@ public abstract class Team2753Linear extends LinearOpMode {
     public void startVuforia(VuforiaLocalizer.CameraDirection direction){vumark.setup(direction);}
 
     public void hitJewelOff(Jewel_Color Alliance){
-        Jewel.deploy();
+        Jewel.deploy(true);
 
     }
 
@@ -200,7 +204,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                     (runtime.seconds() < timeoutS) &&
                     (getDrive().leftIsBusy() || getDrive().rightIsBusy())) {
                 if((Math.abs(getDrive().getLeftCurrentPosition())>(newLeftTarget-(leftInches*COUNTS_PER_INCH)+(6*COUNTS_PER_INCH)))){
-                    getJewel().retract();
+                    getJewel().retract(true);
                 }
                 //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
                 if ((Math.abs(newLeftTarget - getDrive().getLeftCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
@@ -319,7 +323,7 @@ public abstract class Team2753Linear extends LinearOpMode {
         //if(retarded){kms}
 
         getDrive().encoderDrive(autoSpeed, -24,-24, 5);
-        getJewel().retract();
+        getJewel().retract(true);
         //getDrive().encoderDrive(autoSpeed + 0.05, 0, -19.83, 4);
         getDrive().turnCW(90, autoTurnSpeed, 4);
 
@@ -347,7 +351,7 @@ public abstract class Team2753Linear extends LinearOpMode {
     public void glyphScoreR2(){
 
         getDrive().encoderDrive(autoSpeed, 26,26, 5);
-        getJewel().retract();
+        getJewel().retract(true);
         //getDrive().encoderDrive(autoSpeed + 0.05, 0, -19.83, 4);
         //getDrive().turnCCW(90, autoTurnSpeed, 4);
         getDrive().turnCW(-90, autoTurnSpeed, 4);

@@ -23,43 +23,17 @@ public class B2_Vuforia extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        telemetry.setAutoClear(false);
-        Telemetry.Item status = telemetry.addData("Status", "Initializing");
-        Telemetry.Item currentOpMode = telemetry.addData("Running", "UNKOWN");
-        Telemetry.Item phase = telemetry.addData("Phase", "Init Routine");
-        telemetry.update();
-        status.setValue("Initializing...");
-        currentOpMode.setValue("B2 Vuforia");
-        telemetry.update();
-        initializeRobot(this, AUTO);
-        startVuforia(BACK);
-        status.setValue("Initialized, Waiting for Start");
-        telemetry.update();
-        waitForStart(this);
-        status.setValue("Running OpMode");
+        waitForStart("B2 Vuforia", AUTO, true);
 
         int i = 0;
 
         while (opModeIsActive() && i == 0) {
-
-            closeVuforia();
-
-            //Jewel Phase
-            phase.setValue("Jewel");
-            telemetry.update();
-
-            initJewelDetector();
-            enableJewelDetector();
-            jewelBlue(this);
-            disableJewelDetector();
-
             //score cryptokey
-            phase.setValue("Cryptokey");
-            telemetry.update();
+            SetStatus("Cryptokey");
             //glyphScoreB2();
 
             //grab more glyphs
-            phase.setValue("Multiglyph");
+            SetStatus("Multiglyph");
             telemetry.update();
             //multiGlyphB2(13);
 

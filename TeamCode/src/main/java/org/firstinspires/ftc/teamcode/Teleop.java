@@ -4,13 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.libs.OverdriveLib;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.round;
-import static org.firstinspires.ftc.teamcode.auto.AutoParams.AUTO;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.TELEOP;
+import org.firstinspires.ftc.teamcode.subsystems.Lift.liftState;
 
 /**
  * Created by joshua9889 on 12/10/2017.
@@ -29,33 +26,13 @@ public class Teleop extends Team2753Linear {
 
     private int releaseState = 0;
 
-    org.firstinspires.ftc.teamcode.subsystems.Lift.liftState wantedState = org.firstinspires.ftc.teamcode.subsystems.Lift.liftState.INTAKING;
+    private liftState wantedState = liftState.INTAKING;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //Set up Telemetry
-        telemetry.setAutoClear(true);
-        Telemetry.Item status = telemetry.addData("Status", "Initializing");
-        Telemetry.Item currentOpMode = telemetry.addData("Running", "UNKOWN");
-        Telemetry.Item phase = telemetry.addData("Phase", "Init Routine");
-        telemetry.update();
-
-        //Initialize Robot
-        status.setValue("Initializing...");
-        currentOpMode.setValue("Teleop");
-        telemetry.update();
-        initializeRobot(this, TELEOP);
-        intakeState currentIntakeState = intakeState.OFF;
-
-        //Waiting for Start
-        status.setValue("Initialized, Waiting for Start");
-        telemetry.update();
-        waitForStart(this);
-        status.setValue("Running OpMode");
-        currentOpMode.setValue("Teleop");
-        phase.setValue("Driver Control");
-        telemetry.update();
+        waitForStart("Teleop", TELEOP, false);
+        SetStatus("Teleop");
 
         // Loop while we are running Teleop
         while (opModeIsActive()) {
@@ -86,8 +63,8 @@ public class Teleop extends Team2753Linear {
             /*Gamepad 1 Controls*/
 
             /* Drivetrain Controls */ //Gamepad 1 joysticks
-            float leftThrottle = gamepad1.left_stick_y;
-            float rightThrottle = gamepad1.right_stick_y;
+            float leftThrottle = Ryan.left_stick_y;
+            float rightThrottle = Ryan.right_stick_y;
 
             /* Clip the left and right throttle values so that they never exceed +/- 1.  */
             leftThrottle = Range.clip(leftThrottle, -1, 1);
@@ -101,17 +78,17 @@ public class Teleop extends Team2753Linear {
 
             //D-pad controls for slower movement
             if (Math.abs(leftThrottle) == 0 && Math.abs(rightThrottle) == 0) {
-                if (gamepad1.dpad_up) {
+                if (Ryan.dpad_up) {
                     getDrive().setLeftRightPowers(-0.3, -0.3);
                     waitForTick(200);
-                } else if (gamepad1.dpad_down) {
+                } else if (Ryan.dpad_down) {
                     getDrive().setLeftRightPowers(0.3, 0.3);
                     waitForTick(200);
-                } else if (gamepad1.dpad_left) {
-                    getDrive().setLeftRightPowers(0.35, -0.35);
-                    waitForTick(200);
-                } else if (gamepad1.dpad_right) {
+                } else if (Ryan.dpad_left) {
                     getDrive().setLeftRightPowers(-0.35, 0.35);
+                    waitForTick(200);
+                } else if (Ryan.dpad_right) {
+                    getDrive().setLeftRightPowers(0.35, -0.35);
                     waitForTick(200);
                 } else {
                     getDrive().setLeftRightPowers(0, 0);
@@ -125,19 +102,19 @@ public class Teleop extends Team2753Linear {
             //Press and hold control
 
 
-            if (gamepad1.left_bumper)
+            if (Ryan.left_bumper)
                 getIntake().reverse();
-            else if (gamepad1.right_bumper)
+            else if (Ryan.right_bumper)
                 getIntake().intake();
             /*
-            else if (gamepad1.left_trigger > 0)
+            else if (Ryan.left_trigger > 0)
                 getIntake().shiftLeft();
                 */
-            else if (gamepad1.right_trigger > 0)
+            else if (Ryan.right_trigger > 0)
                 getIntake().shiftRight();
-            else if (gamepad2.left_trigger > 0)
+            else if (Seth.left_trigger > 0)
                 getIntake().reverse();
-             else if (gamepad2.right_trigger > 0)
+             else if (Seth.right_trigger > 0)
                 getIntake().intake();
             else
                 getIntake().stop();
@@ -147,7 +124,7 @@ public class Teleop extends Team2753Linear {
 
             /*
             //Change states depending on what button is pushed and what the current state is
-            if(gamepad1.left_bumper){
+            if(Ryan.left_bumper){
                 switch (currentIntakeState){
                     case OFF:
                         currentIntakeState = intakeState.REVERSE;
@@ -161,7 +138,7 @@ public class Teleop extends Team2753Linear {
                 }
             }
 
-            if(gamepad1.right_bumper){
+            if(Ryan.right_bumper){
                 switch (currentIntakeState){
                     case OFF:
                         currentIntakeState = intakeState.INTAKE;
@@ -190,58 +167,55 @@ public class Teleop extends Team2753Linear {
             */
 
             //Jewel Arm
-            if (gamepad1.left_trigger > 0)
-                getJewel().deploy();
+            if (Ryan.left_trigger > 0)
+                getJewel().deploy(false);
             else
-                getJewel().retract();
+                getJewel().retract(true);
 
 
             //Intake Release
 
-            if (gamepad1.y) {
+            if (Ryan.y) {
                 getIntake().releaseIntake();
+                //getJewel().leftHit();
             }
-            else if (gamepad1.x){
+            else if (Ryan.x){
                 getIntake().releaseLock();
+                //getJewel().rightHit();
             }
 
             /*  Gamepad 2 Controls  */
 
             /*Lift Control  Gamepad 2 Left Joystick*/
-
-
-
-
-                if(Math.abs(gamepad2.left_stick_y)<0.01){
-                    if(gamepad2.dpad_up){
-                        getSlammer().stopperUp();
-                        wantedState = org.firstinspires.ftc.teamcode.subsystems.Lift.liftState.UPPER;
-                        getIntake().stop();
-                    }
-                    else if (gamepad2.dpad_down){
-                        wantedState = org.firstinspires.ftc.teamcode.subsystems.Lift.liftState.INTAKING;
-                    }
-
-                    getLift().goTo(wantedState);
-                } else {
-                    getLift().setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                    float liftThrottle = gamepad2.left_stick_y;
-                    //CLip
-                    liftThrottle = Range.clip(liftThrottle, -1, 1);
-                    //Scale
-                    liftThrottle = (float) OverdriveLib.scaleInput(liftThrottle);
-                    //Invert
-                    liftThrottle = liftThrottle * -1;
-                    //Apply power to motor
-                    getLift().setLiftPower(liftThrottle);
+            if(Math.abs(Seth.left_stick_y)<0.01){
+                if(Seth.dpad_up){
+                    getSlammer().stopperUp();
+                    wantedState = org.firstinspires.ftc.teamcode.subsystems.Lift.liftState.UPPER;
+                    getIntake().stop();
+                }
+                else if (Seth.dpad_down){
+                    wantedState = org.firstinspires.ftc.teamcode.subsystems.Lift.liftState.INTAKING;
                 }
 
+                getLift().goTo(wantedState);
+            } else {
+                getLift().setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                float liftThrottle = Seth.left_stick_y;
+                //CLip
+                liftThrottle = Range.clip(liftThrottle, -1, 1);
+                //Scale
+                liftThrottle = (float) OverdriveLib.scaleInput(liftThrottle);
+                //Invert
+                liftThrottle = liftThrottle * -1;
+                //Apply power to motor
+                getLift().setLiftPower(liftThrottle);
+            }
 
 
             //Slammer
-            if (gamepad2.y) {
+            if (Seth.y) {
                 getSlammer().setPower(0.35);
-            } else if (gamepad2.a) {
+            } else if (Seth.a) {
                 getSlammer().setPower(-0.2);
             } else
                 getSlammer().setPower(0);
@@ -249,15 +223,15 @@ public class Teleop extends Team2753Linear {
 
 
             //Stopper
-            if (gamepad2.left_bumper)
+            if (Seth.left_bumper)
                 getSlammer().stopperUp();
-            else if (gamepad2.right_bumper)
+            else if (Seth.right_bumper)
                 getSlammer().stopperDown();
 
             //Phone servo test
 
             /*
-            if(gamepad2.right_bumper)
+            if(Seth.right_bumper)
                 getPhoneServo().jewelPosition();
             else
                 getPhoneServo().initPosition();
@@ -265,10 +239,8 @@ public class Teleop extends Team2753Linear {
 
 
 
-            status.setValue("Running OpMode");
-            currentOpMode.setValue("Teleop");
-            phase.setValue("Driver Control");
-            updateTelemetry(this);
+            SetStatus("Running OpMode");
+            updateTelemetry();
 
         }
 

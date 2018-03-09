@@ -28,26 +28,7 @@ public class DriveTurn extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //Set up telemetry
-        telemetry.setAutoClear(false);
-        Telemetry.Item status = telemetry.addData("Status", "Initializing");
-        Telemetry.Item currentOpMode = telemetry.addData("Running", "UNKNOWN");
-        Telemetry.Item phase = telemetry.addData("Phase", "Init Routine");
-        telemetry.update();
-
-        //Initialize Robot
-        status.setValue("Initializing...");
-        currentOpMode.setValue("Drive Test");
-        telemetry.update();
-        initializeRobot(this, AUTO);
-
-        //Waiting for start
-        status.setValue("Initialized, Waiting for Start");
-        telemetry.update();
-        waitForStart(this);
-
-        status.setValue("Running OpMode");
-        telemetry.update();
+        waitForStart("Drive Test", AUTO, false);
 
         int i = 0;
 

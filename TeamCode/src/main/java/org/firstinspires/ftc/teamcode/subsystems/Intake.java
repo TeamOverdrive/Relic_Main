@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 /**
@@ -18,25 +17,28 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 public class Intake implements Subsystem{
 
-    private LinearOpMode linearOpMode = null;
     private DcMotor leftIntake, rightIntake = null;
     private Servo intakeRelease = null;
 
+    private ModernRoboticsI2cRangeSensor intakeDistanceLeft = null;
+
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        this.linearOpMode = linearOpMode;
         leftIntake = linearOpMode.hardwareMap.dcMotor.get("intake_left");
-        leftIntake.setDirection(FORWARD);
         rightIntake = linearOpMode.hardwareMap.dcMotor.get("intake_right");
+        intakeRelease = linearOpMode.hardwareMap.servo.get("intake_servo");
+
+        leftIntake.setDirection(REVERSE);
         rightIntake.setDirection(REVERSE);
+        leftIntake.setZeroPowerBehavior(BRAKE);
+        rightIntake.setZeroPowerBehavior(BRAKE);
 
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        intakeRelease = linearOpMode.hardwareMap.servo.get("intake_servo");
+
         releaseLock();
+
         if(!auto)
             releaseIntake();
-        zeroSensors();
-        stop();
     }
 
     @Override
@@ -72,12 +74,12 @@ public class Intake implements Subsystem{
     public void reverse(){setPower(-1.0);}
 
     public void shiftLeft(){
-        leftIntake.setPower(1.0);
+        setPower(1.0);
         rightIntake.setPower(0.8);
     }
 
     public void shiftRight(){
-        rightIntake.setPower(1.0);
+        setPower(1.0);
         leftIntake.setPower(0.8);
     }
 

@@ -15,17 +15,20 @@ import static org.firstinspires.ftc.teamcode.auto.AutoParams.jewelVotes;
 
 public class Jewel implements Subsystem {
 
-    private LinearOpMode linearOpMode = null;
-    private Servo jewelArm = null;
+    private Servo arm, wrist;
 
     final private static double ARMUP = 0.94;
     final private static double ARMDOWN = 0.25;
 
+    final private static double CenterJewelWrist = 0.49;
+    final private static double LeftJewelWrist = 0.0;
+    final private static double RightJewelWrist = 1.0;
+
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        this.linearOpMode = linearOpMode;
-        jewelArm = linearOpMode.hardwareMap.servo.get("jewel_arm");
-        retract();
+        arm = linearOpMode.hardwareMap.get(Servo.class, "jewel_arm");
+        wrist = linearOpMode.hardwareMap.get(Servo.class, "jewel_flicker");
+        stop();
     }
 
     @Override
@@ -35,86 +38,44 @@ public class Jewel implements Subsystem {
 
     @Override
     public void stop() {
-        retract();
+        retract(true);
     }
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-        telemetry.addData("Jewel Arm Position", jewelArm.getPosition());
+        telemetry.addData("Jewel Arm Position", arm.getPosition());
+        telemetry.addData("Jewel Wrist Position", wrist.getPosition());
     }
 
     // Deploy jewel mech
-    public void deploy(){
-        jewelArm.setPosition(ARMDOWN);
+    public void deploy(boolean center){
+        arm.setPosition(ARMDOWN);
+        if(center)
+            center();
     }
 
     // Retract jewel mech
-    public void retract(){
-        jewelArm.setPosition(ARMUP);
+    public void retract(boolean center){
+        arm.setPosition(ARMUP);
+        if(center)
+            center();
     }
 
+    public void center(){wrist.setPosition(CenterJewelWrist);}
 
-
-    /**
-     * Old code for color sensor
-     */
-
-    // Get current Jewel color
-
-    /*
-    public JewelColor jewelColor() {
-        if(jewelColor.red()>jewelColor.blue())
-            return JewelColor.RED;
-        else if (jewelColor.red()<jewelColor.blue())
-            return JewelColor.BLUE;
-        else
-            return JewelColor.UNKNOWN;
+    public void left(){
+        wrist.setPosition(LeftJewelWrist);
     }
-    */
 
-
-
-    // Counts "votes" based on how many times it sees red/blue
-
-    /**
-     * Returns the jewel color as an enum.  Values are RED and BLUE.
-     * If a timeout occurs and the sensor has not recognized a color, the method returns UNKOWN.
-     *
-     * @param linearOpMode  linearOpMode (in an opmode just use the keyword "this".
-     * @param timeoutS      The amount of time this method is allowed to execute.
-     * @return              The color of the jewel.
-     */
-
-    /*
-    protected ElapsedTime runtime = new ElapsedTime();
-    public JewelColor vote(LinearOpMode linearOpMode, double timeoutS) {
-        int redVotes = 0;
-        int blueVotes = 0;
-            runtime.reset();
-            while (linearOpMode.opModeIsActive()
-                    &&redVotes < jewelVotes && blueVotes < jewelVotes
-                    && runtime.seconds() < timeoutS) {
-                switch (jewelColor()) {
-                    case RED:
-                        redVotes++;
-                        break;
-                    case BLUE:
-                        blueVotes++;
-                        break;
-                }
-                linearOpMode.telemetry.addData("Red Votes", redVotes);
-                linearOpMode.telemetry.addData("Blue Votes", blueVotes);
-                linearOpMode.telemetry.addData("Red Value", jewelColor.red());
-                linearOpMode.telemetry.addData("Blue Value", jewelColor.blue());
-                linearOpMode.telemetry.update();
-            }
-
-            if (redVotes == jewelVotes)
-                return JewelColor.RED;
-            else if (blueVotes == jewelVotes)
-                return JewelColor.BLUE;
-            else
-                return JewelColor.UNKNOWN;
+    public void right(){
+        wrist.setPosition(RightJewelWrist);
     }
-    */
+
+    public void leftHit(){
+        wrist.setPosition((CenterJewelWrist+LeftJewelWrist)/2);
+    }
+
+    public void rightHit(){
+        wrist.setPosition((CenterJewelWrist+RightJewelWrist)/2);
+    }
 }

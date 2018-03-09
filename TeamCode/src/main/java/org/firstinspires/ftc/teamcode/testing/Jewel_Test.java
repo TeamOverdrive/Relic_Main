@@ -28,41 +28,41 @@ public class Jewel_Test extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        telemetry.addData("Status", "Initializing...");
-        telemetry.update();
-        initializeRobot(this, AUTO);
-
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
-        //initJewelDetector();
-        jewelDetector = new JewelDetector();
-        jewelDetector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
-
-        //Jewel Detector Settings
-        jewelDetector.areaWeight = 0.02;
-        //jewelDetector.detectionMode = JewelDetector.JewelDetectionMode.PERFECT_AREA;
-        jewelDetector.detectionMode = JewelDetector.JewelDetectionMode.MAX_AREA;
-        jewelDetector.perfectArea = 1600;
-        jewelDetector.debugContours = false;
-        jewelDetector.maxDiffrence = 15;
-        jewelDetector.ratioWeight = 15;
-        jewelDetector.minArea = 800;
-        //getPhoneServo().jewelPosition();
-
-        waitForStart(this);
-
-        int i = 0;
-        while(opModeIsActive() && i == 0) {
-
-            enableJewelDetector();
-
-            jewelRed(this);
-
-            disableJewelDetector();
-
-            i++;
-
-        }
+//        telemetry.addData("Status", "Initializing...");
+//        telemetry.update();
+//        initializeRobot(this, AUTO);
+//
+//        telemetry.addData("Status", "Initialized");
+//        telemetry.update();
+//
+//        initJewelDetector();
+//        jewelDetector = new JewelDetector();
+//        jewelDetector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
+//
+//        Jewel Detector Settings
+//        jewelDetector.areaWeight = 0.02;
+//        jewelDetector.detectionMode = JewelDetector.JewelDetectionMode.PERFECT_AREA;
+//        jewelDetector.detectionMode = JewelDetector.JewelDetectionMode.MAX_AREA;
+//        jewelDetector.perfectArea = 1600;
+//        jewelDetector.debugContours = false;
+//        jewelDetector.maxDiffrence = 15;
+//        jewelDetector.ratioWeight = 15;
+//        jewelDetector.minArea = 800;
+//        getPhoneServo().jewelPosition();
+//
+//        waitForStart(this);
+//
+//        int i = 0;
+//        while(opModeIsActive() && i == 0) {
+//
+//            enableJewelDetector();
+//
+//            jewelRed(this);
+//
+//            disableJewelDetector();
+//
+//            i++;
+//
+//        }
     }
 }

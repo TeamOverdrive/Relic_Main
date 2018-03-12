@@ -21,14 +21,16 @@ public class Jewel implements Subsystem {
     final private static double ARMDOWN = 0.25;
 
     final private static double CenterJewelWrist = 0.49;
-    final private static double LeftJewelWrist = 0.0;
-    final private static double RightJewelWrist = 1.0;
+    final private static double LeftJewelWrist = 1.0;
+    final private static double RightJewelWrist = 0.0;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
         arm = linearOpMode.hardwareMap.get(Servo.class, "jewel_arm");
         wrist = linearOpMode.hardwareMap.get(Servo.class, "jewel_flicker");
-        stop();
+
+        if(auto)
+            stop();
     }
 
     @Override

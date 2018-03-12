@@ -131,4 +131,8 @@ public class Lift implements Subsystem {
         return Math.abs(liftMotor.getTargetPosition()-liftMotor.getCurrentPosition())<20;
     }
 
+    public boolean shouldLiftStop(){
+        return liftMotor.getCurrentPosition()>400;
+    }
+
 }

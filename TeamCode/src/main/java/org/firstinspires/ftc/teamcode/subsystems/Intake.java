@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 /**
@@ -28,7 +29,7 @@ public class Intake implements Subsystem{
         rightIntake = linearOpMode.hardwareMap.dcMotor.get("intake_right");
         intakeRelease = linearOpMode.hardwareMap.servo.get("intake_servo");
 
-        leftIntake.setDirection(REVERSE);
+        leftIntake.setDirection(FORWARD);
         rightIntake.setDirection(REVERSE);
         leftIntake.setZeroPowerBehavior(BRAKE);
         rightIntake.setZeroPowerBehavior(BRAKE);

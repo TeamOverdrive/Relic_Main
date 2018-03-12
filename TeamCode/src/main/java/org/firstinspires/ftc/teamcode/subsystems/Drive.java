@@ -34,7 +34,7 @@ public class Drive implements Subsystem {
     private static final double DRIVE_GEAR_REDUCTION = 0.6666 ;     // This is < 1.0 if geared UP
     private static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference w/ wheel base
     public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.141592);
-    private static final double WHEEL_BASE = 12.625;
+    public static final double WHEEL_BASE = 12.625;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
@@ -62,7 +62,8 @@ public class Drive implements Subsystem {
 
     @Override
     public void zeroSensors() {
-        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        while(leftMotor.getCurrentPosition()!=0 && rightMotor.getCurrentPosition()!=0)
+            setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Thread.yield();
     }
 
@@ -77,8 +78,9 @@ public class Drive implements Subsystem {
 
         telemetry.addData("Left Power", leftMotor.getPower());
         telemetry.addData("Right Power", rightMotor.getPower());
-        //telemetry.addData("Left Pos", leftMotor.getCurrentPosition());
-        //telemetry.addData("Right Pos", rightMotor.getCurrentPosition());
+        telemetry.addData("Left Pos", leftMotor.getCurrentPosition());
+        telemetry.addData("Right Pos", rightMotor.getCurrentPosition());
+        telemetry.addData("Gyro", this.getGyroAngleDegrees());
 
     }
 
@@ -315,7 +317,8 @@ public class Drive implements Subsystem {
         }
     }
 
-    public void encoderProportionDrive(double squareProportion, double proportion, double bias, double leftInches, double rightInches, double timeoutS) {
+    public void encoderProportionDrive(double squareProportion, double proportion, double bias,
+                                       double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
 

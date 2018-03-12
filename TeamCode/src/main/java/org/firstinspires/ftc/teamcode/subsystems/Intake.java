@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsAnalogOpticalDistanceSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -22,12 +23,19 @@ public class Intake implements Subsystem{
     private Servo intakeRelease = null;
 
     private ModernRoboticsI2cRangeSensor intakeDistanceLeft = null;
+    private ModernRoboticsI2cRangeSensor intakeDistanceRight = null;
+
+    private ModernRoboticsAnalogOpticalDistanceSensor front, back = null;
+
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
         leftIntake = linearOpMode.hardwareMap.dcMotor.get("intake_left");
         rightIntake = linearOpMode.hardwareMap.dcMotor.get("intake_right");
         intakeRelease = linearOpMode.hardwareMap.servo.get("intake_servo");
+
+        front = linearOpMode.hardwareMap.get(ModernRoboticsAnalogOpticalDistanceSensor.class, "front_ods");
+        back = linearOpMode.hardwareMap.get(ModernRoboticsAnalogOpticalDistanceSensor.class, "back_ods");
 
         leftIntake.setDirection(FORWARD);
         rightIntake.setDirection(REVERSE);
@@ -58,6 +66,8 @@ public class Intake implements Subsystem{
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Left Intake Power", leftIntake.getPower());
         telemetry.addData("Right Intake Power", rightIntake.getPower());
+        telemetry.addData("Front Ods", this.front.getLightDetected());
+        telemetry.addData("Back Ods", this.back.getLightDetected());
     }
 
     public void setPower(double power){

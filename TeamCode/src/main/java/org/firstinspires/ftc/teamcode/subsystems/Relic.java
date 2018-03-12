@@ -41,4 +41,8 @@ public class Relic implements Subsystem{
         relicServo.setPosition(elbow);
     }
 
+    public void setPosition(double x, double y){
+        turretAndElbow((Math.toDegrees(Math.acos(x)))/160, Math.toDegrees((Math.acos(x)))/185);
+    }
+
 }

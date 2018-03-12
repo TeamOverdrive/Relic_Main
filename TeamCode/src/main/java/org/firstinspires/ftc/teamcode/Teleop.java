@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.libs.OverdriveLib;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.TELEOP;
 import org.firstinspires.ftc.teamcode.subsystems.Lift.liftState;
 
+import java.util.Set;
+
 /**
  * Created by joshua9889 on 12/10/2017.
  *
@@ -28,6 +30,13 @@ public class Teleop extends Team2753Linear {
 
     private liftState wantedState = liftState.INTAKING;
     private boolean lift = false;
+
+    private double x = -0.99;
+    private double y = 0;
+
+    private boolean stopper = true;
+    private boolean lastPressed = false;
+    private boolean deploy = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -66,40 +75,36 @@ public class Teleop extends Team2753Linear {
             /* Drivetrain Controls */ //Gamepad 1 joysticks
 
             if(true){
-                float leftThrottle = Ryan.left_stick_y;
-                float rightThrottle = Ryan.right_stick_y;
-
-                /* Clip the left and right throttle values so that they never exceed +/- 1.  */
-                leftThrottle = Range.clip(leftThrottle, -1, 1);
-                rightThrottle = Range.clip(rightThrottle, -1, 1);
-
-                /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
-                leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
-                rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
-
-                getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
-
                 //D-pad controls for slower movement
-                if (Math.abs(leftThrottle) == 0 && Math.abs(rightThrottle) == 0) {
+                if (Math.abs(Ryan.right_stick_y) < 0.01 && Math.abs(Ryan.left_stick_y) < 0.01) {
                     if (Ryan.dpad_up) {
                         getDrive().setLeftRightPowers(-0.3, -0.3);
-                        waitForTick(200);
                     } else if (Ryan.dpad_down) {
                         getDrive().setLeftRightPowers(0.3, 0.3);
-                        waitForTick(200);
                     } else if (Ryan.dpad_left) {
                         getDrive().setLeftRightPowers(-0.35, 0.35);
-                        waitForTick(200);
                     } else if (Ryan.dpad_right) {
                         getDrive().setLeftRightPowers(0.35, -0.35);
-                        waitForTick(200);
                     } else {
                         getDrive().setLeftRightPowers(0, 0);
                     }
+                } else {
+                    float leftThrottle = Ryan.left_stick_y;
+                    float rightThrottle = Ryan.right_stick_y;
+
+                    /* Clip the left and right throttle values so that they never exceed +/- 1.  */
+                    leftThrottle = Range.clip(leftThrottle, -1, 1);
+                    rightThrottle = Range.clip(rightThrottle, -1, 1);
+
+                    /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
+                    leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
+                    rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
+
+                    getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
                 }
             } else {
                 double speed = Ryan.left_stick_y;
-                double turn = Ryan.right_stick_x;
+                double turn = -Ryan.right_stick_x;
 
                 speed = Range.clip(speed, -1, 1);
                 turn = Range.clip(turn, -1, 1);
@@ -132,12 +137,6 @@ public class Teleop extends Team2753Linear {
                 getIntake().intake();
             else
                 getIntake().stop();
-
-            //Jewel Arm
-//            if (Ryan.left_trigger > 0)
-//                getJewel().deploy(false);
-//            else
-//                getJewel().retract(true);
 
 
             //Intake Release
@@ -177,14 +176,35 @@ public class Teleop extends Team2753Linear {
 
 
             //Stopper
-            if (Seth.left_bumper)
-                getSlammer().stopperUp();
-            else if (Seth.right_bumper)
-                getSlammer().stopperDown();
+            if(Seth.right_bumper){
+                if(lastPressed!=stopper){
+                    if(deploy) {
+                        getSlammer().stopperDown();
+                        deploy = false;
+                    } else {
+                        getSlammer().stopperUp();
+                        deploy = true;
+                    }
+                }
+                lastPressed = stopper;
+            } else {
+                lastPressed = !stopper;
+            }
+
+            getJewel().retract(true);
 
             SetStatus("Running OpMode");
             updateTelemetry();
 
+            if(Math.abs(Seth.right_stick_x)>0){
+                if (Math.abs(x)<=0.99)
+                    x += (Seth.right_stick_x/Math.abs(Seth.right_stick_x))/10;
+            }
+
+            if(Math.abs(x)>0.99)
+                x= (x/Math.abs(x)) * 0.99;
+
+            getRelic().setPosition(x, 0);
         }
 
         finalAction();

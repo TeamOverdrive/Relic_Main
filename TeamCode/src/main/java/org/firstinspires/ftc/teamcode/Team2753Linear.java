@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.libs.AutoTransitioner;
 import org.firstinspires.ftc.teamcode.libs.VuMark;
+import org.firstinspires.ftc.teamcode.subsystems.Relic;
 import org.firstinspires.ftc.teamcode.subsystems.Subsystem;
 
 import java.util.Arrays;
@@ -52,9 +53,10 @@ public abstract class Team2753Linear extends LinearOpMode {
     private org.firstinspires.ftc.teamcode.subsystems.Intake Intake = new org.firstinspires.ftc.teamcode.subsystems.Intake();
     private org.firstinspires.ftc.teamcode.subsystems.Slammer Slammer = new org.firstinspires.ftc.teamcode.subsystems.Slammer();
     private org.firstinspires.ftc.teamcode.subsystems.Phone Phone = new org.firstinspires.ftc.teamcode.subsystems.Phone();
+    private Relic Relic = new Relic();
 
     // Used to init everything quickly
-    private List<Subsystem> subsystems = Arrays.asList(Drive, Jewel, Lift, Intake, Slammer, Phone);
+    private List<Subsystem> subsystems = Arrays.asList(Drive, Jewel, Lift, Intake, Slammer, Phone, Relic);
 
     public static final String vuforiaKey = "AeUsQDb/////AAAAGXsDAQwNS0SWopXJpAHyRntcnTcoWD8Tns"+
             "R6PWGX9OwmlIhNxQgn8RX/1cH2RXXTsuSkHh6OjfMoCuHt35rhumaUsLnk8MZZJ7P9PEu+uSsUbH1hHcnnB"+
@@ -101,7 +103,7 @@ public abstract class Team2753Linear extends LinearOpMode {
         }
 
         if(camera && auton) {
-            AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
+            //AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
             while (!isStarted() && !isStopRequested()){
                 vumark.update();
@@ -156,9 +158,9 @@ public abstract class Team2753Linear extends LinearOpMode {
             if(!bm.isRecycled())
                 bm.recycle();
 
-            if(redValue>blueValue)
+            if(redVotes>blueVotes)
                 jewel_Color=Jewel_Color.Red;
-            else
+            else if(redVotes<blueVotes)
                 jewel_Color=Jewel_Color.Blue;
 
         } else {
@@ -182,11 +184,6 @@ public abstract class Team2753Linear extends LinearOpMode {
 
     //Vuforia
     public void startVuforia(VuforiaLocalizer.CameraDirection direction){vumark.setup(direction);}
-
-    public void hitJewelOff(Jewel_Color Alliance){
-        Jewel.deploy(true);
-
-    }
 
     public void jewelDrive(LinearOpMode linearOpMode, double speed, double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
@@ -461,8 +458,10 @@ public abstract class Team2753Linear extends LinearOpMode {
 
     //Telemetry
 
+    private boolean first = true;
     public void updateTelemetry() {
 
+        telemetry.clearAll();
         if(isAuton){
             telemetry.addData("Match Time", 30 - getRuntime());
         }
@@ -475,8 +474,11 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("Phase", "Overtime");
             }
         }
-        for(Subsystem subsystem:subsystems)
-            subsystem.outputToTelemetry(telemetry);
+
+            for(Subsystem subsystem:subsystems)
+                subsystem.outputToTelemetry(telemetry);
+
+
 
         telemetry.update();
     }
@@ -524,6 +526,10 @@ public abstract class Team2753Linear extends LinearOpMode {
     public org.firstinspires.ftc.teamcode.subsystems.Intake getIntake() {return Intake;}
 
     public org.firstinspires.ftc.teamcode.subsystems.Slammer getSlammer() {return Slammer;}
+
+    public Relic getRelic(){
+        return Relic;
+    }
 
     public org.firstinspires.ftc.teamcode.subsystems.Phone getPhoneServo() {return Phone;}
 }

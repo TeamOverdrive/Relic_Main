@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Team2753Linear;
 
+import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.jewelVotes;
 
 /**
@@ -29,8 +31,7 @@ public class Jewel implements Subsystem {
         arm = linearOpMode.hardwareMap.get(Servo.class, "jewel_arm");
         wrist = linearOpMode.hardwareMap.get(Servo.class, "jewel_flicker");
 
-        if(auto)
-            stop();
+        stop();
     }
 
     @Override
@@ -79,5 +80,34 @@ public class Jewel implements Subsystem {
 
     public void rightHit(){
         wrist.setPosition((CenterJewelWrist+RightJewelWrist)/2);
+    }
+
+    public void hit(Team2753Linear.Jewel_Color scannedJewel, Team2753Linear.Jewel_Color alliance_color
+    ){
+        deploy(true);
+        try {
+            sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(scannedJewel==alliance_color){
+            rightHit();
+        } else {
+            leftHit();
+        }
+
+        try {
+            sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        retract(true);
+        try {
+            sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

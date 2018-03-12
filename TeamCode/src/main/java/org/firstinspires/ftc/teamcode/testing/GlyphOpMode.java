@@ -59,7 +59,7 @@ public class GlyphOpMode extends OpMode
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Glyph Pos X", glyphDetector.getChosenGlyphOffset());
-        telemetry.addData("Glyph Pos Offest", glyphDetector.getChosenGlyphPosition().toString());
+        telemetry.addData("Glyph Pos Offest", glyphDetector.getChosenGlyphPosition());
 
 
     }

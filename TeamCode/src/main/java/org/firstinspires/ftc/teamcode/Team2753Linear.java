@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsUsbDeviceInterfaceModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -26,6 +27,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryV
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoSpeed;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoTurnSpeed;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.vuMarkVotes;
+import static org.firstinspires.ftc.teamcode.libs.VuMark.SaveImage;
 import static org.firstinspires.ftc.teamcode.libs.VuMark.blue;
 import static org.firstinspires.ftc.teamcode.libs.VuMark.red;
 import static org.firstinspires.ftc.teamcode.subsystems.Drive.COUNTS_PER_INCH;
@@ -60,17 +62,20 @@ public abstract class Team2753Linear extends LinearOpMode {
             "/bxKqy7VA77krKFtgDi6amam+vWvBCqyIo6tXxbo0w8q/HCXo4v/4UYyoFLRx1l1d2Wya5an5SwFfU3eKxy"+
             "0BYc3tnsaaDJww59RNJ6IK9D3PZM+oPDrmF9ukQrc/jw+u+6Zm4wQHieHt9urSwLR7dgz0V3aatDx1V7y";
 
-    public static VuMark vumark = new VuMark(vuforiaKey);
+    private static VuMark vumark = new VuMark(vuforiaKey);
     private RelicRecoveryVuMark savedVumark = RelicRecoveryVuMark.UNKNOWN;
+
+    private Bitmap bm=null;
     private int redVotes = 0;
     private int blueVotes = 0;
 
-    public enum Jewel_Color{
-        RED, BLUE
+    // Jewel
+    public enum Jewel_Color {
+        Red, Blue
     }
-    public Jewel_Color scannedColor;
+    protected Jewel_Color jewel_Color = null;
 
-    public static ElapsedTime runtime = new ElapsedTime();
+    private static ElapsedTime runtime = new ElapsedTime();
     private boolean isAuton = false; // Are we running auto
     private int Column = 0;
 
@@ -88,6 +93,8 @@ public abstract class Team2753Linear extends LinearOpMode {
         Telemetry.Item currentOpMode = telemetry.addData("Running", OpModeName);
         telemetry.update();
 
+        vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
+
         //Initialize Robot
         for (Subsystem subsystem:subsystems) {
             subsystem.init(this, auton);
@@ -96,61 +103,64 @@ public abstract class Team2753Linear extends LinearOpMode {
         if(camera && auton) {
             AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
-            while(!isStarted() && !isStopRequested()) {
-                // Update VuMark
+            while (!isStarted() && !isStopRequested()){
                 vumark.update();
 
-                if(vumark.getOuputVuMark()!= RelicRecoveryVuMark.UNKNOWN)
-                    savedVumark = vumark.getOuputVuMark();
-
-                // Value of all pixels
-                int redValue = 0;
-                int blueValue = 0;
-
-                // Get current bitmap from Vuforia
-                Bitmap bm = vumark.getBm(20);
-
-                if(bm != null){
-                    // Scan area for red and blue pixels
-                    // TODO: Find the correct values for this
-                    for (int x = 0; x < bm.getWidth()/5 && !isStarted() && !isStopRequested(); x++) {
-                        for (int y = (bm.getHeight()/4)+(bm.getHeight()/2); y < bm.getHeight() && !isStarted() && !isStopRequested(); y++) {
-                            int pixel = bm.getPixel(x,y);
-                            redValue += red(pixel);
-                            blueValue += blue(pixel);
-
-                            if(redValue>blueValue)
-                                redVotes++;
-                            else if(blueValue>redValue)
-                                blueVotes++;
-                            idle();
-                        }
-                    }
-                    bm.recycle();
-                }
-
-                // Cut off
-                if (redVotes>300) {
-                    redVotes = 50;
-                    blueVotes = 0;
-                    scannedColor=Jewel_Color.RED;
-                } else if(blueVotes > 300){
-                    redVotes = 0;
-                    blueVotes = 50;
-                    scannedColor=Jewel_Color.BLUE;
-                }
-
-
-                // Output Telemetry
-                if(WhatColumnToScoreIn()!=UNKNOWN)
-                    SetStatus("Initialized, Waiting for Start");
-
-                telemetry.addData("VuMark", WhatColumnToScoreIn());
-                telemetry.addData("Red Votes", redVotes);
-                telemetry.addData("Blue Votes", blueVotes);
+                telemetry.addData("VuMark", vumark.getOuputVuMark());
                 telemetry.update();
-                idle();
+
+                try {
+                    bm = vumark.getBm(20);
+                } catch (Exception e){}
             }
+
+            int redValue = 0;
+            int blueValue = 0;
+
+            SaveImage(bm);
+
+            // Scan area for red and blue pixels
+            for (int x = (bm.getWidth()/2)+(bm.getWidth()/5); x < ((bm.getWidth()/2)+(2*bm.getWidth()/5)); x++) {
+                for (int y = (2*bm.getHeight() / 5) + (bm.getHeight() / 2); y < bm.getHeight(); y++) {
+                    int pixel = bm.getPixel(x,y);
+                    redValue = red(pixel);
+                    blueValue = blue(pixel);
+
+                    if(redValue>blueValue) {
+                        redVotes++;
+                        bm.setPixel(x,y, Color.RED);
+                    }
+                    else if(blueValue>redValue) {
+                        blueVotes++;
+                        bm.setPixel(x, y, Color.BLUE);
+                    }
+
+                    if(redValue>blueValue) {
+                        bm.setPixel(x,y, Color.YELLOW);
+                    }
+                    else if(blueValue>redValue) {
+                        bm.setPixel(x, y, Color.CYAN);
+                    }
+                }
+            }
+
+            for (int x =(bm.getWidth()/2)+(bm.getWidth()/5); x < ((bm.getWidth()/2)+(2*bm.getWidth()/5)); x++ ){
+                bm.setPixel(x, (2*bm.getHeight() / 5) + (bm.getHeight() / 2), Color.GREEN);
+            }
+
+            for (int y = (2*bm.getHeight() / 5) + (bm.getHeight() / 2); y < bm.getHeight(); y++){
+                bm.setPixel((bm.getWidth()/2)+(bm.getWidth()/5), y, Color.GREEN);
+            }
+
+            SaveImage(bm);
+            if(!bm.isRecycled())
+                bm.recycle();
+
+            if(redValue>blueValue)
+                jewel_Color=Jewel_Color.Red;
+            else
+                jewel_Color=Jewel_Color.Blue;
+
         } else {
             SetStatus("Initialized, Waiting for Start");
             waitForStart();

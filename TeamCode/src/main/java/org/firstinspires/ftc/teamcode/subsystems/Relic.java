@@ -16,15 +16,14 @@ public class Relic implements Subsystem{
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        turretServo = linearOpMode.hardwareMap.servo.get("relic_turret");
-        relicServo = linearOpMode.hardwareMap.servo.get("relic_elbow");
+        turretServo = linearOpMode.hardwareMap.get(Servo.class, "relic_turret");
+        relicServo = linearOpMode.hardwareMap.get(Servo.class, "relic_elbow");
         stop();
     }
 
     @Override
     public void zeroSensors() {
-        turretServo.setPosition(0);
-        relicServo.setPosition(1);
+        turretAndElbow(0,1);
     }
 
     @Override
@@ -36,4 +35,10 @@ public class Relic implements Subsystem{
     public void outputToTelemetry(Telemetry telemetry) {
 
     }
+
+    public void turretAndElbow(double turret, double elbow){
+        turretServo.setPosition(turret);
+        relicServo.setPosition(elbow);
+    }
+
 }

@@ -2,14 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.libs.OverdriveLib;
 
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.TELEOP;
-import org.firstinspires.ftc.teamcode.subsystems.Lift.liftState;
-
-import java.util.Set;
 
 /**
  * Created by joshua9889 on 12/10/2017.
@@ -20,23 +18,17 @@ import java.util.Set;
 @TeleOp(name = "Teleop")
 public class Teleop extends Team2753Linear {
 
-    private enum intakeState{
-        OFF,
-        INTAKE,
-        REVERSE
-    }
-
-    private int releaseState = 0;
-
-    private liftState wantedState = liftState.INTAKING;
-    private boolean lift = false;
-
-    private double x = -0.99;
-    private double y = 0;
-
     private boolean stopper = true;
     private boolean lastPressed = false;
     private boolean deploy = false;
+
+    private enum Relic{
+        Retract, Extend
+    }
+
+    private Relic current = Teleop.Relic.Retract;
+
+    private ElapsedTime t = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -60,7 +52,7 @@ public class Teleop extends Team2753Linear {
              |                                                                |
             |                                                                  |
             |                                                                  |
-            |                                                                  |
+            |                            -                                      |
             |                                                                  |
            |                                                                    |
            |                                                                    |
@@ -131,10 +123,6 @@ public class Teleop extends Team2753Linear {
                 */
             else if (Ryan.right_trigger > 0)
                 getIntake().shiftRight();
-            else if (Seth.left_trigger > 0)
-                getIntake().reverse();
-             else if (Seth.right_trigger > 0)
-                getIntake().intake();
             else
                 getIntake().stop();
 
@@ -180,9 +168,11 @@ public class Teleop extends Team2753Linear {
                 if(lastPressed!=stopper){
                     if(deploy) {
                         getSlammer().stopperDown();
+                        getRelic().open();
                         deploy = false;
                     } else {
                         getSlammer().stopperUp();
+                        getRelic().close();
                         deploy = true;
                     }
                 }
@@ -196,15 +186,30 @@ public class Teleop extends Team2753Linear {
             SetStatus("Running OpMode");
             updateTelemetry();
 
-            if(Math.abs(Seth.right_stick_x)>0){
-                if (Math.abs(x)<=0.99)
-                    x += (Seth.right_stick_x/Math.abs(Seth.right_stick_x))/10;
+            if(gamepad2.dpad_up){
+                getRelic().setAngles(0, 190);
+                getRelic().setWristAngle(-130);
+                current = Teleop.Relic.Retract;
+            } else if(gamepad2.dpad_down){
+                getRelic().setAngles(140, 190);
+                getRelic().setWristAngle(30);
+                current = Teleop.Relic.Extend;
+            } else if(gamepad2.right_trigger>0.3){
+                getRelic().setAngles(0,0);
+                getRelic().setWristAngle(30);
+                current = Teleop.Relic.Retract;
             }
 
-            if(Math.abs(x)>0.99)
-                x= (x/Math.abs(x)) * 0.99;
+            if(current == Teleop.Relic.Extend){
+                if(t.milliseconds()>2000)
+                    getRelic().setWristAngle(-130);
+                else
+                    getRelic().setWristAngle(30);
+            } else {
+                t.reset();
+            }
 
-            getRelic().setPosition(x, 0);
+
         }
 
         finalAction();

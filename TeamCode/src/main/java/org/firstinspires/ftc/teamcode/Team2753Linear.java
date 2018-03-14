@@ -95,15 +95,14 @@ public abstract class Team2753Linear extends LinearOpMode {
         Telemetry.Item currentOpMode = telemetry.addData("Running", OpModeName);
         telemetry.update();
 
-        vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
-
         //Initialize Robot
         for (Subsystem subsystem:subsystems) {
             subsystem.init(this, auton);
         }
 
-        if(camera && auton) {
-            //AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
+        if(auton) {
+            vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
+            AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
             while (!isStarted() && !isStopRequested()){
                 vumark.update();

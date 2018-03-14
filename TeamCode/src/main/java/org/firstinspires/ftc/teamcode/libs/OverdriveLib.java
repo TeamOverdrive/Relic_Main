@@ -1,19 +1,37 @@
 package org.firstinspires.ftc.teamcode.libs;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
 /**
  * Used to store math and things
  * Created by joshua9889 on 12/10/2017.
  */
 
 public class OverdriveLib {
+
+    /**
+     * @param L1 Length One
+     * @param L2 Length Two
+     * @param xp X endpoint
+     * @param yp Y endpoint
+     * @return double array, first is theda1, second is theda2
+     */
+    public static double[] SolveInverseKinematics(double L1, double L2,
+                                                  double xp, double yp){
+        double a = Math.pow(xp, 2) + Math.pow(yp, 2);
+        double b = Math.pow(L1, 2);
+        double c = Math.pow(L2, 2);
+        double d = a + b - c;
+        double e = a- b - c;
+        double f = 4*b;
+        double g = f*a-Math.pow(d, 2);
+        double h = f*c-Math.pow(e,2);
+        double theda1 = Math.toDegrees(Math.atan2(xp, yp) - Math.atan2(Math.sqrt(g), d));
+        double theda2 = Math.toDegrees(Math.atan2(Math.sqrt(h), e));
+
+
+        return new double[]{
+                theda1, theda2
+        };
+    }
 
     // Scale driver joystick input to make it easier to control a low speeds
     public static double scaleInput(double dVal)   {
@@ -60,33 +78,5 @@ public class OverdriveLib {
         }
 
         return dScale;
-    }
-
-    // Still need to test this code
-    class VuMark{
-        VuforiaLocalizer vuforia;
-
-        public void init(LinearOpMode linearOpMode){
-            int cameraMonitorViewId = linearOpMode.hardwareMap.appContext.getResources().getIdentifier
-                    ("cameraMonitorViewId", "id", linearOpMode.hardwareMap.appContext.getPackageName());
-            VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-
-            //constructor not to initialize the camera
-            // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
-
-            //Vuforia License
-            parameters.vuforiaLicenseKey = "AeUsQDb/////AAAAGXsDAQwNS0SWopXJpAHyRntcnTcoWD8TnsR6PWGX9OwmlIhNxQgn8RX/1cH2RXXTsuSkHh6OjfMoCuHt35rhumaUsLnk8MZZJ7P9PEu+uSsUbH1hHcnnB6GzJnX/FqlZJX5HWWfeQva5s4OHJEwSbPR2zxhkRxntAjeuIPGVSHeIseAikPB0NF0SqEiPZea+PWrxpryP/bxKqy7VA77krKFtgDi6amam+vWvBCqyIo6tXxbo0w8q/HCXo4v/4UYyoFLRx1l1d2Wya5an5SwFfU3eKxy0BYc3tnsaaDJww59RNJ6IK9D3PZM+oPDrmF9ukQrc/jw+u+6Zm4wQHieHt9urSwLR7dgz0V3aatDx1V7y";
-
-            //Camera Direction
-            parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
-            this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-
-            //Load targets
-            VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-            VuforiaTrackable relicTemplate = relicTrackables.get(0);
-            relicTemplate.setName("relicVuMarkTemplate");
-
-            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-        }
     }
 }

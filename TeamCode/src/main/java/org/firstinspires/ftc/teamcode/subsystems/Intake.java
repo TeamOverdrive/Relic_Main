@@ -4,6 +4,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsAnalogOpticalDistanceS
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -25,6 +26,9 @@ public class Intake implements Subsystem{
     private ModernRoboticsI2cRangeSensor intakeDistanceLeft = null;
     private ModernRoboticsI2cRangeSensor intakeDistanceRight = null;
 
+    private I2cAddr leftAddr = new I2cAddr(0x28);
+    private I2cAddr rightAddr = new I2cAddr(0x98);
+
     private ModernRoboticsAnalogOpticalDistanceSensor front, back = null;
 
 
@@ -42,7 +46,16 @@ public class Intake implements Subsystem{
         leftIntake.setZeroPowerBehavior(BRAKE);
         rightIntake.setZeroPowerBehavior(BRAKE);
 
+        intakeDistanceLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "left_range");
+        intakeDistanceRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "right_range");
+
+        intakeDistanceLeft.setI2cAddress(leftAddr);
+        intakeDistanceRight.setI2cAddress(rightAddr);
+
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        intakeDistanceLeft.enableLed(false);
+        intakeDistanceRight.enableLed(false);
 
         releaseLock();
 

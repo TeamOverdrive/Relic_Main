@@ -54,9 +54,15 @@ public class Intake implements Subsystem{
         leftIntake.setZeroPowerBehavior(BRAKE);
         rightIntake.setZeroPowerBehavior(BRAKE);
 
+        intakeDistanceLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "left_range");
+        intakeDistanceRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "right_range");
+
+        intakeDistanceLeft.setI2cAddress(leftAddr);
+        intakeDistanceRight.setI2cAddress(rightAddr);
+
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        intakeDistanceRight.enableLed(false);
+        intakeDistanceLeft.enableLed(false);
 
         releaseLock();
 

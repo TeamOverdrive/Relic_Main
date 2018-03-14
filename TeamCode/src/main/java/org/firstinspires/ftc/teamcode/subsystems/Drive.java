@@ -42,10 +42,12 @@ public class Drive implements Subsystem {
         leftMotor = linearOpMode.hardwareMap.dcMotor.get("left_drive");
         rightMotor  = linearOpMode.hardwareMap.dcMotor.get("right_drive");
 
-        gyroLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_l");
-        gyroRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_r");
-        gyroLeft.setI2cAddress(leftAddr);
-        gyroRight.setI2cAddress(rightAddr);
+        if(auto) {
+            gyroLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_l");
+            gyroRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_r");
+            gyroLeft.setI2cAddress(leftAddr);
+            gyroRight.setI2cAddress(rightAddr);
+        }
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -75,13 +77,10 @@ public class Drive implements Subsystem {
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-
         telemetry.addData("Left Power", leftMotor.getPower());
         telemetry.addData("Right Power", rightMotor.getPower());
         telemetry.addData("Left Pos", leftMotor.getCurrentPosition());
         telemetry.addData("Right Pos", rightMotor.getCurrentPosition());
-        telemetry.addData("Gyro", this.getGyroAngleDegrees());
-
     }
 
     /**

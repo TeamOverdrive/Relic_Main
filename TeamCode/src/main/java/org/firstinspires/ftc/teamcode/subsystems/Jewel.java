@@ -82,8 +82,7 @@ public class Jewel implements Subsystem {
         wrist.setPosition((CenterJewelWrist+RightJewelWrist)/2);
     }
 
-    public void hit(Team2753Linear.Jewel_Color scannedJewel, Team2753Linear.Jewel_Color alliance_color
-    ){
+    public void hit(Team2753Linear.Jewel_Color scannedJewel, Team2753Linear.Jewel_Color alliance_color){
         deploy(true);
         try {
             sleep(500);

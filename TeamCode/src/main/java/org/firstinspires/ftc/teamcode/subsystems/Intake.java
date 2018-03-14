@@ -4,6 +4,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsAnalogOpticalDistanceS
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -25,7 +26,12 @@ public class Intake implements Subsystem{
     private ModernRoboticsI2cRangeSensor intakeDistanceLeft = null;
     private ModernRoboticsI2cRangeSensor intakeDistanceRight = null;
 
+    private I2cAddr leftAddr = new I2cAddr(0x28);
+    private I2cAddr rightAddr = new I2cAddr(0x30);
+
     private ModernRoboticsAnalogOpticalDistanceSensor front, back = null;
+
+    private static final double intakePower = 1.0;
 
 
     @Override
@@ -37,12 +43,20 @@ public class Intake implements Subsystem{
         front = linearOpMode.hardwareMap.get(ModernRoboticsAnalogOpticalDistanceSensor.class, "front_ods");
         back = linearOpMode.hardwareMap.get(ModernRoboticsAnalogOpticalDistanceSensor.class, "back_ods");
 
+        intakeDistanceLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "left_range");
+        intakeDistanceRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "right_range");
+
+        intakeDistanceLeft.setI2cAddress(leftAddr);
+        intakeDistanceRight.setI2cAddress(rightAddr);
+
         leftIntake.setDirection(FORWARD);
         rightIntake.setDirection(REVERSE);
         leftIntake.setZeroPowerBehavior(BRAKE);
         rightIntake.setZeroPowerBehavior(BRAKE);
 
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        intakeDistanceRight.enableLed(false);
 
         releaseLock();
 
@@ -75,22 +89,27 @@ public class Intake implements Subsystem{
         rightIntake.setPower(power);
     }
 
+    public void setLeftRightPower(double leftPower, double rightPower){
+        leftIntake.setPower(leftPower);
+        rightIntake.setPower(rightPower);
+    }
+
     public void setRunMode(DcMotor.RunMode runMode){
         leftIntake.setMode(runMode);
         rightIntake.setMode(runMode);
     }
 
-    public void intake(){setPower(1.0);}
+    public void intake(){setPower(intakePower);}
 
-    public void reverse(){setPower(-1.0);}
+    public void reverse(){setPower(-intakePower);}
 
     public void shiftLeft(){
-        setPower(1.0);
+        leftIntake.setPower(intakePower);
         rightIntake.setPower(0.8);
     }
 
     public void shiftRight(){
-        setPower(1.0);
+        rightIntake.setPower(intakePower);
         leftIntake.setPower(0.8);
     }
 

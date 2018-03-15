@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -95,30 +96,49 @@ public abstract class Team2753Linear extends LinearOpMode {
         Telemetry.Item currentOpMode = telemetry.addData("Running", OpModeName);
         telemetry.update();
 
+        RobotLog.v("================ WaitForStart: Start Init Loop =============");
         //Initialize Robot
         for (Subsystem subsystem:subsystems) {
             subsystem.init(this, auton);
         }
+        RobotLog.v("================ WaitForStart: Finished Init Loop =============");
 
         if(auton) {
+            RobotLog.v("================ Start VuCam =============");
             vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
+
+            RobotLog.v("================ AutoTransitioner =============");
             AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
+            RobotLog.v("================ VuCam Loop =============");
             while (!isStarted() && !isStopRequested()){
                 vumark.update();
 
+                telemetry.clearAll();
                 telemetry.addData("VuMark", vumark.getOuputVuMark());
                 telemetry.update();
 
                 try {
                     bm = vumark.getBm(20);
-                } catch (Exception e){}
+                } catch (Exception e){
+                    bm = null;
+                }
+
             }
 
+            while (bm==null){
+                try {
+                    bm = vumark.getBm(20);
+                } catch (Exception e){
+                    bm = null;
+                }
+            }
+
+            RobotLog.v("================ VuCam Loop Finished =============");
+
+            RobotLog.v("================ Scan Bitmap =============");
             int redValue = 0;
             int blueValue = 0;
-
-            SaveImage(bm);
 
             // Scan area for red and blue pixels
             for (int x = (bm.getWidth()/2)+(bm.getWidth()/5); x < ((bm.getWidth()/2)+(2*bm.getWidth()/5)); x++) {
@@ -135,32 +155,24 @@ public abstract class Team2753Linear extends LinearOpMode {
                         blueVotes++;
                         bm.setPixel(x, y, Color.BLUE);
                     }
-
-                    if(redValue>blueValue) {
-                        bm.setPixel(x,y, Color.YELLOW);
-                    }
-                    else if(blueValue>redValue) {
-                        bm.setPixel(x, y, Color.CYAN);
-                    }
                 }
             }
 
-            for (int x =(bm.getWidth()/2)+(bm.getWidth()/5); x < ((bm.getWidth()/2)+(2*bm.getWidth()/5)); x++ ){
-                bm.setPixel(x, (2*bm.getHeight() / 5) + (bm.getHeight() / 2), Color.GREEN);
-            }
-
-            for (int y = (2*bm.getHeight() / 5) + (bm.getHeight() / 2); y < bm.getHeight(); y++){
-                bm.setPixel((bm.getWidth()/2)+(bm.getWidth()/5), y, Color.GREEN);
-            }
-
             SaveImage(bm);
-            if(!bm.isRecycled())
-                bm.recycle();
 
             if(redVotes>blueVotes)
                 jewel_Color=Jewel_Color.Red;
             else if(redVotes<blueVotes)
                 jewel_Color=Jewel_Color.Blue;
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sleep(1000);
+                    vumark.disableVuforia();
+                    Thread.yield();
+                }
+            }).start();
 
         } else {
             SetStatus("Initialized, Waiting for Start");
@@ -169,6 +181,7 @@ public abstract class Team2753Linear extends LinearOpMode {
 
         runtime.reset();
         SetStatus("Running OpMode");
+        RobotLog.v("================ Running OpMode =============");
     }
 
     public void SetStatus(String update){
@@ -457,7 +470,6 @@ public abstract class Team2753Linear extends LinearOpMode {
 
     //Telemetry
 
-    private boolean first = true;
     public void updateTelemetry() {
 
         telemetry.clearAll();
@@ -474,10 +486,8 @@ public abstract class Team2753Linear extends LinearOpMode {
             }
         }
 
-            for(Subsystem subsystem:subsystems)
-                subsystem.outputToTelemetry(telemetry);
-
-
+        for(Subsystem subsystem:subsystems)
+            subsystem.outputToTelemetry(telemetry);
 
         telemetry.update();
     }

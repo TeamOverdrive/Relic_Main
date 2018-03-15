@@ -47,6 +47,21 @@ public class Drive implements Subsystem {
             gyroRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_r");
             gyroLeft.setI2cAddress(leftAddr);
             gyroRight.setI2cAddress(rightAddr);
+
+
+            gyroLeft.calibrate();
+            while (gyroLeft.isCalibrating()){
+                Thread.yield();
+            }
+
+            gyroRight.calibrate();
+            while (gyroLeft.isCalibrating()){
+                Thread.yield();
+            }
+
+
+            gyroLeft.resetZAxisIntegrator();
+            gyroRight.resetZAxisIntegrator();
         }
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -122,7 +137,7 @@ public class Drive implements Subsystem {
     public boolean rightIsBusy(){return rightMotor.isBusy();}
 
     public double getGyroAngleDegrees(){
-        return (gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
+        return (gyroLeft.getIntegratedZValue());//+gyroRight.getIntegratedZValue())/2;
     }
 
     public double getGyroAngleRadians(){

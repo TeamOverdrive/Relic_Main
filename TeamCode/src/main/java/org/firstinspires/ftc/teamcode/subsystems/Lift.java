@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -27,23 +28,19 @@ public class Lift implements Subsystem {
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
+        RobotLog.v("============= Lift Init Started =============");
         liftMotor = linearOpMode.hardwareMap.get(DcMotor.class, "lift_motor");
-        //limitSwitch = linearOpMode.hardwareMap.get(DigitalChannel.class, "limit");
 
         liftMotor.setDirection(REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        zeroSensors();
+        RobotLog.v("============= Lift Init Finished =============");
     }
 
     @Override
     public void zeroSensors() {
         stop();
-        while(liftMotor.getCurrentPosition() != 0) {
-            setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        }
-        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     @Override
@@ -120,6 +117,8 @@ public class Lift implements Subsystem {
     }
 
     public void setLiftPower(double power){
+        if(liftMotor.getMode()!= DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+            setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftMotor.setPower(power);
     }
 

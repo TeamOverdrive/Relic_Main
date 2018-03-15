@@ -4,10 +4,12 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsAnalogOpticalDistanceS
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
@@ -29,7 +31,7 @@ public class Intake implements Subsystem{
     private I2cAddr leftAddr = new I2cAddr(0x28);
     private I2cAddr rightAddr = new I2cAddr(0x30);
 
-    private ModernRoboticsAnalogOpticalDistanceSensor front, back = null;
+    private DeviceInterfaceModule cdi = null;
 
     private static final double intakePower = 1.0;
 
@@ -40,8 +42,7 @@ public class Intake implements Subsystem{
         rightIntake = linearOpMode.hardwareMap.dcMotor.get("intake_right");
         intakeRelease = linearOpMode.hardwareMap.servo.get("intake_servo");
 
-        front = linearOpMode.hardwareMap.get(ModernRoboticsAnalogOpticalDistanceSensor.class, "front_ods");
-        back = linearOpMode.hardwareMap.get(ModernRoboticsAnalogOpticalDistanceSensor.class, "back_ods");
+        cdi = linearOpMode.hardwareMap.get(DeviceInterfaceModule.class, "Device Interface Module");
 
         intakeDistanceLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "left_range");
         intakeDistanceRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "right_range");
@@ -62,12 +63,25 @@ public class Intake implements Subsystem{
 
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        intakeDistanceLeft.enableLed(false);
+        intakeDistanceLeft.enableLed(true);
+        intakeDistanceRight.enableLed(true);
 
         releaseLock();
 
         if(!auto)
             releaseIntake();
+    }
+
+    public double getLeftDistanceCM(){
+        return intakeDistanceLeft.cmUltrasonic();
+    }
+
+    public double getLeftDistance(){
+        return intakeDistanceLeft.getDistance(DistanceUnit.INCH);
+    }
+
+    public double getRightDistance(){
+        return intakeDistanceRight.cmUltrasonic();
     }
 
     @Override
@@ -86,8 +100,11 @@ public class Intake implements Subsystem{
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Left Intake Power", leftIntake.getPower());
         telemetry.addData("Right Intake Power", rightIntake.getPower());
-        telemetry.addData("Front Ods", this.front.getLightDetected());
-        telemetry.addData("Back Ods", this.back.getLightDetected());
+
+        //Read each Analog Port of the CDI. 0-7
+
+        telemetry.addData("Front Ods", this.frontDetected());
+        telemetry.addData("Back Ods", this.backDetected());
     }
 
     public void setPower(double power){
@@ -122,4 +139,13 @@ public class Intake implements Subsystem{
     public void releaseLock(){intakeRelease.setPosition(0.16);}
 
     public void releaseIntake(){intakeRelease.setPosition(0.35);}
+
+    public boolean backDetected(){
+        return cdi.getAnalogInputVoltage(1) > 0.1;
+    }
+
+    public boolean frontDetected(){
+        return cdi.getAnalogInputVoltage(4) > 0.1;
+    }
+
 }

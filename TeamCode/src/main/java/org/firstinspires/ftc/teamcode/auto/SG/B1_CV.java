@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.SG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -18,6 +19,7 @@ import static org.firstinspires.ftc.teamcode.auto.AutoParams.jewelArmDelayMS;
  * Created by David Zheng | FTC 2753 Team Overdrive on 1/10/2018.
  */
 @Autonomous(name = "Blue 1 CV", group = "CV")
+@Disabled
 public class B1_CV extends Team2753Linear {
 
     @Override

@@ -28,7 +28,7 @@ public class VuMark {
 
     // Vuforia THings
     private String vuforiaLicenseKey ="";
-    private VuforiaLocalizer vuforia;
+    private ClosableVuforiaLocalizer vuforia;
     private VuforiaTrackables relicTrackables;
     private VuforiaTrackable relicTemplate;
     private RelicRecoveryVuMark ouputVuMark = RelicRecoveryVuMark.UNKNOWN;
@@ -63,7 +63,7 @@ public class VuMark {
         params.vuforiaLicenseKey = this.vuforiaLicenseKey;
         params.cameraDirection = cameraDirection;
 
-        this.vuforia = ClassFactory.createVuforiaLocalizer(params);
+        this.vuforia = new ClosableVuforiaLocalizer(params);
         vuforia.setFrameQueueCapacity(1);
         Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
 
@@ -85,6 +85,8 @@ public class VuMark {
      */
     public void disableVuforia(){
         this.relicTrackables.deactivate();
+        if(!vuforia.closed)
+            vuforia.close();
     }
 
     /**

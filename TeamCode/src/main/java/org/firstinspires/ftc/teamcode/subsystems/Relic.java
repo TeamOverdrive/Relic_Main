@@ -38,7 +38,7 @@ public class Relic implements Subsystem{
         elbowServo.setDirection(Servo.Direction.REVERSE);
 
         if(!auto){
-            setWristAngle(360-260);
+            setWristAngle(-100);
             setAngles(0,0);
             close();
         }
@@ -58,6 +58,7 @@ public class Relic implements Subsystem{
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Turret Position", turretServo.getPosition());
         telemetry.addData("Elbow Position", elbowServo.getPosition());
+        telemetry.addData("Wrist Position", wristServo.getPosition());
     }
 
     public void turretAndElbow(double turret, double elbow){
@@ -90,7 +91,6 @@ public class Relic implements Subsystem{
         double[] thedas = SolveInverseKinematics(l1, l2, x, y);
 
         if(thedas[0] < 360 && thedas[0] >-360) {
-
             double newTheda0 = (90-thedas[0]);
             double newTheda1 = (90-thedas[1]);
 

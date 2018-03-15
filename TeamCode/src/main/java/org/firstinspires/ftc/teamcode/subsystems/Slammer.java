@@ -70,61 +70,14 @@ public class Slammer implements Subsystem{
     public void autoSlam(){
         stopperUp();
         waitForTick(350);
-        setPower(0.3);
-        waitForTick(1000);
-        setPower(-0.25);
-        waitForTick(1500);
+        setPower(0.6);
+        waitForTick(1200);
         stop();
     }
 
     public void stopperDown(){stopServo.setPosition(ARMDOWN);}
 
     public void stopperUp(){stopServo.setPosition(ARMUP);}
-
-    /*
-    public void setTarget(boolean direction, double angle){
-        int newTarget = 0;
-
-        setRunMode(RUN_TO_POSITION);
-        if(direction)
-            newTarget = slamMotor.getCurrentPosition() + (int) (COUNTS_PER_MOTOR_REV * angle)/360;
-        else if(!direction)
-            newTarget = slamMotor.getCurrentPosition() + (int) (-1 * (COUNTS_PER_MOTOR_REV * angle)/360);
-        slamMotor.setTargetPosition(newTarget);
-    }
-
-    public void angleTurn(double speed, boolean direction, double angle, double timeoutS){
-
-        int newTarget = 0;
-        int counter = 0;
-
-        if(linearOpMode.opModeIsActive()){
-
-            if(direction)
-                newTarget = slamMotor.getCurrentPosition() + (int) (COUNTS_PER_MOTOR_REV * angle)/360;
-            if(!direction)
-                newTarget = slamMotor.getCurrentPosition() + (int) (-1 * (COUNTS_PER_MOTOR_REV * angle)/360);
-
-            slamMotor.setTargetPosition(newTarget);
-            setRunMode(RUN_TO_POSITION);
-            runtime.reset();
-            setPower(Math.abs(speed));
-            while(linearOpMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    slamMotor.isBusy()){
-
-                linearOpMode.telemetry.addData("Target", "Running to %7d", newTarget);
-                linearOpMode.telemetry.addData("Distance", Math.abs(newTarget - slamMotor.getCurrentPosition()));
-                linearOpMode.telemetry.addData("Counter", counter);
-                counter++;
-
-            }
-            setPower(0);
-            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
-
-    }
-    */
 
     public void waitForTick(long periodMs) {
 

@@ -19,7 +19,7 @@ import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoTurnSpeed;
  */
 
 @Autonomous(name = "Drive Test", group = "test")
-//@Disabled
+@Disabled
 public class DriveTurn extends Team2753Linear{
 
     //Runs position b1 for now bc its the closest on test field

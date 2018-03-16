@@ -36,40 +36,40 @@ public class Drive implements Subsystem {
     public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.141592);
     public static final double WHEEL_BASE = 12.625;
 
+    private boolean gyro = false;
+
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
         this.linearOpMode = linearOpMode;
         leftMotor = linearOpMode.hardwareMap.dcMotor.get("left_drive");
         rightMotor  = linearOpMode.hardwareMap.dcMotor.get("right_drive");
-
-        if(auto) {
-            gyroLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_l");
-            gyroRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_r");
-            gyroLeft.setI2cAddress(leftAddr);
-            gyroRight.setI2cAddress(rightAddr);
-
-
-            gyroLeft.calibrate();
-            while (gyroLeft.isCalibrating()){
-                Thread.yield();
-            }
-
-            gyroRight.calibrate();
-            while (gyroLeft.isCalibrating()){
-                Thread.yield();
-            }
-
-
-            gyroLeft.resetZAxisIntegrator();
-            gyroRight.resetZAxisIntegrator();
-        }
-
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
         if(auto){
             zeroSensors();
             setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            if(gyro) {
+                gyroLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_l");
+                gyroRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_r");
+                gyroLeft.setI2cAddress(I2cAddr.create8bit(0x98));
+                gyroRight.setI2cAddress(I2cAddr.create8bit(0x20));
+
+                gyroLeft.calibrate();
+                while (gyroLeft.isCalibrating()){
+                    Thread.yield();
+                }
+
+                gyroRight.calibrate();
+                while (gyroLeft.isCalibrating()){
+                    Thread.yield();
+                }
+
+
+                gyroLeft.resetZAxisIntegrator();
+                gyroRight.resetZAxisIntegrator();
+            }
 
         } else {
             // We are running teleop, we don't need them
@@ -81,6 +81,7 @@ public class Drive implements Subsystem {
     public void zeroSensors() {
         while(leftMotor.getCurrentPosition()!=0 && rightMotor.getCurrentPosition()!=0)
             setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         Thread.yield();
     }
 
@@ -137,7 +138,7 @@ public class Drive implements Subsystem {
     public boolean rightIsBusy(){return rightMotor.isBusy();}
 
     public double getGyroAngleDegrees(){
-        return (gyroLeft.getIntegratedZValue());//+gyroRight.getIntegratedZValue())/2;
+        return (gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
     }
 
     public double getGyroAngleRadians(){

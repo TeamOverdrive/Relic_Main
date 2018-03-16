@@ -118,6 +118,7 @@ public abstract class Team2753Linear extends LinearOpMode {
                 telemetry.addData("VuMark", vumark.getOuputVuMark());
                 telemetry.update();
 
+                savedVumark = vumark.getOuputVuMark();
                 try {
                     bm = vumark.getBm(20);
                 } catch (Exception e){

@@ -35,7 +35,7 @@ public class R_Far_Multi extends Team2753Linear {
                 // Drive 17 in
                 getDrive().encoderDrive(0.5, -18.5, -18.5, 2.5);
 
-                // Turn 54
+                // Turn 90
                 getDrive().turnCCW(90, 0.4, 3);
 
                 // Release Preloaded Glyph
@@ -211,11 +211,6 @@ public class R_Far_Multi extends Team2753Linear {
                 getIntake().setPower(0.6);
 
                 getDrive().turnCCW(10, 0.5, 2);
-
-                telemetry.addData("UltraSonic Left", getIntake().getLeftDistanceCM());
-                telemetry.addData("UltraSonic Right", getIntake().getRightDistance());
-
-                telemetry.update();
 
                 getDrive().encoderDrive(0.5, -25, -25, 5);
                 sleep(200);

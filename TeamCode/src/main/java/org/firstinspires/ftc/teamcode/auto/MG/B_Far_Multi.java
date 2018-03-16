@@ -14,7 +14,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.Drive.WHEEL_BASE;
  * Created by joshua9889 on 3/12/2018.
  */
 
-@Autonomous
+@Autonomous(group = "3 Glyph")
 public class B_Far_Multi extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,22 +24,50 @@ public class B_Far_Multi extends Team2753Linear {
         ElapsedTime t = new ElapsedTime();
         getJewel().hit(this.jewel_Color, Jewel_Color.Blue);
 
-        switch (RelicRecoveryVuMark.CENTER){
+        switch (WhatColumnToScoreIn()){
             case LEFT:
-                getDrive().encoderDrive(0.6, -23, -23, 5);
+                getDrive().encoderDrive(0.6, -24, -24, 5);
                 getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*90)/180, 0, 3); // -90
                 getDrive().encoderDrive(0.5, -6, -6, 3);
-                getDrive().turnCW(52, 0.3, 3); // -90-52
+
+                getDrive().turnCW(54, 0.3, 3); // -90-52
+                getDrive().encoderDrive(0.2, 1, 1, 3);
                 getSlammer().stopperUp();
                 sleep(400);
+                getDrive().encoderDrive(0.2, -3, -3, 3);
+
                 getIntake().releaseIntake();
                 getDrive().encoderDrive(0.5, -10, -10, 2);
                 getRelic().setAngles(0,0);
+                getRelic().setWristPostion(50);
                 sleep(400);
+
                 getSlammer().stopperDown();
-                getIntake().intake();
                 getDrive().turnCW(8, 1.0, 3); // -150
+
+                getIntake().reverse();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sleep(1000);
+                        getIntake().intake();
+                    }
+                }).start();
                 getDrive().encoderDrive(1.0, -35, -35, 6);
+
+                boolean left = false;
+                if(!(getIntake().backDetected() && getIntake().frontDetected())){
+                    left = true;
+                    getIntake().reverse();
+                    sleep(500);
+                    getIntake().intake();
+                    getDrive().encoderDrive(0.4, -10, -10, 3);
+                } else {
+                    getIntake().reverse();
+                }
+
+
+
                 while (opModeIsActive() && t.seconds()>24 && !(getIntake().frontDetected() || getIntake().backDetected())){
                     Thread.yield();
                     telemetry.clearAll();
@@ -50,34 +78,112 @@ public class B_Far_Multi extends Team2753Linear {
                 sleep(500);
                 getIntake().reverse();
 
-                getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*5)/180, 3); // -158
-                getIntake().intake();
+                if(left){
+                    getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*10)/180, 3);
+                    getIntake().intake();
 
-                getDrive().encoderDrive(0.8, 35, 35, 3);
-                getDrive().encoderDrive(0.2, 5, 5, 2);
-                getIntake().reverse();
+                    getDrive().encoderDrive(0.8, 53, 53, 3);
+                } else {
+                    getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*8)/180, 3);
+                    getIntake().intake();
+
+                    getDrive().encoderDrive(0.8, 49, 49, 3);
+                }
+
                 getSlammer().autoSlam();
-                getDrive().encoderDrive(0.3, -4, -4, 1);
-                getDrive().encoderDrive(1.0, 3, 3, 1);
-                getDrive().encoderDrive(1.0, -5, -5, 4);
+                getDrive().encoderDrive(0.2, -4, -4, 1);
+                getSlammer().setPower(-1);
+                sleep(100);
+                getSlammer().stop();
                 break;
             case CENTER:
-                getDrive().encoderDrive(0.5, -23, -23, 6);
-                getDrive().encoderDrive(0.4, -(WHEEL_BASE*PI*90)/180, 0, 3); // -90
-                getDrive().encoderDrive(0.5, -11, -11, 5);
-                getDrive().turnCW(54, 0.2, 3); // -90-54
+                getDrive().encoderDrive(0.6, -24, -24, 5);
+                getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*90)/180, 0, 3); // -90
+                getDrive().encoderDrive(0.5, -13, -13, 3);
+
+                getDrive().turnCW(54, 0.3, 3); // -90-52
+                getDrive().encoderDrive(0.2, 1, 1, 3);
                 getSlammer().stopperUp();
                 sleep(400);
+                getDrive().encoderDrive(0.2, -3, -3, 3);
+
                 getIntake().releaseIntake();
                 getDrive().encoderDrive(0.5, -10, -10, 2);
                 getRelic().setAngles(0,0);
+                getRelic().setWristPostion(50);
                 sleep(400);
-                getSlammer().stopperDown();
-                getIntake().intake();
-                getDrive().turnCW(15, 1.0, 3); // -90-54-15
-                getDrive().encoderDrive(0.6, -25, -25, 6);
 
-                sleep(300);
+                getSlammer().stopperDown();
+                getDrive().turnCW(20, 1.0, 3); // -150
+
+                getIntake().reverse();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sleep(1000);
+                        getIntake().intake();
+                    }
+                }).start();
+                getDrive().encoderDrive(1.0, -35, -35, 6);
+
+                getIntake().reverse();
+                sleep(500);
+                getIntake().intake();
+                getDrive().encoderDrive(0.4, -10, -10, 3);
+
+                while (opModeIsActive() && t.seconds()>24 && !(getIntake().frontDetected() || getIntake().backDetected())){
+                    Thread.yield();
+                    telemetry.clearAll();
+                    telemetry.addData("Front", getIntake().frontDetected());
+                    telemetry.addData("Back", getIntake().backDetected());
+                    telemetry.update();
+                }
+                sleep(500);
+                getIntake().reverse();
+
+                getDrive().encoderDrive(0.8, 52, 52, 3);
+                getSlammer().autoSlam();
+                getDrive().encoderDrive(0.2, -2, -2, 1);
+                getSlammer().setPower(-1);
+                sleep(100);
+                getSlammer().stop();
+                break;
+            case RIGHT:
+                // Drive off
+                getDrive().encoderDrive(0.6, -30, -30, 3);
+
+                //Turn 90
+                getDrive().turnCW(90, 0.3, 2);
+
+                // Drive 17 in
+                getDrive().encoderDrive(0.5, -21, -21, 2.5);
+
+                // Turn 90
+                getDrive().turnCW(90, 0.4, 3);
+
+                // Release Preloaded Glyph
+                getSlammer().stopperUp();
+                sleep(600);
+
+                // Release Intake
+                getIntake().releaseIntake();
+
+                // Drive Backward
+                getDrive().encoderDrive(0.6, -10, -10, 3);
+
+                // Relic
+                getRelic().setAngles(0,0);
+                getSlammer().stopperDown();
+
+                // Start intaking
+                getIntake().intake();
+
+                getDrive().turnCCW(28, 0.5, 2);
+
+                getDrive().encoderDrive(0.5, -25, -25, 5);
+                getRelic().lock();
+                sleep(200);
+
                 boolean farther = false;
                 if(!(getIntake().frontDetected() || getIntake().backDetected())){
                     getIntake().reverse();
@@ -94,85 +200,21 @@ public class B_Far_Multi extends Team2753Linear {
                     telemetry.addData("Back", getIntake().backDetected());
                     telemetry.update();
                 }
-                sleep(500);
+
                 getIntake().reverse();
-                sleep(500);
-                getIntake().intake();
-
-                if(farther) {
-                    getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*2)/180, 3);
-                    getDrive().encoderDrive(0.8, 25, 25, 3);
-                    getDrive().turnCW(5, 0.5, 4);
-                } else {
-                    getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*1)/180, 3);
-                    getDrive().encoderDrive(0.8, 27, 27, 3);
-                    getDrive().turnCW(5, 0.5, 4);
-                }
-
-                getDrive().encoderDrive(0.3, 5, 5, 2);
-                getIntake().reverse();
-                getSlammer().autoSlam();
-                getDrive().encoderDrive(0.3, -4, -4, 1);
-                getDrive().encoderDrive(1.0, 3, 3, 1);
-                getDrive().encoderDrive(1.0, -5, -5, 4);
-                break;
-            case RIGHT:
-                getDrive().encoderDrive(0.5, -23, -23, 6);
-                getDrive().encoderDrive(0.4, -(WHEEL_BASE*PI*90)/180, 0, 3); // -90
-                getDrive().encoderDrive(0.5, -18, -18, 5);
-                getDrive().turnCW(54, 0.2, 3);
-                getSlammer().stopperUp();
-                sleep(400);
-                getIntake().releaseIntake();
-                getDrive().encoderDrive(0.5, -5, -5, 1);
-                getRelic().setAngles(0,0);
-                sleep(400);
-                getSlammer().stopperDown();
-                getIntake().intake();
-                getDrive().turnCW(90-54, 1.0, 3); // -90-54-15
-                getDrive().encoderDrive(0.6, -25, -25, 6);
-
-                boolean fartherR = false;
-                if(!(getIntake().frontDetected() || getIntake().backDetected())){
+                boolean farther3 = false;
+                if(!getIntake().frontDetected() && !getIntake().backDetected()){
+                    sleep(600);
+                    getIntake().intake();
+                    getDrive().encoderDrive(0.2, -4, -4, 2);
                     getIntake().reverse();
-                    sleep(400);
-                    getIntake().intake();
-                    getDrive().encoderDrive(0.2, -7, -7, 3);
-                    fartherR = true;
+                    farther3 = true;
                 }
 
-                while (opModeIsActive() && t.seconds()>24 && !(getIntake().frontDetected() || getIntake().backDetected())){
-                    Thread.yield();
-                    telemetry.clearAll();
-                    telemetry.addData("Front", getIntake().frontDetected());
-                    telemetry.addData("Back", getIntake().backDetected());
-                    telemetry.update();
-                }
-                sleep(500);
-                getIntake().reverse();
-
-                if(fartherR) {
-//                    if(getDrive().getGyroAngleDegrees()<360 && getDrive().getGyroAngleDegrees()>-360)
-//                        getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*(-150+getDrive().getGyroAngleDegrees()+180))/180, 3);
-//                    else
-                        getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*4)/180, 3);
-
-                    getIntake().intake();
-                    getDrive().encoderDrive(0.8, 35, 35, 3);
-                } else {
-//                    if(getDrive().getGyroAngleDegrees()<360 && getDrive().getGyroAngleDegrees()>-360)
-//                        getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*(-160+getDrive().getGyroAngleDegrees()+180))/180, 3);
-//                    else
-                        getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*3)/180, 3);
-                    getIntake().intake();
-                    getDrive().encoderDrive(0.8, 30, 30, 3);
-                }
-
-                getIntake().reverse();
+                getDrive().turnCCW(2, 0.3, 2);
+                getDrive().encoderDrive(1, 49, 49, 3);
                 getSlammer().autoSlam();
-                getDrive().encoderDrive(0.3, -4, -4, 1);
-                getDrive().encoderDrive(1.0, 3, 3, 1);
-                getDrive().encoderDrive(1.0, -5, -5, 4);
+                getDrive().encoderDrive(0.3, -4, -4, 3);
                 break;
         }
     }

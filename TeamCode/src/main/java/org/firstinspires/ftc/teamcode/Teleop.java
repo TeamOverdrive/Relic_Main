@@ -40,6 +40,10 @@ public class Teleop extends Team2753Linear {
         waitForStart("Teleop", TELEOP, false);
         SetStatus("Teleop");
 
+        getRelic().setAngles(0,0);
+        getRelic().setWristPostion(65);
+        getRelic().lock();
+
         // Loop while we are running Teleop
         while (opModeIsActive()) {
 /*
@@ -200,28 +204,29 @@ public class Teleop extends Team2753Linear {
 
             if(gamepad2.dpad_up){
                 getRelic().setAngles(0, 190);
-                getRelic().setWristAngle(-130);
+                getRelic().setWristPostion(34);
                 current = Teleop.Relic.Retract;
             } else if(gamepad2.dpad_down){
                 getRelic().setAngles(140, 190);
-                getRelic().setWristAngle(30);
+                getRelic().setWristPostion(50);
                 current = Teleop.Relic.Extend;
             } else if(gamepad2.right_trigger>0.3){
                 getRelic().setAngles(0,0);
-                getRelic().setWristAngle(30);
+                getRelic().setWristPostion(50);
                 current = Teleop.Relic.Retract;
             }
 
             if(current == Teleop.Relic.Extend){
-                if(t.milliseconds()>2000)
-                    getRelic().setWristAngle(-130);
-                else
-                    getRelic().setWristAngle(30);
+                if(t.milliseconds()<2000){
+                    getRelic().setWristPostion(50);
+                }else if(t.milliseconds()>2000) {
+                    getRelic().setWristPostion(35);
+                }
             } else {
                 t.reset();
             }
-
-            //getJewel().retract(true);
+            
+            getJewel().retract(true);
 
             SetStatus("Running OpMode");
             updateTelemetry();

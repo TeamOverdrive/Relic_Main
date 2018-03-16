@@ -19,11 +19,6 @@ public class Relic implements Subsystem{
     private Servo wristServo = null;
     private Servo fingerServo = null;
 
-    // Used to find the position we want with a
-    // 8-rotation servo motor.
-    double oneRotation = (1.0/8.0)*(24.0/16.0);
-    double oneDegree = (oneRotation/360.0);
-
     private double l1 = 17.5; // Inches of first section
     private double l2 = 15; // Inches of second section
 
@@ -36,12 +31,6 @@ public class Relic implements Subsystem{
 
         turretServo.setDirection(Servo.Direction.REVERSE);
         elbowServo.setDirection(Servo.Direction.REVERSE);
-
-        if(!auto){
-            setWristAngle(-100);
-            setAngles(0,0);
-            close();
-        }
     }
 
     @Override
@@ -108,9 +97,20 @@ public class Relic implements Subsystem{
         fingerServo.setPosition(0);
     }
 
+    public void lock(){
+        fingerServo.setPosition(0.35);
+    }
+
+    double oneRotation = ((16.0/24.0)/8.0);
+    double oneDegree = (oneRotation/360);
+
     public void setWristAngle(double angle){
-        angle += 360;
+        angle -= 360;
         wristServo.setPosition(angle*oneDegree);
+    }
+
+    public void setWristPostion(double pos){
+        wristServo.setPosition(pos/255.0);
     }
 
 }

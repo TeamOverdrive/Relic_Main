@@ -22,6 +22,10 @@ public class Teleop extends Team2753Linear {
     private boolean lastPressed = false;
     private boolean deploy = false;
 
+    private boolean intakeRelease = true;
+    private boolean releaseLastPressed = false;
+    private boolean release = true;
+
     private enum Relic{
         Retract, Extend
     }
@@ -128,15 +132,22 @@ public class Teleop extends Team2753Linear {
 
 
             //Intake Release
-
             if (Ryan.y) {
-                getIntake().releaseIntake();
-                //getJewel().leftHit();
+                if (releaseLastPressed != intakeRelease) {
+                    if (release) {
+                        getIntake().releaseIntake();
+                        release = false;
+                    } else {
+                        getIntake().releaseLock();
+                        release = true;
+                    }
+                }
+                releaseLastPressed = intakeRelease;
             }
-            else if (Ryan.x){
-                getIntake().releaseLock();
-                //getJewel().rightHit();
+            else {
+                releaseLastPressed = !intakeRelease;
             }
+
 
             /*  Gamepad 2 Controls  */
 
@@ -181,11 +192,6 @@ public class Teleop extends Team2753Linear {
                 lastPressed = !stopper;
             }
 
-            getJewel().retract(true);
-
-            SetStatus("Running OpMode");
-            updateTelemetry();
-
             if(gamepad2.dpad_up){
                 getRelic().setAngles(0, 190);
                 getRelic().setWristAngle(-130);
@@ -209,7 +215,10 @@ public class Teleop extends Team2753Linear {
                 t.reset();
             }
 
+            getJewel().retract(true);
 
+            SetStatus("Running OpMode");
+            updateTelemetry();
         }
 
         finalAction();

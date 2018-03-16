@@ -121,15 +121,21 @@ public class Teleop extends Team2753Linear {
                 getIntake().reverse();
             else if (Ryan.right_bumper)
                 getIntake().intake();
-            /*
+
             else if (Ryan.left_trigger > 0)
                 getIntake().shiftLeft();
-                */
+
             else if (Ryan.right_trigger > 0)
                 getIntake().shiftRight();
             else
                 getIntake().stop();
 
+            if(Ryan.x){
+                getJewel().deploy(true);
+            }
+            else{
+                getJewel().retract(true);
+            }
 
             //Intake Release
             if (Ryan.y) {

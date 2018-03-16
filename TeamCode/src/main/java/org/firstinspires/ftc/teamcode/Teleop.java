@@ -221,7 +221,7 @@ public class Teleop extends Team2753Linear {
                 t.reset();
             }
 
-            getJewel().retract(true);
+            //getJewel().retract(true);
 
             SetStatus("Running OpMode");
             updateTelemetry();

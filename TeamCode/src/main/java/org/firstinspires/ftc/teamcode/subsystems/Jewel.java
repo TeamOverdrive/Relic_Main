@@ -30,7 +30,6 @@ public class Jewel implements Subsystem {
     public void init(LinearOpMode linearOpMode, boolean auto) {
         arm = linearOpMode.hardwareMap.get(Servo.class, "jewel_arm");
         wrist = linearOpMode.hardwareMap.get(Servo.class, "jewel_flicker");
-
         stop();
     }
 

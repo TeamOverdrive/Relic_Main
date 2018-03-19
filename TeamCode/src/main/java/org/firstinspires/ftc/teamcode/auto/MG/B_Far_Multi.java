@@ -92,6 +92,10 @@ public class B_Far_Multi extends Team2753Linear {
 
                 getSlammer().autoSlam();
                 getDrive().encoderDrive(0.2, -4, -4, 1);
+                if(t.seconds()<26){
+                    getDrive().encoderDrive(0.3, 3, 3, 2);
+                    getDrive().encoderDrive(0.3, -4, -4, 2);
+                }
                 getSlammer().setPower(-1);
                 sleep(100);
                 getSlammer().stop();
@@ -144,26 +148,32 @@ public class B_Far_Multi extends Team2753Linear {
                 getDrive().encoderDrive(0.8, 52, 52, 3);
                 getSlammer().autoSlam();
                 getDrive().encoderDrive(0.2, -2, -2, 1);
+
+                if(t.seconds()<26){
+                    getDrive().encoderDrive(0.3, 2, 2, 2);
+                    getDrive().encoderDrive(0.3, -4, -4, 2);
+                }
+
                 getSlammer().setPower(-1);
                 sleep(100);
                 getSlammer().stop();
                 break;
             case RIGHT:
                 // Drive off
-                getDrive().encoderDrive(0.6, -30, -30, 3);
+                getDrive().encoderDrive(0.4, -30, -30, 3);
 
                 //Turn 90
-                getDrive().turnCW(90, 0.3, 2);
+                getDrive().turnCW(90, 0.3, 3);
 
                 // Drive 17 in
-                getDrive().encoderDrive(0.5, -21, -21, 2.5);
+                getDrive().encoderDrive(0.5, -19, -19, 3);
 
                 // Turn 90
                 getDrive().turnCW(90, 0.4, 3);
 
                 // Release Preloaded Glyph
                 getSlammer().stopperUp();
-                sleep(600);
+                sleep(800);
 
                 // Release Intake
                 getIntake().releaseIntake();
@@ -173,6 +183,8 @@ public class B_Far_Multi extends Team2753Linear {
 
                 // Relic
                 getRelic().setAngles(0,0);
+                getRelic().setWristPostion(64);
+                getRelic().close();
                 getSlammer().stopperDown();
 
                 // Start intaking
@@ -185,7 +197,7 @@ public class B_Far_Multi extends Team2753Linear {
                 sleep(200);
 
                 boolean farther = false;
-                if(!(getIntake().frontDetected() || getIntake().backDetected())){
+                if(!(getIntake().frontDetected() && getIntake().backDetected())){
                     getIntake().reverse();
                     sleep(400);
                     getIntake().intake();
@@ -193,7 +205,7 @@ public class B_Far_Multi extends Team2753Linear {
                     farther = true;
                 }
 
-                while (opModeIsActive() && t.seconds()>24 && !(getIntake().frontDetected() || getIntake().backDetected())){
+                while (opModeIsActive() && t.seconds()>24 && !(getIntake().frontDetected() && getIntake().backDetected())){
                     Thread.yield();
                     telemetry.clearAll();
                     telemetry.addData("Front", getIntake().frontDetected());
@@ -211,10 +223,20 @@ public class B_Far_Multi extends Team2753Linear {
                     farther3 = true;
                 }
 
-                getDrive().turnCCW(2, 0.3, 2);
-                getDrive().encoderDrive(1, 49, 49, 3);
+                getDrive().turnCW(6, 0.3, 2);
+
+                if(farther3){
+                    getDrive().encoderDrive(0.6, 46.5, 46.5, 3);
+                } else {
+                    getDrive().encoderDrive(0.6, 45, 45, 3);
+                }
+
                 getSlammer().autoSlam();
                 getDrive().encoderDrive(0.3, -4, -4, 3);
+                if(t.seconds()<26){
+                    getDrive().encoderDrive(0.3, 3, 3, 2);
+                    getDrive().encoderDrive(0.3, -4, -4, 2);
+                }
                 break;
         }
     }

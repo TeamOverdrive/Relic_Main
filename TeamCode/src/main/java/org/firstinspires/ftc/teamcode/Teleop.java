@@ -31,6 +31,7 @@ public class Teleop extends Team2753Linear {
     }
 
     private Relic current = Teleop.Relic.Retract;
+    private boolean isRelicDeployed = false;
 
     private ElapsedTime t = new ElapsedTime();
 
@@ -42,33 +43,20 @@ public class Teleop extends Team2753Linear {
 
         getRelic().setAngles(0,0);
         getRelic().setWristPostion(65);
-        getRelic().lock();
+        getRelic().close();
+
+        if(opModeIsActive()){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sleep(700);
+                    getRelic().lock();
+                }
+            }).start();
+        }
 
         // Loop while we are running Teleop
         while (opModeIsActive()) {
-/*
-                     _______                                    _______
-                  __/_______\_____                       ______/_______\__
-                /                 \                     /                  \
-               /                   \___________________/                    \
-              |         __                                                   |
-              |      __|  |__                                 ( Y )          |
-              |     |__    __|                           ( X )     ( B )     |
-             |         |__|                                   ( A )           |
-             |                                                                |
-             |                                                                |
-             |                                                                |
-            |                                                                  |
-            |                                                                  |
-            |                            -                                      |
-            |                                                                  |
-           |                                                                    |
-           |                                                                    |
-           |                                                                    |
-           |                                                                    |
-           |                                                                    |
-            \________/                                                \________/
-*/
 
             /*Gamepad 1 Controls*/
 
@@ -189,11 +177,14 @@ public class Teleop extends Team2753Linear {
                 if(lastPressed!=stopper){
                     if(deploy) {
                         getSlammer().stopperDown();
-                        getRelic().open();
+                        if(isRelicDeployed){
+                            getRelic().open();
+                        }
                         deploy = false;
                     } else {
                         getSlammer().stopperUp();
-                        getRelic().close();
+                        if(isRelicDeployed)
+                            getRelic().close();
                         deploy = true;
                     }
                 }
@@ -202,18 +193,33 @@ public class Teleop extends Team2753Linear {
                 lastPressed = !stopper;
             }
 
-            if(gamepad2.dpad_up){
+            getJewel().retract(true);
+
+            SetStatus("Running OpMode");
+            updateTelemetry();
+
+            if(gamepad2.dpad_down){
                 getRelic().setAngles(0, 190);
                 getRelic().setWristPostion(34);
+                getRelic().open();
                 current = Teleop.Relic.Retract;
-            } else if(gamepad2.dpad_down){
+                isRelicDeployed = true;
+            } else if(gamepad2.dpad_up){
                 getRelic().setAngles(140, 190);
                 getRelic().setWristPostion(50);
+                getRelic().close();
                 current = Teleop.Relic.Extend;
-            } else if(gamepad2.right_trigger>0.3){
+                isRelicDeployed = true;
+            } else if(gamepad2.dpad_right){
                 getRelic().setAngles(0,0);
                 getRelic().setWristPostion(50);
+                getRelic().close();
                 current = Teleop.Relic.Retract;
+                isRelicDeployed = true;
+            } else if(gamepad2.dpad_left){
+                getRelic().setAngles(0,0);
+                getRelic().setWristPostion(70);
+                isRelicDeployed = false;
             }
 
             if(current == Teleop.Relic.Extend){
@@ -225,8 +231,6 @@ public class Teleop extends Team2753Linear {
             } else {
                 t.reset();
             }
-            
-            getJewel().retract(true);
 
             SetStatus("Running OpMode");
             updateTelemetry();

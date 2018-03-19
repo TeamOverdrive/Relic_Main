@@ -27,5 +27,6 @@ public class TestRelicServo extends LinearOpMode{
         mRelic.setWristPostion(34);// Deploy To Intake
         sleep(3000);
         mRelic.setWristPostion(50);//
+        sleep(3000);
     }
 }

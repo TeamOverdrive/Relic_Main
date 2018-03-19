@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -15,6 +16,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.Drive.WHEEL_BASE;
  */
 
 @Autonomous(group = "3 Glyph")
+@Disabled
 public class R_Back_3Glyph extends Team2753Linear {
 
     @Override

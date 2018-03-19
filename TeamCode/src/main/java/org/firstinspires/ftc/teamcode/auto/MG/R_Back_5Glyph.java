@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Team2753Linear;
@@ -14,6 +15,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.Drive.WHEEL_BASE;
  */
 
 @Autonomous(group = "5 Glyph")
+@Disabled
 public class R_Back_5Glyph extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {

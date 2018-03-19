@@ -92,6 +92,10 @@ public class B_Far_Multi extends Team2753Linear {
 
                 getSlammer().autoSlam();
                 getDrive().encoderDrive(0.2, -4, -4, 1);
+                if(t.seconds()<26){
+                    getDrive().encoderDrive(0.3, 3, 3, 2);
+                    getDrive().encoderDrive(0.3, -4, -4, 2);
+                }
                 getSlammer().setPower(-1);
                 sleep(100);
                 getSlammer().stop();
@@ -144,6 +148,12 @@ public class B_Far_Multi extends Team2753Linear {
                 getDrive().encoderDrive(0.8, 52, 52, 3);
                 getSlammer().autoSlam();
                 getDrive().encoderDrive(0.2, -2, -2, 1);
+
+                if(t.seconds()<26){
+                    getDrive().encoderDrive(0.3, 2, 2, 2);
+                    getDrive().encoderDrive(0.3, -4, -4, 2);
+                }
+
                 getSlammer().setPower(-1);
                 sleep(100);
                 getSlammer().stop();
@@ -213,7 +223,7 @@ public class B_Far_Multi extends Team2753Linear {
                     farther3 = true;
                 }
 
-                getDrive().turnCCW(6, 0.3, 2);
+                getDrive().turnCW(6, 0.3, 2);
 
                 if(farther3){
                     getDrive().encoderDrive(0.6, 46.5, 46.5, 3);
@@ -223,6 +233,10 @@ public class B_Far_Multi extends Team2753Linear {
 
                 getSlammer().autoSlam();
                 getDrive().encoderDrive(0.3, -4, -4, 3);
+                if(t.seconds()<26){
+                    getDrive().encoderDrive(0.3, 3, 3, 2);
+                    getDrive().encoderDrive(0.3, -4, -4, 2);
+                }
                 break;
         }
     }

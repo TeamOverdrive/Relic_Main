@@ -14,7 +14,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.Drive.WHEEL_BASE;
  * Created by joshua9889 on 3/15/2018.
  */
 
-@Autonomous
+@Autonomous(group = "3 Glyph")
 public class R_Far_Multi extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {

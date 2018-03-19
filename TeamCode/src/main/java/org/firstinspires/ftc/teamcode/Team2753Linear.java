@@ -142,7 +142,7 @@ public abstract class Team2753Linear extends LinearOpMode {
             int blueValue = 0;
 
             // Scan area for red and blue pixels
-            for (int x = (bm.getWidth()/2)+(bm.getWidth()/5); x < ((bm.getWidth()/2)+(2*bm.getWidth()/5)); x++) {
+            for (int x = (bm.getWidth()/2)+(bm.getWidth()/6); x < ((bm.getWidth()/2)+(18*bm.getWidth()/64)); x++) {
                 for (int y = (2*bm.getHeight() / 5) + (bm.getHeight() / 2); y < bm.getHeight(); y++) {
                     int pixel = bm.getPixel(x,y);
                     redValue = red(pixel);

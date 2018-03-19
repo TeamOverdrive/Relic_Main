@@ -57,29 +57,6 @@ public class Teleop extends Team2753Linear {
 
         // Loop while we are running Teleop
         while (opModeIsActive()) {
-/*
-                     _______                                    _______
-                  __/_______\_____                       ______/_______\__
-                /                 \                     /                  \
-               /                   \___________________/                    \
-              |         __                                                   |
-              |      __|  |__                                 ( Y )          |
-              |     |__    __|                           ( X )     ( B )     |
-             |         |__|                                   ( A )           |
-             |                                                                |
-             |                                                                |
-             |                                                                |
-            |                                                                  |
-            |                                                                  |
-            |                            -                                      |
-            |                                                                  |
-           |                                                                    |
-           |                                                                    |
-           |                                                                    |
-           |                                                                    |
-           |                                                                    |
-            \________/                                                \________/
-*/
 
             /*Gamepad 1 Controls*/
 
@@ -153,10 +130,7 @@ public class Teleop extends Team2753Linear {
             }
 
             //Intake Release
-
             if (Ryan.y) {
-                getIntake().releaseIntake();
-                //getJewel().leftHit();
                 if (releaseLastPressed != intakeRelease) {
                     if (release) {
                         getIntake().releaseIntake();
@@ -168,9 +142,6 @@ public class Teleop extends Team2753Linear {
                 }
                 releaseLastPressed = intakeRelease;
             }
-            else if (Ryan.x){
-                getIntake().releaseLock();
-                //getJewel().rightHit();
             else {
                 releaseLastPressed = !intakeRelease;
             }

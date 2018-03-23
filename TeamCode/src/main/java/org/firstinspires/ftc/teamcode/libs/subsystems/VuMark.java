@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.libs;
+package org.firstinspires.ftc.teamcode.libs.subsystems;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
@@ -8,7 +8,6 @@ import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
 import com.vuforia.Vuforia;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;

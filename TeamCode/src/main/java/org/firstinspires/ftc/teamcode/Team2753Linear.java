@@ -3,10 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsUsbDeviceInterfaceModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -15,23 +13,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.libs.AutoTransitioner;
-import org.firstinspires.ftc.teamcode.libs.VuMark;
+import org.firstinspires.ftc.teamcode.libs.subsystems.VuMark;
 import org.firstinspires.ftc.teamcode.subsystems.Relic;
 import org.firstinspires.ftc.teamcode.subsystems.Subsystem;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark.CENTER;
-import static org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark.LEFT;
-import static org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark.RIGHT;
-import static org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark.UNKNOWN;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoSpeed;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoTurnSpeed;
-import static org.firstinspires.ftc.teamcode.auto.AutoParams.vuMarkVotes;
-import static org.firstinspires.ftc.teamcode.libs.VuMark.SaveImage;
-import static org.firstinspires.ftc.teamcode.libs.VuMark.blue;
-import static org.firstinspires.ftc.teamcode.libs.VuMark.red;
+import static org.firstinspires.ftc.teamcode.libs.subsystems.VuMark.SaveImage;
+import static org.firstinspires.ftc.teamcode.libs.subsystems.VuMark.blue;
+import static org.firstinspires.ftc.teamcode.libs.subsystems.VuMark.red;
 import static org.firstinspires.ftc.teamcode.subsystems.Drive.COUNTS_PER_INCH;
 
 /**

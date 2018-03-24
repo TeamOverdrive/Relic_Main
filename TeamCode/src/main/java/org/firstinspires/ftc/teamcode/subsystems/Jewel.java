@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Team2753Linear;
 
 import static java.lang.Thread.sleep;
-import static org.firstinspires.ftc.teamcode.auto.AutoParams.jewelVotes;
 
 /**
  * Created by joshua9889 on 12/10/2017.
@@ -111,5 +108,10 @@ public class Jewel implements Subsystem {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Jewel";
     }
 }

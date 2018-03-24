@@ -28,12 +28,11 @@ public class Drive implements Subsystem {
     private LinearOpMode linearOpMode = null;
 
     private ElapsedTime runtime = new ElapsedTime();
-    // FORWARD_SPEED was running the robot in reverse to the TeleOp program setup.  Speed is reversed to standardize the robot orientation.
 
-    private static final double COUNTS_PER_MOTOR_REV = 1120;     // AndyMark NeveRest 40
+    private static double COUNTS_PER_MOTOR_REV = 1120;     // AndyMark NeveRest 40
     private static final double DRIVE_GEAR_REDUCTION = 0.6666 ;     // This is < 1.0 if geared UP
     private static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference w/ wheel base
-    public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.141592);
+    public static double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.141592);
     public static final double WHEEL_BASE = 12.625;
 
     private boolean gyro = false;
@@ -45,6 +44,10 @@ public class Drive implements Subsystem {
         rightMotor  = linearOpMode.hardwareMap.dcMotor.get("right_drive");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
+
+        // Recalculate value based on configuration
+        COUNTS_PER_MOTOR_REV = leftMotor.getMotorType().getTicksPerRev();
+        COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.141592);
 
         if(auto){
             zeroSensors();
@@ -152,6 +155,7 @@ public class Drive implements Subsystem {
      * @param speed         The speed that the motors are moving.
      * @param timeoutS      The amount of time this method is allowed to execute.
      */
+    @Deprecated
     public void turnCW(double degrees, double speed, double timeoutS){
 
         double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
@@ -161,6 +165,7 @@ public class Drive implements Subsystem {
 
     }
 
+    @Deprecated
     public void turnProportionCW(double degrees, double timeoutS){
 
         double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
@@ -169,6 +174,7 @@ public class Drive implements Subsystem {
         encoderProportionDrive(0.0114286, 0, 0.0755714, leftDistance, rightDistance, timeoutS);
     }
 
+    @Deprecated
     public void turnDirectCW(double degrees, double speed, double timeoutS){
         double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
         double rightDistance = (WHEEL_BASE*PI*degrees)/360;
@@ -176,6 +182,7 @@ public class Drive implements Subsystem {
         encoderDirectDrive(speed, leftDistance, rightDistance, timeoutS);
     }
 
+    @Deprecated
     public void turnPIDCW(LinearOpMode linearOpMode, double degrees, double timeoutS, double P, double I, double D, double bias){
 
         double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
@@ -193,6 +200,7 @@ public class Drive implements Subsystem {
      * @param timeoutS      The amount of time this method is allowed to execute.
      */
 
+    @Deprecated
     public void turnCCW(double degrees, double speed, double timeoutS){
 
         double leftDistance = (WHEEL_BASE*PI*degrees)/360;
@@ -202,6 +210,7 @@ public class Drive implements Subsystem {
 
     }
 
+    @Deprecated
     public void turnProportionCCW(double degrees, double timeoutS){
 
         double leftDistance = (WHEEL_BASE*PI*degrees)/360;
@@ -210,6 +219,7 @@ public class Drive implements Subsystem {
         encoderProportionDrive(0.0114286, 0, 0.0755714, leftDistance, rightDistance, timeoutS);
     }
 
+    @Deprecated
     public void turnDirectCCW(double degrees, double speed, double timeoutS){
         double leftDistance = (WHEEL_BASE*PI*degrees)/360;
         double rightDistance = (WHEEL_BASE*PI*degrees)/-360;
@@ -217,6 +227,7 @@ public class Drive implements Subsystem {
         encoderDirectDrive(speed, leftDistance, rightDistance, timeoutS);
     }
 
+    @Deprecated
     public void turnPIDCCW(LinearOpMode linearOpMode, double degrees, double timeoutS, double P, double I, double D, double bias){
 
         double leftDistance = (WHEEL_BASE*PI*degrees)/360;
@@ -239,6 +250,7 @@ public class Drive implements Subsystem {
      * @param timeoutS    The amount of time this method is allowed to execute.
      */
 
+    @Deprecated
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
@@ -288,6 +300,7 @@ public class Drive implements Subsystem {
         }
     }
 
+    @Deprecated
     public void encoderTargetDrive(double speed, double leftTarget, double rightTarget, double timeoutS) {
         // Ensure that the opmode is still active
         if (linearOpMode.opModeIsActive()) {
@@ -332,6 +345,7 @@ public class Drive implements Subsystem {
         }
     }
 
+    @Deprecated
     public void encoderProportionDrive(double squareProportion, double proportion, double bias,
                                        double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
@@ -394,6 +408,7 @@ public class Drive implements Subsystem {
         }
     }
 
+    @Deprecated
     public void encoderPDDrive(LinearOpMode linearOpMode, double Kp2, double Kp, double Kd, double bias, double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
@@ -469,6 +484,7 @@ public class Drive implements Subsystem {
     }
 
     //same as encoderDrive except without the slowdown before reaching target
+    @Deprecated
     public void encoderDirectDrive(double speed, double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
@@ -504,6 +520,7 @@ public class Drive implements Subsystem {
         }
     }
 
+    @Deprecated
     public void encoderPIDDrive(LinearOpMode linearOpMode, double leftInches, double rightInches, double timeoutS, double P, double I, double D, double bias){
         int newLeftTarget;
         int newRightTarget;
@@ -573,6 +590,7 @@ public class Drive implements Subsystem {
         }
     }
 
+    @Deprecated
     public double startEncoderPIDControl(DcMotor motor, double target, double P, double I, double D) {
         double error_prior = 0;
         double time_prior = 0;
@@ -588,9 +606,15 @@ public class Drive implements Subsystem {
 
     //only implements Kp right now.
     //if only Kp returns a desired result, i will leave it like that
+    @Deprecated
     public void proportionControl(double leftTarget, double rightTarget, double speed, double P, double I, double D){
         //double leftError = Math.abs(leftTarget - leftMotor.getCurrentPosition());
         //double rightError = Math.abs(rightTarget - rightMotor.getCurrentPosition());
 
+    }
+
+    @Override
+    public String toString() {
+        return "Drive";
     }
 }

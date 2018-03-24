@@ -1,21 +1,15 @@
 
-package org.firstinspires.ftc.teamcode.testing;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+package org.firstinspires.ftc.teamcode.testing.camera;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
-import com.disnodeteam.dogecv.detectors.*;
+import com.disnodeteam.dogecv.detectors.GenericDetector;
 import com.disnodeteam.dogecv.filters.LeviColorFilter;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.opencv.core.Size;
-
-import java.io.IOException;
 
 
 @Autonomous(name="Relic Detector", group="DogeCV")

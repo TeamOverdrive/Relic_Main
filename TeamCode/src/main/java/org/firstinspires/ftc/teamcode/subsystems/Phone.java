@@ -6,11 +6,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
+ * For the phone servo only lel
  * Created by David Zheng | FTC 2753 Team Overdrive on 1/29/2018.
  */
 
-
-//For the phone servo only lel
 public class Phone implements Subsystem{
 
     private Servo phoneServo = null;
@@ -23,7 +22,7 @@ public class Phone implements Subsystem{
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
         phoneServo = linearOpMode.hardwareMap.servo.get("phone_servo");
-       initPosition();
+        initPosition();
     }
 
     @Override
@@ -55,4 +54,8 @@ public class Phone implements Subsystem{
 
     public void cryptoPosition(){phoneServo.setPosition(CRYPTOPOS);}
 
+    @Override
+    public String toString() {
+        return "Phone";
+    }
 }

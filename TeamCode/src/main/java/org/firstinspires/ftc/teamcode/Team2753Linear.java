@@ -14,11 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.libs.AutoTransitioner;
 import org.firstinspires.ftc.teamcode.libs.subsystems.VuMark;
-import org.firstinspires.ftc.teamcode.subsystems.Relic;
-import org.firstinspires.ftc.teamcode.subsystems.Subsystem;
-
-import java.util.Arrays;
-import java.util.List;
+import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoSpeed;
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoTurnSpeed;
@@ -41,16 +37,8 @@ public abstract class Team2753Linear extends LinearOpMode {
     public Gamepad Ryan = gamepad1;
     public Gamepad Seth = gamepad2;
 
-    private org.firstinspires.ftc.teamcode.subsystems.Drive Drive = new org.firstinspires.ftc.teamcode.subsystems.Drive();
-    private org.firstinspires.ftc.teamcode.subsystems.Jewel Jewel = new org.firstinspires.ftc.teamcode.subsystems.Jewel();
-    private org.firstinspires.ftc.teamcode.subsystems.Lift Lift = new org.firstinspires.ftc.teamcode.subsystems.Lift();
-    private org.firstinspires.ftc.teamcode.subsystems.Intake Intake = new org.firstinspires.ftc.teamcode.subsystems.Intake();
-    private org.firstinspires.ftc.teamcode.subsystems.Slammer Slammer = new org.firstinspires.ftc.teamcode.subsystems.Slammer();
-    private org.firstinspires.ftc.teamcode.subsystems.Phone Phone = new org.firstinspires.ftc.teamcode.subsystems.Phone();
-    private Relic Relic = new Relic();
-
-    // Used to init everything quickly
-    private List<Subsystem> subsystems = Arrays.asList(Drive, Jewel, Lift, Intake, Slammer, Phone, Relic);
+    // Robot class for all subsystems
+    public Robot Robot = new Robot();
 
     public static final String vuforiaKey = "AeUsQDb/////AAAAGXsDAQwNS0SWopXJpAHyRntcnTcoWD8Tns"+
             "R6PWGX9OwmlIhNxQgn8RX/1cH2RXXTsuSkHh6OjfMoCuHt35rhumaUsLnk8MZZJ7P9PEu+uSsUbH1hHcnnB"+
@@ -73,7 +61,6 @@ public abstract class Team2753Linear extends LinearOpMode {
 
     private static ElapsedTime runtime = new ElapsedTime();
     private boolean isAuton = false; // Are we running auto
-    private int Column = 0;
 
     private Telemetry.Item status;
 
@@ -89,12 +76,7 @@ public abstract class Team2753Linear extends LinearOpMode {
         Telemetry.Item currentOpMode = telemetry.addData("Running", OpModeName);
         telemetry.update();
 
-        RobotLog.v("================ WaitForStart: Start Init Loop =============");
-        //Initialize Robot
-        for (Subsystem subsystem:subsystems) {
-            subsystem.init(this, auton);
-        }
-        RobotLog.v("================ WaitForStart: Finished Init Loop =============");
+        Robot.init(this, auton);
 
         if(auton) {
             RobotLog.v("================ Start VuCam =============");
@@ -199,44 +181,44 @@ public abstract class Team2753Linear extends LinearOpMode {
         if (linearOpMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = getDrive().getLeftCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = getDrive().getRightCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
-            getDrive().setLeftRightTarget(newLeftTarget, newRightTarget);
+            newLeftTarget = Robot.getDrive().getLeftCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = Robot.getDrive().getRightCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            Robot.getDrive().setLeftRightTarget(newLeftTarget, newRightTarget);
             //int counter1 = 0;
             //int counter2 = 0;
 
             // Turn On RUN_TO_POSITION
-            getDrive().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Robot.getDrive().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            getDrive().setLeftRightPowers(Math.abs(speed), Math.abs(speed));
+            Robot.getDrive().setLeftRightPowers(Math.abs(speed), Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (getDrive().leftIsBusy() || getDrive().rightIsBusy())) {
-                if((Math.abs(getDrive().getLeftCurrentPosition())>(newLeftTarget-(leftInches*COUNTS_PER_INCH)+(6*COUNTS_PER_INCH)))){
-                    getJewel().retract(true);
+                    (Robot.getDrive().leftIsBusy() || Robot.getDrive().rightIsBusy())) {
+                if((Math.abs(Robot.getDrive().getLeftCurrentPosition())>(newLeftTarget-(leftInches*COUNTS_PER_INCH)+(6*COUNTS_PER_INCH)))){
+                    Robot.getJewel().retract(true);
                 }
                 //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
-                if ((Math.abs(newLeftTarget - getDrive().getLeftCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
-                        && (Math.abs(newRightTarget - getDrive().getRightCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                if ((Math.abs(newLeftTarget - Robot.getDrive().getLeftCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                        && (Math.abs(newRightTarget - Robot.getDrive().getRightCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
                         && speed > 0.1) {
-                    getDrive().setLeftRightPowers(Math.abs(speed * 0.75), Math.abs(speed * 0.75));
+                    Robot.getDrive().setLeftRightPowers(Math.abs(speed * 0.75), Math.abs(speed * 0.75));
                 }
                 //slow the motors down to 0.3 of the original speed when we get within 2 inches of our target and the speed is greater than 0.1.
-                if ((Math.abs(newLeftTarget - getDrive().getLeftCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
-                        && (Math.abs(newRightTarget - getDrive().getRightCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                if ((Math.abs(newLeftTarget - Robot.getDrive().getLeftCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                        && (Math.abs(newRightTarget - Robot.getDrive().getRightCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
                         && speed > 0.1) {
-                    getDrive().setLeftRightPowers(Math.abs(speed * 0.3), Math.abs(speed * 0.3));
+                    Robot.getDrive().setLeftRightPowers(Math.abs(speed * 0.3), Math.abs(speed * 0.3));
                 }
             }
             // Stop all motion;
-            getDrive().setLeftRightPowers(0,0);
+            Robot.getDrive().setLeftRightPowers(0,0);
 
             // Turn off RUN_TO_POSITION
-            getDrive().setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Robot.getDrive().setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  linearOpMode.sleep(250);   // optional pause after each move
         }
@@ -247,37 +229,37 @@ public abstract class Team2753Linear extends LinearOpMode {
         // Ensure that the opmode is still active
         if(linearOpMode.opModeIsActive()){
 
-            getDrive().setLeftRightTarget(0, 0);
+            Robot.getDrive().setLeftRightTarget(0, 0);
 
             // Turn On RUN_TO_POSITION
-            getDrive().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Robot.getDrive().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            getDrive().setLeftRightPowers(Math.abs(speed), Math.abs(speed));
+            Robot.getDrive().setLeftRightPowers(Math.abs(speed), Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (getDrive().leftIsBusy() || getDrive().rightIsBusy())) {
+                    (Robot.getDrive().leftIsBusy() || Robot.getDrive().rightIsBusy())) {
                 //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
-                if ((Math.abs(getDrive().getLeftCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
-                        && (Math.abs(getDrive().getRightCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                if ((Math.abs(Robot.getDrive().getLeftCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                        && (Math.abs(Robot.getDrive().getRightCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
                         && speed > 0.1) {
-                    getDrive().setLeftRightPowers(Math.abs(speed * 0.75), Math.abs(speed * 0.75));
+                    Robot.getDrive().setLeftRightPowers(Math.abs(speed * 0.75), Math.abs(speed * 0.75));
                 }
                 //slow the motors down to 0.3 of the original speed when we get within 2 inches of our target and the speed is greater than 0.1.
-                if ((Math.abs(getDrive().getLeftCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
-                        && (Math.abs(getDrive().getRightCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                if ((Math.abs(Robot.getDrive().getLeftCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                        && (Math.abs(Robot.getDrive().getRightCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
                         && speed > 0.1) {
-                    getDrive().setLeftRightPowers(Math.abs(speed * 0.3), Math.abs(speed * 0.3));
+                    Robot.getDrive().setLeftRightPowers(Math.abs(speed * 0.3), Math.abs(speed * 0.3));
                 }
             }
             // Stop all motion;
-            getDrive().setLeftRightPowers(0,0);
+            Robot.getDrive().setLeftRightPowers(0,0);
 
             // Turn off RUN_TO_POSITION
-            getDrive().setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Robot.getDrive().setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  linearOpMode.sleep(250);   // optional pause after each move
         }
@@ -302,8 +284,8 @@ public abstract class Team2753Linear extends LinearOpMode {
                 break;
         }
 
-        getDrive().turnCW(90, autoTurnSpeed, 4);
-        getDrive().encoderDrive(autoSpeed, 8, 8, 2);
+        Robot.getDrive().turnCW(90, autoTurnSpeed, 4);
+        Robot.getDrive().encoderDrive(autoSpeed, 8, 8, 2);
         //waitForTick(75);
         scoreGlyphDropIntake();
     }
@@ -325,8 +307,8 @@ public abstract class Team2753Linear extends LinearOpMode {
                 break;
         }
 
-        getDrive().turnCW(90, autoTurnSpeed, 4);
-        getDrive().encoderDrive(autoSpeed, 8, 8, 2);
+        Robot.getDrive().turnCW(90, autoTurnSpeed, 4);
+        Robot.getDrive().encoderDrive(autoSpeed, 8, 8, 2);
         //waitForTick(75);
         scoreGlyphDropIntake();
     }
@@ -335,118 +317,118 @@ public abstract class Team2753Linear extends LinearOpMode {
 
         //if(retarded){kms}
 
-        getDrive().encoderDrive(autoSpeed, -24,-24, 5);
-        getJewel().retract(true);
+        Robot.getDrive().encoderDrive(autoSpeed, -24,-24, 5);
+        Robot.getJewel().retract(true);
         //getDrive().encoderDrive(autoSpeed + 0.05, 0, -19.83, 4);
-        getDrive().turnCW(90, autoTurnSpeed, 4);
+        Robot.getDrive().turnCW(90, autoTurnSpeed, 4);
 
         switch (WhatColumnToScoreIn()){
             case LEFT:
-                getDrive().encoderDrive(autoSpeed + 0.1, -4, -4, 5);
+                Robot.getDrive().encoderDrive(autoSpeed + 0.1, -4, -4, 5);
                 break;
             case CENTER:
-                getDrive().encoderDrive(autoSpeed, -12, -12, 4);
+                Robot.getDrive().encoderDrive(autoSpeed, -12, -12, 4);
                 break;
             case RIGHT:
-                getDrive().encoderDrive(autoSpeed, -20, -20, 4);
+                Robot.getDrive().encoderDrive(autoSpeed, -20, -20, 4);
                 break;
             case UNKNOWN:
-                getDrive().encoderDrive(autoSpeed, -12, -12, 4);
+                Robot.getDrive().encoderDrive(autoSpeed, -12, -12, 4);
                 break;
         }
 
         //waitForTick(1500);
-        getDrive().turnCW(90, autoTurnSpeed, 4);
-        getDrive().encoderDrive(autoSpeed, 5, 5, 4);
+        Robot.getDrive().turnCW(90, autoTurnSpeed, 4);
+        Robot.getDrive().encoderDrive(autoSpeed, 5, 5, 4);
         scoreGlyph();
     }
 
     public void glyphScoreR2(){
 
-        getDrive().encoderDrive(autoSpeed, 26,26, 5);
-        getJewel().retract(true);
+        Robot.getDrive().encoderDrive(autoSpeed, 26,26, 5);
+        Robot.getJewel().retract(true);
         //getDrive().encoderDrive(autoSpeed + 0.05, 0, -19.83, 4);
         //getDrive().turnCCW(90, autoTurnSpeed, 4);
-        getDrive().turnCW(-90, autoTurnSpeed, 4);
+        Robot.getDrive().turnCW(-90, autoTurnSpeed, 4);
 
         switch (WhatColumnToScoreIn()){
             case LEFT:
-                getDrive().encoderDrive(autoSpeed, 20, 20, 4);
+                Robot.getDrive().encoderDrive(autoSpeed, 20, 20, 4);
                 break;
             case CENTER:
-                getDrive().encoderDrive(autoSpeed, 12, 12, 4);
+                Robot.getDrive().encoderDrive(autoSpeed, 12, 12, 4);
                 break;
             case RIGHT:
-                getDrive().encoderDrive(autoSpeed, 4, 4, 4);
+                Robot.getDrive().encoderDrive(autoSpeed, 4, 4, 4);
                 break;
             case UNKNOWN:
-                getDrive().encoderDrive(autoSpeed, 12, 12, 4);
+                Robot.getDrive().encoderDrive(autoSpeed, 12, 12, 4);
                 break;
         }
 
         //waitForTick(100);
-        getDrive().turnCW(90, autoTurnSpeed, 4);
-        getDrive().encoderDrive(autoSpeed, 4, 4, 4);
+        Robot.getDrive().turnCW(90, autoTurnSpeed, 4);
+        Robot.getDrive().encoderDrive(autoSpeed, 4, 4, 4);
         scoreGlyph();
     }
 
     public void scoreGlyphDropIntake(){
-        getSlammer().stopperUp();
+        Robot.getSlammer().stopperUp();
         waitForTick(350);
-        getSlammer().setPower(0.35);
+        Robot.getSlammer().setPower(0.35);
         waitForTick(450);
-        getSlammer().stop();
-        getIntake().releaseIntake();
-        getDrive().encoderDirectDrive(autoSpeed, -3, -3, 1);
-        getSlammer().setPower(-0.3);
-        getDrive().encoderDrive(autoSpeed, 6,6, 1.5);
-        getSlammer().stop();
-        getDrive().encoderDrive(autoSpeed, -6, -6, 3);
+        Robot.getSlammer().stop();
+        Robot.getIntake().releaseIntake();
+        Robot.getDrive().encoderDirectDrive(autoSpeed, -3, -3, 1);
+        Robot.getSlammer().setPower(-0.3);
+        Robot.getDrive().encoderDrive(autoSpeed, 6,6, 1.5);
+        Robot.getSlammer().stop();
+        Robot.getDrive().encoderDrive(autoSpeed, -6, -6, 3);
     }
 
     public void scoreGlyph(){
-        getSlammer().stopperUp();
+        Robot.getSlammer().stopperUp();
         waitForTick(350);
-        getSlammer().setPower(0.35);
+        Robot.getSlammer().setPower(0.35);
         waitForTick(500);
-        getSlammer().stop();
-        getIntake().releaseLock();
-        getDrive().encoderDirectDrive(autoSpeed, -3, -3, 2);
-        getDrive().encoderDrive(autoSpeed, 6, 6, 1.5);
-        getSlammer().setPower(-0.3);
-        getDrive().encoderDrive(autoSpeed, -6, -6, 1.5);
-        getSlammer().stop();
+        Robot.getSlammer().stop();
+        Robot.getIntake().releaseLock();
+        Robot.getDrive().encoderDirectDrive(autoSpeed, -3, -3, 2);
+        Robot.getDrive().encoderDrive(autoSpeed, 6, 6, 1.5);
+        Robot.getSlammer().setPower(-0.3);
+        Robot.getDrive().encoderDrive(autoSpeed, -6, -6, 1.5);
+        Robot.getSlammer().stop();
     }
 
     //use timeoutS to ensure we have enough time to park before the end of autonomous
     public void multiGlyphPos1(){
         //v 2.0 - Final version tune for more consistent results and for different columns
 
-        getIntake().reverse();
-        getSlammer().stopperDown();
-        getDrive().encoderDirectDrive(autoSpeed + 0.15, -20, -20, 3);
-        getIntake().intake();
-        getDrive().encoderDrive(0.75, -4, -4, 2);
+        Robot.getIntake().reverse();
+        Robot.getSlammer().stopperDown();
+        Robot.getDrive().encoderDirectDrive(autoSpeed + 0.15, -20, -20, 3);
+        Robot.getIntake().intake();
+        Robot.getDrive().encoderDrive(0.75, -4, -4, 2);
         waitForTick(200);
-        int leftPosition = getDrive().getLeftCurrentPosition();
-        int rightPosition = getDrive().getRightCurrentPosition();
+        int leftPosition = Robot.getDrive().getLeftCurrentPosition();
+        int rightPosition = Robot.getDrive().getRightCurrentPosition();
 
         switch (WhatColumnToScoreIn()){
             case LEFT:
-                getDrive().encoderDrive(0.75, 0, -9.915, 2);
-                getDrive().encoderTargetDrive(autoSpeed, leftPosition, rightPosition, 2);
+                Robot.getDrive().encoderDrive(0.75, 0, -9.915, 2);
+                Robot.getDrive().encoderTargetDrive(autoSpeed, leftPosition, rightPosition, 2);
                 break;
             default:
-                getDrive().encoderDrive(0.75, -9.915, 0, 2);
-                getDrive().encoderTargetDrive(autoSpeed, leftPosition, rightPosition, 2);
+                Robot.getDrive().encoderDrive(0.75, -9.915, 0, 2);
+                Robot.getDrive().encoderTargetDrive(autoSpeed, leftPosition, rightPosition, 2);
                 break;
         }
 
         waitForTick(250);
-        getIntake().stop();
+        Robot.getIntake().stop();
 
-        getDrive().encoderDrive(autoSpeed + 0.15 , 23, 23, 3);
-        getDrive().encoderDrive(autoSpeed, 0, 2, 1.5);
+        Robot.getDrive().encoderDrive(autoSpeed + 0.15 , 23, 23, 3);
+        Robot.getDrive().encoderDrive(autoSpeed, 0, 2, 1.5);
         scoreGlyph();
 
     }
@@ -480,8 +462,7 @@ public abstract class Team2753Linear extends LinearOpMode {
             }
         }
 
-        for(Subsystem subsystem:subsystems)
-            subsystem.outputToTelemetry(telemetry);
+        Robot.outputToTelemetry(telemetry);
 
         telemetry.update();
     }
@@ -490,8 +471,7 @@ public abstract class Team2753Linear extends LinearOpMode {
     //Other
 
     public void finalAction(){
-        for (Subsystem subsystem:subsystems)
-            subsystem.stop();
+        Robot.stop();
 
         requestOpModeStop();
 
@@ -512,29 +492,6 @@ public abstract class Team2753Linear extends LinearOpMode {
         // Reset the cycle clock for the next pass.
         runtime.reset();
     }
-
-
-    //Getter Methods
-
-    public org.firstinspires.ftc.teamcode.subsystems.Drive getDrive() {
-        return Drive;
-    }
-
-    public org.firstinspires.ftc.teamcode.subsystems.Jewel getJewel() {
-        return Jewel;
-    }
-
-    public org.firstinspires.ftc.teamcode.subsystems.Lift getLift () { return Lift; }
-
-    public org.firstinspires.ftc.teamcode.subsystems.Intake getIntake() {return Intake;}
-
-    public org.firstinspires.ftc.teamcode.subsystems.Slammer getSlammer() {return Slammer;}
-
-    public Relic getRelic(){
-        return Relic;
-    }
-
-    public org.firstinspires.ftc.teamcode.subsystems.Phone getPhoneServo() {return Phone;}
 }
 
 

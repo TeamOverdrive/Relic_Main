@@ -1,16 +1,12 @@
 
-package org.firstinspires.ftc.teamcode.testing;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+package org.firstinspires.ftc.teamcode.testing.camera;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
-import com.disnodeteam.dogecv.detectors.*;
+import com.disnodeteam.dogecv.detectors.GlyphDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import java.io.IOException;
 
 
 @TeleOp(name="Glyph Detector", group="DogeCV")

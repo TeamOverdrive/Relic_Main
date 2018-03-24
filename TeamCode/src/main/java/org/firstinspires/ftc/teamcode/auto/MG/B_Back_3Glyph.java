@@ -20,18 +20,18 @@ public class B_Back_3Glyph extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart("BBack", AutoParams.AUTO, true );
-        getDrive().zeroSensors();
+        Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
-        getJewel().hit(this.jewel_Color, Jewel_Color.Blue);
+        Robot.getJewel().hit(this.jewel_Color, Jewel_Color.Blue);
 
-        getDrive().encoderDrive(0.3, -36, -36, 4);
+        Robot.getDrive().encoderDrive(0.3, -36, -36, 4);
 
-        getDrive().encoderDrive(0.3, 0, (WHEEL_BASE*PI*(82))/180, 4);
-        getDrive().encoderDrive(0.3, 7, 7, 3);
-        getSlammer().stopperUp();
+        Robot.getDrive().encoderDrive(0.3, 0, (WHEEL_BASE*PI*(82))/180, 4);
+        Robot.getDrive().encoderDrive(0.3, 7, 7, 3);
+        Robot.getSlammer().stopperUp();
         sleep(600);
-        getDrive().encoderDrive(0.3, -10, -10, 3);
+        Robot.getDrive().encoderDrive(0.3, -10, -10, 3);
 //        getDrive().turnCW(56, 0.3, 3);
 //        getDrive().encoderDrive(0.3, 7, 7, 3);
 //        getSlammer().stopperUp();

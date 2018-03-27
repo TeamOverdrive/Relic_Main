@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.testing;
+package org.firstinspires.ftc.teamcode.testing.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -19,18 +19,18 @@ public class Jewel_Test extends Team2753Linear {
     public void runOpMode() throws InterruptedException {
         waitForStart("Jewel Test", true, true);
 
-        getJewel().deploy(true);
+        Robot.getJewel().deploy(true);
         sleep(500);
 
         if(jewel_Color==alliance_color){
-            getJewel().rightHit();
+            Robot.getJewel().rightHit();
         } else {
-            getJewel().leftHit();
+            Robot.getJewel().leftHit();
         }
 
         sleep(200);
 
-        getJewel().retract(true);
+        Robot.getJewel().retract(true);
         sleep(1000);
     }
 }

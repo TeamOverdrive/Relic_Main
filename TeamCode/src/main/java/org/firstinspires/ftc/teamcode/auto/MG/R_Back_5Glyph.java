@@ -20,51 +20,51 @@ public class R_Back_5Glyph extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart("RBack", AutoParams.AUTO, true);
-        getDrive().zeroSensors();
+        Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
-        getJewel().hit(this.jewel_Color, Jewel_Color.Red);
+        Robot.getJewel().hit(this.jewel_Color, Jewel_Color.Red);
 
-        getDrive().encoderDrive(0.5, 34.5, 34.5, 3);
-        getDrive().turnCW(90, 0.5, 3);
-        getDrive().encoderDrive(0.7, 8, 8, 2);
+        Robot.getDrive().encoderDrive(0.5, 34.5, 34.5, 3);
+        Robot.getDrive().turnCW(90, 0.5, 3);
+        Robot.getDrive().encoderDrive(0.7, 8, 8, 2);
 
-        getSlammer().stopperUp();
+        Robot.getSlammer().stopperUp();
         sleep(400);
-        getIntake().releaseIntake();
-        getDrive().encoderDrive(1, -8, -8, 1.6);
-        getIntake().intake();
-        getRelic().setAngles(0,0);
-        getSlammer().stopperDown();
+        Robot.getIntake().releaseIntake();
+        Robot.getDrive().encoderDrive(1, -8, -8, 1.6);
+        Robot.getIntake().intake();
+        Robot.getRelic().setAngles(0,0);
+        Robot.getSlammer().stopperDown();
         sleep(200);
 
-        getDrive().encoderDrive(0.4, -28, -28, 3);
-        getIntake().reverse();
+        Robot.getDrive().encoderDrive(0.4, -28, -28, 3);
+        Robot.getIntake().reverse();
         sleep(400);
 
         boolean farther = false;
-        if(!getIntake().frontDetected() && !getIntake().backDetected()){
-            getIntake().intake();
-            getDrive().encoderDrive(0.2, -7, -7, 3);
-            getIntake().reverse();
+        if(!Robot.getIntake().frontDetected() && !Robot.getIntake().backDetected()){
+            Robot.getIntake().intake();
+            Robot.getDrive().encoderDrive(0.2, -7, -7, 3);
+            Robot.getIntake().reverse();
             sleep(1000);
             farther = true;
         }
 
-        getIntake().intake();
+        Robot.getIntake().intake();
 //        getDrive().encoderDrive(1, 0, (WHEEL_BASE*PI*7)/180, 2);
-        getDrive().encoderDrive(1, 37, 37, 3);
-        getSlammer().autoSlam();
-        getDrive().encoderDrive(1, -5, -5, 2);
-        getSlammer().setPower(-1);
+        Robot.getDrive().encoderDrive(1, 37, 37, 3);
+        Robot.getSlammer().autoSlam();
+        Robot.getDrive().encoderDrive(1, -5, -5, 2);
+        Robot.getSlammer().setPower(-1);
         sleep(1000);
-        getSlammer().stop();
-        getSlammer().stopperDown();
-        getIntake().intake();
-        getDrive().encoderDrive(1, -37, -37, 3);
-        getDrive().encoderDrive(1, (WHEEL_BASE*PI*9)/180, 0, 2);
-        getDrive().encoderDrive(1, 40, 40, 3);
-        getSlammer().autoSlam();
-        getDrive().encoderDrive(1, -4, -4, 2);
+        Robot.getSlammer().stop();
+        Robot.getSlammer().stopperDown();
+        Robot.getIntake().intake();
+        Robot.getDrive().encoderDrive(1, -37, -37, 3);
+        Robot.getDrive().encoderDrive(1, (WHEEL_BASE*PI*9)/180, 0, 2);
+        Robot.getDrive().encoderDrive(1, 40, 40, 3);
+        Robot.getSlammer().autoSlam();
+        Robot.getDrive().encoderDrive(1, -4, -4, 2);
     }
 }

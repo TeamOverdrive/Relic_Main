@@ -12,5 +12,5 @@ public interface Subsystem {
     void init(LinearOpMode linearOpMode, boolean auto);
     void zeroSensors();
     void stop();
-    public abstract void outputToTelemetry(Telemetry telemetry);
+    void outputToTelemetry(Telemetry telemetry);
 }

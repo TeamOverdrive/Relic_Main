@@ -113,4 +113,8 @@ public class Relic implements Subsystem{
         wristServo.setPosition(pos/255.0);
     }
 
+    @Override
+    public String toString() {
+        return "Relic";
+    }
 }

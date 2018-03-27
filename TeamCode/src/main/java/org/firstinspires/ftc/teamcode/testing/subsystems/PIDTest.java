@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.testing;
+package org.firstinspires.ftc.teamcode.testing.subsystems;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Team2753Linear;
 
 import static org.firstinspires.ftc.teamcode.auto.AutoParams.AUTO;
@@ -19,17 +18,17 @@ public class PIDTest extends Team2753Linear{
 
         while(opModeIsActive() && i == 0) {
 
-            getDrive().encoderPIDDrive(this, 24, 24, 10, 0.05, 0, 0, 0.1);
+            Robot.getDrive().encoderPIDDrive(this, 24, 24, 10, 0.05, 0, 0, 0.1);
             waitForTick(2000);
-            getDrive().encoderPIDDrive(this,-24, -24, 10, 0.05, 0, 0, 0.1);
+            Robot.getDrive().encoderPIDDrive(this,-24, -24, 10, 0.05, 0, 0, 0.1);
             waitForTick(2000);
-            getDrive().encoderPIDDrive(this, 12, 12, 10, 0.05, 0, 0, 0.1);
+            Robot.getDrive().encoderPIDDrive(this, 12, 12, 10, 0.05, 0, 0, 0.1);
             waitForTick(2000);
-            getDrive().encoderPIDDrive(this, -12, -12, 10, 0.05, 0, 0, 0.1);
+            Robot.getDrive().encoderPIDDrive(this, -12, -12, 10, 0.05, 0, 0, 0.1);
             waitForTick(2000);
-            getDrive().turnPIDCCW(this, 90, 10, 0.05, 0, 0, 0.1);
+            Robot.getDrive().turnPIDCCW(this, 90, 10, 0.05, 0, 0, 0.1);
             waitForTick(2000);
-            getDrive().turnPIDCW(this, 90, 10, 0.05, 0, 0, 0.1);
+            Robot.getDrive().turnPIDCW(this, 90, 10, 0.05, 0, 0, 0.1);
 
             i++;
         }

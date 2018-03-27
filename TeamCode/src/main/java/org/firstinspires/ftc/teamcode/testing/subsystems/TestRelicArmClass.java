@@ -1,12 +1,10 @@
-package org.firstinspires.ftc.teamcode.testing;
+package org.firstinspires.ftc.teamcode.testing.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Team2753Linear;
 import org.firstinspires.ftc.teamcode.subsystems.Relic;
-
-import static org.firstinspires.ftc.teamcode.libs.OverdriveLib.SolveInverseKinematics;
 
 /**
  * Created by joshua9889 on 3/10/2018.

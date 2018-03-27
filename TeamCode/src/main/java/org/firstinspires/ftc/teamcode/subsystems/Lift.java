@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 import static org.firstinspires.ftc.teamcode.subsystems.Lift.liftState.INTAKING;
 import static org.firstinspires.ftc.teamcode.subsystems.Lift.liftState.LOWER;
@@ -134,4 +131,8 @@ public class Lift implements Subsystem {
         return liftMotor.getCurrentPosition()>400;
     }
 
+    @Override
+    public String toString() {
+        return "Lift";
+    }
 }

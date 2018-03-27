@@ -1,20 +1,19 @@
-package org.firstinspires.ftc.teamcode.testing;
+package org.firstinspires.ftc.teamcode.testing.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.Team2753Linear;
-import org.firstinspires.ftc.teamcode.libs.VuMark;
+import org.firstinspires.ftc.teamcode.libs.subsystems.VuMark;
 
-import static org.firstinspires.ftc.teamcode.libs.VuMark.SaveImage;
-import static org.firstinspires.ftc.teamcode.libs.VuMark.blue;
-import static org.firstinspires.ftc.teamcode.libs.VuMark.red;
+import static org.firstinspires.ftc.teamcode.libs.subsystems.VuMark.SaveImage;
+import static org.firstinspires.ftc.teamcode.libs.subsystems.VuMark.blue;
+import static org.firstinspires.ftc.teamcode.libs.subsystems.VuMark.red;
 
 /**
  * Created by joshua9889 on 1/13/2018.

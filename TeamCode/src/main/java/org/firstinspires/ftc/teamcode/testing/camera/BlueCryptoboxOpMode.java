@@ -1,23 +1,17 @@
 
-package org.firstinspires.ftc.teamcode.testing;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+package org.firstinspires.ftc.teamcode.testing.camera;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
-import com.disnodeteam.dogecv.detectors.*;
+import com.disnodeteam.dogecv.detectors.CryptoboxDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-import java.io.IOException;
-
-
-@TeleOp(name="Red Cryptobox Detector", group="DogeCV")
+@TeleOp(name="Blue Cryptobox Detector", group="DogeCV")
 @Disabled
-public class RedCryptoboxOpMode extends OpMode
+public class BlueCryptoboxOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -35,11 +29,9 @@ public class RedCryptoboxOpMode extends OpMode
         cryptoboxDetector = new CryptoboxDetector();
         cryptoboxDetector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
 
-        cryptoboxDetector.rotateMat = false;
+        cryptoboxDetector.detectionMode = CryptoboxDetector.CryptoboxDetectionMode.BLUE;
 
-        //Optional Test Code to load images via Drawables
-        //cryptoboxDetector.useImportedImage = true;
-        //cryptoboxDetector.SetTestMat(com.qualcomm.ftcrobotcontroller.R.drawable.test_cv4);
+        cryptoboxDetector.rotateMat = false;
 
         cryptoboxDetector.enable();
 
@@ -70,6 +62,7 @@ public class RedCryptoboxOpMode extends OpMode
         telemetry.addData("Column Left ",  cryptoboxDetector.getCryptoBoxLeftPosition());
         telemetry.addData("Column Center ",  cryptoboxDetector.getCryptoBoxCenterPosition());
         telemetry.addData("Column Right ",  cryptoboxDetector.getCryptoBoxRightPosition());
+        //telemetry.addData("Cryptobox Position", cryptoboxDetector.getCryptoBoxPositions());
 
 
     }

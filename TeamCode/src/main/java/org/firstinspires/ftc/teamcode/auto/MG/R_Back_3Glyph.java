@@ -22,254 +22,254 @@ public class R_Back_3Glyph extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart("RBack", AutoParams.AUTO, true);
-        getDrive().zeroSensors();
+        Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
-        getJewel().hit(this.jewel_Color, Jewel_Color.Red);
+        Robot.getJewel().hit(this.jewel_Color, Jewel_Color.Red);
 
 
         switch (RelicRecoveryVuMark.RIGHT){
             case RIGHT:
                 boolean rightFarther = false;
-                getDrive().encoderDrive(0.6, 21, 21, 3);
-                getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(90))/180, 3);
-                getDrive().encoderDrive(0.6, 2, 2, 3);
-                getSlammer().stopperUp();
+                Robot.getDrive().encoderDrive(0.6, 21, 21, 3);
+                Robot.getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(90))/180, 3);
+                Robot.getDrive().encoderDrive(0.6, 2, 2, 3);
+                Robot.getSlammer().stopperUp();
                 sleep(400);
-                getIntake().releaseIntake();
-                getRelic().setAngles(0,0);
-                getRelic().setWristPostion(64);
-                getRelic().close();
-                getDrive().encoderDrive(0.7, -4, -4, 3);
-                getSlammer().stopperDown();
-                getIntake().intake();
+                Robot.getIntake().releaseIntake();
+                Robot.getRelic().setAngles(0,0);
+                Robot.getRelic().setWristPostion(64);
+                Robot.getRelic().close();
+                Robot.getDrive().encoderDrive(0.7, -4, -4, 3);
+                Robot.getSlammer().stopperDown();
+                Robot.getIntake().intake();
 
-                getDrive().encoderDrive(0.3, -20, -20, 3);
-                getDrive().encoderDrive(0.2, -5, -5, 2);
-                getRelic().lock();
+                Robot.getDrive().encoderDrive(0.3, -20, -20, 3);
+                Robot.getDrive().encoderDrive(0.2, -5, -5, 2);
+                Robot.getRelic().lock();
 
                 telemetry.clearAll();
-                telemetry.addData("Front", getIntake().frontDetected());
-                telemetry.addData("Back", getIntake().backDetected());
+                telemetry.addData("Front", Robot.getIntake().frontDetected());
+                telemetry.addData("Back", Robot.getIntake().backDetected());
                 telemetry.update();
 
                 int counter = 0;
                 for (int i=0;i<30;i++){
-                    if((getIntake().frontDetected() && getIntake().backDetected()))
+                    if((Robot.getIntake().frontDetected() && Robot.getIntake().backDetected()))
                         counter++;
                 }
 
                 if(counter<10){
                     rightFarther = true;
                     sleep(400);
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(400);
-                    getIntake().intake();
-                    getDrive().encoderDrive(0.4, 3, 3, 3);
-                    getDrive().encoderDrive(0.4, -6, -6, 3);
-                    while (opModeIsActive() && t.seconds()<18 && !(getIntake().frontDetected() && getIntake().backDetected())){
+                    Robot.getIntake().intake();
+                    Robot.getDrive().encoderDrive(0.4, 3, 3, 3);
+                    Robot.getDrive().encoderDrive(0.4, -6, -6, 3);
+                    while (opModeIsActive() && t.seconds()<18 && !(Robot.getIntake().frontDetected() && Robot.getIntake().backDetected())){
                         Thread.yield();
                         telemetry.clearAll();
-                        telemetry.addData("Front", getIntake().frontDetected());
-                        telemetry.addData("Back", getIntake().backDetected());
+                        telemetry.addData("Front", Robot.getIntake().frontDetected());
+                        telemetry.addData("Back", Robot.getIntake().backDetected());
                         telemetry.update();
                     }
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(1000);
                 } else {
                     rightFarther = false;
                     sleep(500);
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(1000);
                 }
 
-                getIntake().setPower(0.5);
+                Robot.getIntake().setPower(0.5);
 
                 if(rightFarther){
-                    getDrive().encoderDrive(0.4, (WHEEL_BASE*PI*(17))/180, 0, 3);
-                    getDrive().encoderDrive(0.4, 36, 36, 4);
+                    Robot.getDrive().encoderDrive(0.4, (WHEEL_BASE*PI*(17))/180, 0, 3);
+                    Robot.getDrive().encoderDrive(0.4, 36, 36, 4);
                 } else {
-                    getDrive().encoderDrive(0.4, (WHEEL_BASE*PI*(25))/180, 0, 3);
-                    getDrive().encoderDrive(0.4, 32, 32, 4);
+                    Robot.getDrive().encoderDrive(0.4, (WHEEL_BASE*PI*(25))/180, 0, 3);
+                    Robot.getDrive().encoderDrive(0.4, 32, 32, 4);
                 }
 
-                getSlammer().autoSlam();
-                getDrive().encoderDrive(0.5, -5, -5, 2);
+                Robot.getSlammer().autoSlam();
+                Robot.getDrive().encoderDrive(0.5, -5, -5, 2);
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        getSlammer().setPower(-1);
+                        Robot.getSlammer().setPower(-1);
                         sleep(300);
-                        getSlammer().setPower(0);
+                        Robot.getSlammer().setPower(0);
                     }
                 }).start();
 
                 if(30-t.seconds()>=4){
-                    getDrive().encoderDrive(1, 4, 4, 2);
-                    getDrive().encoderDrive(1, -5, -5, 2);
+                    Robot.getDrive().encoderDrive(1, 4, 4, 2);
+                    Robot.getDrive().encoderDrive(1, -5, -5, 2);
                 }
                 break;
 
             case CENTER:
                 boolean centerFarther = false;
-                getDrive().encoderDrive(0.6, 22, 22, 4);
-                getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(57))/180, 3);
-                getDrive().encoderDrive(0.6, 7, 7, 3);
-                getSlammer().stopperUp();
+                Robot.getDrive().encoderDrive(0.6, 22, 22, 4);
+                Robot.getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(57))/180, 3);
+                Robot.getDrive().encoderDrive(0.6, 7, 7, 3);
+                Robot.getSlammer().stopperUp();
                 sleep(400);
-                getIntake().releaseIntake();
-                getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*(90-57))/180, 0, 3);
-                getDrive().encoderDrive(0.6, -5, -5, 2);
-                getSlammer().stopperDown();
-                getIntake().intake();
-                getRelic().setAngles(0,0);
-                getRelic().setWristPostion(64);
-                getRelic().close();
+                Robot.getIntake().releaseIntake();
+                Robot.getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*(90-57))/180, 0, 3);
+                Robot.getDrive().encoderDrive(0.6, -5, -5, 2);
+                Robot.getSlammer().stopperDown();
+                Robot.getIntake().intake();
+                Robot.getRelic().setAngles(0,0);
+                Robot.getRelic().setWristPostion(64);
+                Robot.getRelic().close();
 
-                getDrive().encoderDrive(0.3, -20, -20, 3);
-                getDrive().encoderDrive(0.2, -5, -5, 2);
+                Robot.getDrive().encoderDrive(0.3, -20, -20, 3);
+                Robot.getDrive().encoderDrive(0.2, -5, -5, 2);
 
                 telemetry.clearAll();
-                telemetry.addData("Front", getIntake().frontDetected());
-                telemetry.addData("Back", getIntake().backDetected());
+                telemetry.addData("Front", Robot.getIntake().frontDetected());
+                telemetry.addData("Back", Robot.getIntake().backDetected());
                 telemetry.update();
 
                 int counter2 = 0;
                 for (int i=0;i<30;i++){
-                    if((getIntake().frontDetected() && getIntake().backDetected()))
+                    if((Robot.getIntake().frontDetected() && Robot.getIntake().backDetected()))
                         counter2++;
                 }
 
                 if(counter2<10){
                     centerFarther = true;
                     sleep(400);
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(400);
-                    getIntake().intake();
-                    getDrive().encoderDrive(0.4, 3, 3, 3);
-                    getDrive().encoderDrive(0.4, -6, -6, 3);
-                    while (opModeIsActive() && t.seconds()<18 && !(getIntake().frontDetected() && getIntake().backDetected())){
+                    Robot.getIntake().intake();
+                    Robot.getDrive().encoderDrive(0.4, 3, 3, 3);
+                    Robot.getDrive().encoderDrive(0.4, -6, -6, 3);
+                    while (opModeIsActive() && t.seconds()<18 && !(Robot.getIntake().frontDetected() && Robot.getIntake().backDetected())){
                         Thread.yield();
                         telemetry.clearAll();
-                        telemetry.addData("Front", getIntake().frontDetected());
-                        telemetry.addData("Back", getIntake().backDetected());
+                        telemetry.addData("Front", Robot.getIntake().frontDetected());
+                        telemetry.addData("Back", Robot.getIntake().backDetected());
                         telemetry.update();
                     }
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(1000);
                 } else {
                     centerFarther = false;
                     sleep(500);
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(1000);
                 }
 
-                getIntake().intake();
+                Robot.getIntake().intake();
 
                 if(centerFarther){
-                    getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(-7))/180, 3);
-                    getDrive().encoderDrive(0.4, 39, 39, 4);
+                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(-7))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 39, 39, 4);
                 } else {
-                    getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(-3))/180, 3);
-                    getDrive().encoderDrive(0.4, 35, 35, 4);
+                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(-3))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 35, 35, 4);
                 }
 
                 telemetry.addData("Counter", counter2);
                 telemetry.update();
 
-                getSlammer().autoSlam();
-                getDrive().encoderDrive(0.5, -5, -5, 2);
+                Robot.getSlammer().autoSlam();
+                Robot.getDrive().encoderDrive(0.5, -5, -5, 2);
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        getSlammer().setPower(-1);
+                        Robot.getSlammer().setPower(-1);
                         sleep(300);
-                        getSlammer().setPower(0);
+                        Robot.getSlammer().setPower(0);
                     }
                 }).start();
 
                 if(30-t.seconds()>=4){
-                    getDrive().encoderDrive(1, 4, 4, 2);
-                    getDrive().encoderDrive(1, -5, -5, 2);
+                    Robot.getDrive().encoderDrive(1, 4, 4, 2);
+                    Robot.getDrive().encoderDrive(1, -5, -5, 2);
                 }
                 break;
 
             case LEFT:
                 boolean leftFarther = false;
-                getDrive().encoderDrive(0.6, 27, 27, 4);
-                getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(54))/180, 3);
-                getDrive().encoderDrive(0.6, 7, 7, 3);
-                getSlammer().stopperUp();
+                Robot.getDrive().encoderDrive(0.6, 27, 27, 4);
+                Robot.getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(54))/180, 3);
+                Robot.getDrive().encoderDrive(0.6, 7, 7, 3);
+                Robot.getSlammer().stopperUp();
                 sleep(400);
-                getIntake().releaseIntake();
-                getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*(90-54))/180, 0, 3);
-                getRelic().setAngles(0,0);
-                getRelic().setWristPostion(64);
-                getRelic().close();
-                getDrive().encoderDrive(0.6, -5, -5, 2);
-                getSlammer().stopperDown();
-                getIntake().intake();
+                Robot.getIntake().releaseIntake();
+                Robot.getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*(90-54))/180, 0, 3);
+                Robot.getRelic().setAngles(0,0);
+                Robot.getRelic().setWristPostion(64);
+                Robot.getRelic().close();
+                Robot.getDrive().encoderDrive(0.6, -5, -5, 2);
+                Robot.getSlammer().stopperDown();
+                Robot.getIntake().intake();
 
-                getDrive().encoderDrive(0.3, -20, -20, 3);
-                getDrive().encoderDrive(0.2, -5, -5, 2);
-                getRelic().lock();
+                Robot.getDrive().encoderDrive(0.3, -20, -20, 3);
+                Robot.getDrive().encoderDrive(0.2, -5, -5, 2);
+                Robot.getRelic().lock();
 
                 telemetry.clearAll();
-                telemetry.addData("Front", getIntake().frontDetected());
-                telemetry.addData("Back", getIntake().backDetected());
+                telemetry.addData("Front", Robot.getIntake().frontDetected());
+                telemetry.addData("Back", Robot.getIntake().backDetected());
                 telemetry.update();
 
-                if(!(getIntake().frontDetected() && getIntake().backDetected())){
+                if(!(Robot.getIntake().frontDetected() && Robot.getIntake().backDetected())){
                     leftFarther = true;
                     sleep(400);
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(400);
-                    getIntake().intake();
-                    getDrive().encoderDrive(0.4, 3, 3, 3);
-                    getDrive().encoderDrive(0.4, -6, -6, 3);
-                    while (opModeIsActive() && t.seconds()<18 && !(getIntake().frontDetected() && getIntake().backDetected())){
+                    Robot.getIntake().intake();
+                    Robot.getDrive().encoderDrive(0.4, 3, 3, 3);
+                    Robot.getDrive().encoderDrive(0.4, -6, -6, 3);
+                    while (opModeIsActive() && t.seconds()<18 && !(Robot.getIntake().frontDetected() && Robot.getIntake().backDetected())){
                         Thread.yield();
                         telemetry.clearAll();
-                        telemetry.addData("Front", getIntake().frontDetected());
-                        telemetry.addData("Back", getIntake().backDetected());
+                        telemetry.addData("Front", Robot.getIntake().frontDetected());
+                        telemetry.addData("Back", Robot.getIntake().backDetected());
                         telemetry.update();
                     }
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(500);
                 } else {
                     leftFarther = false;
                     sleep(500);
-                    getIntake().reverse();
+                    Robot.getIntake().reverse();
                     sleep(300);
                 }
 
-                getIntake().setPower(0.5);
+                Robot.getIntake().setPower(0.5);
 
                 if(leftFarther){
-                    getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(9))/180, 3);
-                    getDrive().encoderDrive(0.4, 39, 39, 4);
+                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(9))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 39, 39, 4);
                 } else {
-                    getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(10))/180, 3);
-                    getDrive().encoderDrive(0.4, 35, 35, 4);
+                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(10))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 35, 35, 4);
                 }
 
-                getSlammer().autoSlam();
-                getDrive().encoderDrive(0.5, -5, -5, 2);
+                Robot.getSlammer().autoSlam();
+                Robot.getDrive().encoderDrive(0.5, -5, -5, 2);
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        getSlammer().setPower(-1);
+                        Robot.getSlammer().setPower(-1);
                         sleep(300);
-                        getSlammer().setPower(0);
+                        Robot.getSlammer().setPower(0);
                     }
                 }).start();
 
                 if(30-t.seconds()>=4){
-                    getDrive().encoderDrive(1, 4, 4, 2);
-                    getDrive().encoderDrive(1, -5, -5, 2);
+                    Robot.getDrive().encoderDrive(1, 4, 4, 2);
+                    Robot.getDrive().encoderDrive(1, -5, -5, 2);
                 }
                 break;
         }

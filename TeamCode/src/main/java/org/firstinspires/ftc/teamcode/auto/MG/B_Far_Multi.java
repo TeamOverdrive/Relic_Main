@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.Team2753Linear;
 import org.firstinspires.ftc.teamcode.auto.AutoParams;
 
 import static java.lang.Math.PI;
+import static org.firstinspires.ftc.teamcode.auto.AutoParams.autoSpeed;
 import static org.firstinspires.ftc.teamcode.subsystems.Drive.WHEEL_BASE;
 
 /**
@@ -65,8 +66,6 @@ public class B_Far_Multi extends Team2753Linear {
                     Robot.getIntake().reverse();
                 }
 
-
-
                 while (opModeIsActive() && t.seconds()>24 &&
                         !(Robot.getIntake().frontDetected() || Robot.getIntake().backDetected())){
                     Thread.yield();
@@ -100,6 +99,7 @@ public class B_Far_Multi extends Team2753Linear {
                 sleep(100);
                 Robot.getSlammer().stop();
                 break;
+
             case CENTER:
                 Robot.getDrive().encoderDrive(0.6, -24, -24, 5);
                 Robot.getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*90)/180, 0, 3); // -90
@@ -159,6 +159,7 @@ public class B_Far_Multi extends Team2753Linear {
                 sleep(100);
                 Robot.getSlammer().stop();
                 break;
+
             case RIGHT:
                 // Drive off
                 Robot.getDrive().encoderDrive(0.4, -30, -30, 3);

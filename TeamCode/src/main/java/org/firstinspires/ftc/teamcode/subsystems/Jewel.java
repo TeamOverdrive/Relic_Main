@@ -102,7 +102,7 @@ public class Jewel implements Subsystem {
             e.printStackTrace();
         }
 
-        retract(false);
+        retract(true);
         try {
             sleep(300);
         } catch (InterruptedException e) {

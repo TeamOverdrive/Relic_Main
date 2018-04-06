@@ -325,6 +325,20 @@ public class FtcRobotControllerActivity extends Activity
   protected void onStart() {
     super.onStart();
     RobotLog.vv(TAG, "onStart()");
+    SharedPreferences globalPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+    RobotLog.a("===============================================");
+
+    int positions = globalPrefs.getInt("Positions", 10);
+
+    RobotLog.a("Positions: " + positions);
+    try {
+      for (int i = 0; i < positions; i++) {
+        String position = globalPrefs.getString("GlyphPosition1", "");
+        //RobotLog.a("Position: " + position);
+      }
+    } catch (Exception e){
+      RobotLog.e(e.toString());
+    }
 
     // If we're start()ing after a stop(), then shut the old robot down so
     // we can refresh it with new state (e.g., with new hw configurations)
@@ -506,6 +520,10 @@ public class FtcRobotControllerActivity extends Activity
     else if (id == R.id.action_exit_app) {
       finish();
       return true;
+    }
+    else if(id == R.id.glyphSettings) {
+      Intent intent = new Intent(AppUtil.getDefContext(), Team2753GlyphChosingActivity.class);
+      startActivity(intent);
     }
 
    return super.onOptionsItemSelected(item);

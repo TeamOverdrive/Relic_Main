@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.libs.AutoTransitioner;
+import org.firstinspires.ftc.teamcode.libs.CameraBlinker;
 import org.firstinspires.ftc.teamcode.libs.subsystems.VuMark;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
@@ -68,6 +69,8 @@ public abstract class Team2753Linear extends LinearOpMode {
 
     public void waitForStart(String OpModeName, boolean auton, boolean camera) {
 
+        CameraBlinker cameraBlinker = new CameraBlinker();
+        cameraBlinker.on();
         Ryan = gamepad1;
         Seth = gamepad2;
 
@@ -78,7 +81,9 @@ public abstract class Team2753Linear extends LinearOpMode {
 
         Robot.init(this, auton);
 
+
         if(auton) {
+            cameraBlinker.off();
             RobotLog.v("================ Start VuCam =============");
             vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
 
@@ -153,6 +158,7 @@ public abstract class Team2753Linear extends LinearOpMode {
         } else {
             SetStatus("Initialized, Waiting for Start");
             waitForStart();
+            cameraBlinker.off();
         }
 
         runtime.reset();

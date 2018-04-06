@@ -5,6 +5,10 @@
           android:versionCode="26"
           android:versionName="3.6">
 
+  <!-- Use for camera -->
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-feature android:name="android.hardware.camera" />
+
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
   <application
@@ -34,6 +38,8 @@
         android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
         android:resource="@xml/device_filter" />
     </activity>
+
+    <activity android:name="org.firstinspires.ftc.robotcontroller.internal.Team2753GlyphChosingActivity"></activity>
 
     <!-- The robot controller service in which most of the robot functionality is managed -->
     <service

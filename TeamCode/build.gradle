@@ -12,5 +12,4 @@
 apply from: '../build.common.gradle'
 dependencies {
     compile project(':DogeCV')
-    compile project(':RobotLib')
 }

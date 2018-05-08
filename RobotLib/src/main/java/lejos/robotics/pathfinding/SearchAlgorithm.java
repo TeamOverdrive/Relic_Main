@@ -5,7 +5,7 @@ package lejos.robotics.pathfinding;
  * NOTE: Implementations of this interface should override Object.toString() with the name of the algorithm. 
  * e.g. "A*", "Dijkstra", "Best-First", "D* Lite"
  * @author BB
- * @see java.lang.Object#toString()
+ * @see Object#toString()
  */
 public interface SearchAlgorithm {
 	

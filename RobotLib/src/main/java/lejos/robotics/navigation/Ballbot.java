@@ -1,7 +1,5 @@
 package lejos.robotics.navigation;
 
-import lejos.hardware.lcd.LCD;
-import lejos.hardware.Sound;
 import lejos.robotics.EncoderMotor;
 import lejos.robotics.Gyroscope;
 
@@ -211,14 +209,6 @@ public class Ballbot extends Thread { // TODO: Thread should be a private inner 
 	 * gets another set of samples.
 	 */
 	private void getGyroOffset() {
-		
-		LCD.clear();
-		LCD.drawString("NXJ Ballbot",0,1);
-
-		LCD.drawString("Lay robot down", 0, 4);
-		LCD.drawString("flat to get gyro", 0, 5);
-		LCD.drawString("offset.", 0, 6);
-
 		gyro.recalibrateOffset();
 	}
 
@@ -226,17 +216,7 @@ public class Ballbot extends Thread { // TODO: Thread should be a private inner 
 	 * Warn user the Ballbot is about to start balancing. 
 	 */
 	private static void startBeeps() {
-		LCD.clear();
-		LCD.drawString("leJOS NXJ Ballbot", 0, 1);
-		LCD.drawString("Balance in", 0, 3);
 
-		// Play warning beep sequence to indicate balance about to start
-		for (int c=8; c>=0;c--) {
-			LCD.drawInt(c, 5, 4);
-			Sound.playTone(440,100);
-			try { Thread.sleep(1000);
-			} catch (InterruptedException e) {}
-		}
 	}
 
 	/**
@@ -386,10 +366,6 @@ public class Ballbot extends Thread { // TODO: Thread should be a private inner 
 		int power;
 		long tMotorPosOK;
 		long cLoop = 0;
-		
-		LCD.clear();
-		LCD.drawString("leJOS NXJ Ballbot", 0, 1);
-		LCD.drawString("Balancing", 0, 4);
 
 		tMotorPosOK = System.currentTimeMillis();
 
@@ -440,11 +416,6 @@ public class Ballbot extends Thread { // TODO: Thread should be a private inner 
 		
 		my_motor.flt();
 		//right_motor.flt();
-
-		Sound.beepSequenceUp();
-		LCD.drawString("Oops... I fell", 0, 4);
-		LCD.drawString("tInt ms:", 0, 8);
-		LCD.drawInt((int)tInterval*1000, 9, 8);
 	} // END OF BALANCING THREAD CODE
 
 	/**

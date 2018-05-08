@@ -20,12 +20,12 @@ import java.util.ArrayList;
  * Localization  (See section 8.3 of "Probabilistic Robotics" by Thrun et al. <br>
  * Uses a {@link MCLParticleSet} to represent the probability distribution  of the
  * estimated pose.
- * It uses a {@link lejos.robotics.navigation.MoveProvider} to supply odometry
+ * It uses a {@link MoveProvider} to supply odometry
  * data whenever  a movement is completed,
- * from which the {@link lejos.robotics.navigation.Pose} of each particle is updated.
+ * from which the {@link Pose} of each particle is updated.
  * It then uses a {@link  lejos.robotics.RangeScanner} to provide
  * {@link lejos.robotics.RangeReadings}  which are used, together with the
- * {@link lejos.robotics.mapping.RangeMap} to calculate the
+ * {@link RangeMap} to calculate the
  * probability weight of  each {@link MCLParticle} .
  * @author Lawrie Griffiths and Roger Glassey
  */

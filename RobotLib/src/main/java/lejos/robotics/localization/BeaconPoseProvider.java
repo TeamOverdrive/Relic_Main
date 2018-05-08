@@ -2,10 +2,10 @@ package lejos.robotics.localization;
 
 import java.util.ArrayList;
 
-import lejos.hardware.Sound;
-import lejos.robotics.localization.OdometryPoseProvider;
-import lejos.robotics.localization.PoseProvider;
-import lejos.robotics.navigation.*;
+import lejos.robotics.navigation.Move;
+import lejos.robotics.navigation.MoveListener;
+import lejos.robotics.navigation.MoveProvider;
+import lejos.robotics.navigation.Pose;
 
 /**
  * <p>A PoseProvider that uses beacon triangulation to pinpoint the pose (x, y, heading) of a robot. 
@@ -172,7 +172,7 @@ public class BeaconPoseProvider implements PoseProvider, MoveListener {
 	            hasScanned = true;
 	            System.out.println("set to " + hasScanned);
 	            return p;
-	        } else Sound.buzz();
+	        }
 	    }
 	    // If beacons <> 3 then use OdometryPP reading:
         return opp.getPose();

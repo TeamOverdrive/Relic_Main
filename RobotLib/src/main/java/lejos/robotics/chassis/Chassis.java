@@ -145,7 +145,7 @@ public interface Chassis {
    * @param angularSpeed
    * angular component of the robot speed expressed in degrees/second.
    */
-  public void travelCartesian(double xSpeed, double ySpeed, double angularSpeed );
+  public void travelCartesian(double xSpeed, double ySpeed, double angularSpeed);
 
   /** Moves the chassis the specified distance 
    * @param linear

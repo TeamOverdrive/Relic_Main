@@ -27,7 +27,7 @@ import lejos.robotics.RegulatedMotorListener;
  * <p>Note: A DifferentialPilot robot can simulate a SteeringPilot robot by calling {@link DifferentialPilot#setMinRadius(double)}
  * and setting the value to something greater than zero (example: 15 cm).</p>
  * 
- * @see lejos.robotics.navigation.DifferentialPilot#setMinRadius(double)
+ * @see DifferentialPilot#setMinRadius(double)
  * @author BB
  *
  */

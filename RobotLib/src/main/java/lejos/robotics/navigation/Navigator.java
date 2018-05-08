@@ -7,14 +7,14 @@ import lejos.robotics.localization.PoseProvider;
 import lejos.robotics.pathfinding.Path;
 
 /**
- * This class controls a robot to traverse a Path,  a sequence of  {@link  lejos.robotics.navigation.Waypoint}s.
+ * This class controls a robot to traverse a Path,  a sequence of  {@link  Waypoint}s.
  * It's default mode for a new path is continuous movement (no stopping at waypoints)  but see also {@link #singleStep(boolean)}.  To interrupt the path traversal,  call stop().
  *  It uses  an inner class running its own thread to issue movement commands to its
- * {@link lejos.robotics.navigation.MoveController},
- * which can be either a  {@link lejos.robotics.navigation.DifferentialPilot}
- * or {@link lejos.robotics.navigation.SteeringPilot}.
+ * {@link MoveController},
+ * which can be either a  {@link DifferentialPilot}
+ * or {@link SteeringPilot}.
  * It also uses a {@link lejos.robotics.localization.PoseProvider}
- * Calls its {@link lejos.robotics.navigation.NavigationListener}s
+ * Calls its {@link NavigationListener}s
  * when  a Waypoint is reached or the robot stops.
  * This class has only one blocking method: {@link #waitForStop()} .
  * @author Roger Glassey

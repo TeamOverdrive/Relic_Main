@@ -1,4 +1,4 @@
-package com.team2753.localTestCode;
+package com.team2753.localTestCode.auto.actions;
 
 import com.team2753.localTestCode.util.ElapsedTime;
 

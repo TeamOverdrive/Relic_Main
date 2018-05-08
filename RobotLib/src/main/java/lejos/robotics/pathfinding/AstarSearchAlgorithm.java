@@ -10,7 +10,7 @@ import lejos.robotics.navigation.Waypoint;
 /**
  * This is an implementation of the A* search algorithm. Typically this object would be instantiated and then used
  * in a NodePathFinder constructor, along with a set of connected nodes.
- * @see lejos.robotics.pathfinding.NodePathFinder
+ * @see NodePathFinder
  * @author BB
  * 
  */

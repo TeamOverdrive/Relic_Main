@@ -40,7 +40,7 @@ public class IntegrationFilter extends AbstractFilter{
 	/**
 	 * Fetches a sample from the source and then integrates it.
 	 * 
-	 * @see lejos.robotics.filter.AbstractFilter#fetchSample(float[], int)
+	 * @see AbstractFilter#fetchSample(float[], int)
 	 */
 	public void fetchSample(float sample[], int off) {
 		super.fetchSample(sample, off);

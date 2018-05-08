@@ -2,12 +2,10 @@ package lejos.robotics.navigation;
 
 import java.util.ArrayList;
 
-import lejos.hardware.Power;
 import lejos.robotics.Gyroscope;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.RegulatedMotorListener;
 import lejos.robotics.geometry.Point;
-import lejos.robotics.navigation.Pose;
 import lejos.utility.Delay;
 import lejos.utility.Matrix;
 
@@ -65,7 +63,7 @@ public class OmniPilot implements ArcRotateMoveController, RegulatedMotorListene
 	private float spinLinSpeed = 0; // units/s
 	private float spinAngSpeed = 0; // deg/s
 	private float spinTravelDirection = 0; // deg
-	private Power battery;
+	private float batteryVoltage;
 	
 	private double minTurnRadius = 0; // This vehicle can turn withgout moving therefore minimum turn radius = 0
 	
@@ -78,7 +76,8 @@ public class OmniPilot implements ArcRotateMoveController, RegulatedMotorListene
 	 */
 	private ArrayList<MoveListener> listeners= new ArrayList<MoveListener>();
   private int acceleration;
-	
+
+
 	/**
 	 * Instantiates a new omnidirectional pilot.
 	 * This class also keeps track of the odometry
@@ -95,13 +94,13 @@ public class OmniPilot implements ArcRotateMoveController, RegulatedMotorListene
 	public OmniPilot (float wheelDistanceFromCenter, float wheelDiameter, 
 					RegulatedMotor centralMotor, RegulatedMotor CW120degMotor, RegulatedMotor CCW120degMotor,  
 					boolean centralWheelFrontal, boolean motorReverse,
-					Power battery) {
+					float batteryVoltage) {
 		this.wheelBase = wheelDistanceFromCenter;
 		this.wheelDiameter = wheelDiameter;
 		this.motor1 = centralMotor;
 		this.motor2 = CCW120degMotor;
 		this.motor3 = CW120degMotor;
-		this.battery = battery;
+		this.batteryVoltage = batteryVoltage;
 		motor1.addListener(this);
 		motor2.addListener(this);
 		motor3.addListener(this);
@@ -129,9 +128,9 @@ public class OmniPilot implements ArcRotateMoveController, RegulatedMotorListene
 	public OmniPilot(float wheelDistanceFromCenter, float wheelDiameter, 
 			RegulatedMotor centralMotor, RegulatedMotor CW120degMotor, RegulatedMotor CCW120degMotor,  
 			boolean centralWheelFrontal, boolean motorReverse, 
-			Power battery, Gyroscope gyro) {
+			float batteryVoltage, Gyroscope gyro) {
 		this(wheelDistanceFromCenter, wheelDiameter,centralMotor, CW120degMotor, CCW120degMotor,  
-				centralWheelFrontal, motorReverse, battery);
+				centralWheelFrontal, motorReverse, batteryVoltage);
 		this.gyro = gyro;
 //		gyro = new CruizcoreGyro(gyroPort), I2CPort.HIGH_SPEED);
 //		gyro = new CruizcoreGyro(gyroPort, I2CPort.LEGO_MODE);
@@ -374,7 +373,7 @@ private void initMatrices(boolean centralWheelForward, boolean motorReverse) {
 	public double getMaxLinearSpeed() {
 		// it is generally assumed, that the maximum accurate speed of Motor is
 		// 100 degree/second * Voltage
-		double maxRadSec = Math.toRadians(battery.getVoltage()*100f);
+		double maxRadSec = Math.toRadians(batteryVoltage*100f);
 		double[] spd = {0, maxRadSec, -maxRadSec};
 		Matrix wheelSpeeds = new Matrix(spd, 3);		
 		Matrix robotSpeeds = kMatrix.times(wheelSpeeds);
@@ -394,7 +393,7 @@ private void initMatrices(boolean centralWheelForward, boolean motorReverse) {
 	public double getMaxAngularSpeed() {
 		// it is generally assumed, that the maximum accurate speed of Motor is
 		// 100 degree/second * Voltage
-		double maxRadSec = Math.toRadians(battery.getVoltage()*100f);
+		double maxRadSec = Math.toRadians(batteryVoltage*100f);
 		Matrix wheelSpeeds = new Matrix(3, 1, maxRadSec);
 		Matrix robotSpeeds = kMatrix.times(wheelSpeeds);
 		return (float) Math.abs(Math.toDegrees(robotSpeeds.get(2,0)));

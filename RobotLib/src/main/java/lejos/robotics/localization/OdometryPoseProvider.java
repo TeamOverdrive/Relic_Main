@@ -8,10 +8,10 @@ import lejos.robotics.navigation.MoveProvider;
 import lejos.robotics.navigation.Pose;
 
 /**
- * <p>A PoseProvider keeps track of the robot {@link lejos.robotics.navigation.Pose}.
+ * <p>A PoseProvider keeps track of the robot {@link Pose}.
  * It does this using odometry (dead reckoning)
- * data contained in a {@link lejos.robotics.navigation.Move}, which is  supplied by a {@link
- *lejos.robotics.navigation.MoveProvider}. When the PoseProivder  is constructed, it registers
+ * data contained in a {@link Move}, which is  supplied by a {@link
+ *MoveProvider}. When the PoseProivder  is constructed, it registers
  * as listener with its MoveProvider,
  */
 

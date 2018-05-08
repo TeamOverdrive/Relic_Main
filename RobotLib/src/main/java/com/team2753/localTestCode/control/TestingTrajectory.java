@@ -1,4 +1,4 @@
-package com.team2753.localTestCode;
+package com.team2753.localTestCode.control;
 
 import com.team254.lib.trajectory.Trajectory;
 import com.team254.lib.trajectory.TrajectoryGenerator;

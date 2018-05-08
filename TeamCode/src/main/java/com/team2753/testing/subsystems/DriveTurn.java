@@ -21,7 +21,7 @@ public class DriveTurn extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Drive Test", AUTO, false);
+        waitForStart("Drive Test", AUTO);
 
         int i = 0;
 

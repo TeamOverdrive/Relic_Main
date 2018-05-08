@@ -18,25 +18,20 @@ import static java.lang.Math.PI;
 public class B_Back_3Glyph extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("BBack", AutoParams.AUTO, true );
+        waitForStart("BBack", AutoParams.AUTO);
         Robot.getDrive().zeroSensors();
 
-        TrackPosition trackPosition = new TrackPosition();
+        hitJewel(this.jewel_Color, Jewel_Color.Blue);
 
-        runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Blue));
+        Robot.getDrive().encoderDrive(0.3, -36, -36, 4000);
 
-        runAction(new DriveEncoderDrive(0.3, -36, -36, 4));
-        ThreadAction(trackPosition);
+        Robot.getDrive().encoderDrive(0.3, 0, (WHEEL_BASE*PI*(82))/180, 4000);
 
-        runAction(new DriveEncoderDrive(0.3, 0, (WHEEL_BASE*PI*(82))/180, 4));
-
-        runAction(new DriveEncoderDrive(0.3, 7, 7, 3));
+        Robot.getDrive().encoderDrive(0.3, 7, 7, 3000);
 
         Robot.getSlammer().stopperUp();
         sleep(600);
-        runAction(new DriveEncoderDrive(0.3, -10, -10, 3));
-
-        trackPosition.stopTracking();
+        Robot.getDrive().encoderDrive(0.3, -10, -10, 3000);
 
         telemetry.addData("X", trackPosition.currentVectorX);
         telemetry.addData("Y",  trackPosition.currentVectorY);

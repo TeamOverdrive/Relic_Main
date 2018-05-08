@@ -37,7 +37,7 @@ public class Teleop extends Team2753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Teleop", TELEOP, false);
+        waitForStart("Teleop", TELEOP);
         SetStatus("Teleop");
 
         Robot.getRelic().setAngles(0,0);
@@ -68,15 +68,15 @@ public class Teleop extends Team2753Linear {
                 //D-pad controls for slower movement
                 if (Math.abs(Ryan.right_stick_y) < 0.01 && Math.abs(Ryan.left_stick_y) < 0.01) {
                     if (Ryan.dpad_up) {
-                        Robot.getDrive().setLeftRightPowers(-0.3, -0.3);
+                        Robot.getDrive().setLeftRightPower(-0.3, -0.3);
                     } else if (Ryan.dpad_down) {
-                        Robot.getDrive().setLeftRightPowers(0.3, 0.3);
+                        Robot.getDrive().setLeftRightPower(0.3, 0.3);
                     } else if (Ryan.dpad_left) {
-                        Robot.getDrive().setLeftRightPowers(-0.35, 0.35);
+                        Robot.getDrive().setLeftRightPower(-0.35, 0.35);
                     } else if (Ryan.dpad_right) {
-                        Robot.getDrive().setLeftRightPowers(0.35, -0.35);
+                        Robot.getDrive().setLeftRightPower(0.35, -0.35);
                     } else {
-                        Robot.getDrive().setLeftRightPowers(0, 0);
+                        Robot.getDrive().setLeftRightPower(0, 0);
                     }
                 } else {
                     float leftThrottle = Ryan.left_stick_y;
@@ -90,7 +90,7 @@ public class Teleop extends Team2753Linear {
                     leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
                     rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
 
-                    Robot.getDrive().setLeftRightPowers(leftThrottle, rightThrottle);
+                    Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
                 }
             } else {
                 double speed = Ryan.left_stick_y;
@@ -102,7 +102,7 @@ public class Teleop extends Team2753Linear {
                 double left = speed + turn;
                 double right = speed - turn;
 
-                Robot.getDrive().setLeftRightPowers(left, right);
+                Robot.getDrive().setLeftRightPower(left, right);
             }
 
             /* Intake Controls */

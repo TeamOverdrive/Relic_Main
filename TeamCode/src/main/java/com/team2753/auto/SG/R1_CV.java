@@ -18,7 +18,7 @@ public class R1_CV extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("R1 CV", AUTO, true);
+        waitForStart("R1 CV", AUTO);
 
         int i = 0;
 

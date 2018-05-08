@@ -18,7 +18,7 @@ public class R1_Vuforia extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("R1 Vuforia", AUTO, true);
+        waitForStart("R1 Vuforia", AUTO);
 
         int i = 0;
 

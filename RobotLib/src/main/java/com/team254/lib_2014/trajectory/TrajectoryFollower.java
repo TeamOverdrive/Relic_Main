@@ -1,4 +1,4 @@
-package com.team254.lib.trajectory;
+package com.team254.lib_2014.trajectory;
 
 /**
  * PID + Feedforward controller for following a Trajectory.
@@ -16,9 +16,10 @@ public class TrajectoryFollower {
   private double current_heading = 0;
   private int current_segment;
   private Trajectory profile_;
+  public String name;
 
-  public TrajectoryFollower() {
-
+  public TrajectoryFollower(String name) {
+    this.name = name;
   }
 
   public void configure(double kp, double ki, double kd, double kv, double ka) {
@@ -49,7 +50,6 @@ public class TrajectoryFollower {
       last_error_ = error;
       current_heading = segment.heading;
       current_segment++;
-      //System.out.println("so far: " + distance_so_far + "; output: " + output);
       return output;
     } else {
       return 0;
@@ -62,5 +62,13 @@ public class TrajectoryFollower {
 
   public boolean isFinishedTrajectory() {
     return current_segment >= profile_.getNumSegments();
+  }
+  
+  public int getCurrentSegment() {
+    return current_segment;
+  }
+  
+  public int getNumSegments() {
+    return profile_.getNumSegments();
   }
 }

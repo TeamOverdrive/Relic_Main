@@ -1,4 +1,4 @@
-package com.team254.lib.trajectory;
+package com.team254.lib_2014.trajectory;
 
 /**
  * Factory class for creating Trajectories.

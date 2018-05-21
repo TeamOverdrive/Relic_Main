@@ -1,4 +1,6 @@
-package com.team254.lib.trajectory;
+package com.team254.lib_2014.trajectory;
+
+import com.team254.lib_2014.trajectory.Trajectory.Segment;
 
 /**
  * Base class for an autonomous path.
@@ -14,10 +16,6 @@ public class Path {
     name_ = name;
     go_left_pair_ = go_left_pair;
     go_left_ = true;
-  }
-  
-  public Path() {
-    
   }
   
   public String getName() { return name_; }
@@ -42,13 +40,15 @@ public class Path {
     return (go_left_ ? go_left_pair_.right : go_left_pair_.left);
   }
   
-  public Trajectory.Pair getPair() {
-    return go_left_pair_;
+  public boolean canFlip(int segmentNum) {
+    Segment a = go_left_pair_.right.getSegment(segmentNum);
+    Segment b = go_left_pair_.left.getSegment(segmentNum);
+    return (a.pos == b.pos) && (a.vel == b.vel);
   }
 
   public double getEndHeading() {
     int numSegments = getLeftWheelTrajectory().getNumSegments();
-    Trajectory.Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);
+    Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);
     return lastSegment.heading;
   }
 }

@@ -1,4 +1,6 @@
-package com.team254.lib.trajectory;
+package com.team254.lib_2014.trajectory;
+
+import com.team254.lib_2014.util.ChezyMath;
 
 /**
  * Implementation of a Trajectory using arrays as the underlying storage
@@ -83,7 +85,7 @@ public class Trajectory {
       } else {
         Segment segment = new Segment(segments_[index]);
         segment.y *= -1.0;
-        segment.heading *= -1.0;
+        segment.heading = ChezyMath.boundAngle0to2PiRadians(2*Math.PI - segment.heading);
         return segment;
       }
     } else {

@@ -14,7 +14,7 @@ import com.team2753.auto.actions.JewelHitColor;
 public class R_Far_Multi extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("RFar", AutoParams.AUTO, true);
+        waitForStart("RFar", AutoParams.AUTO);
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();

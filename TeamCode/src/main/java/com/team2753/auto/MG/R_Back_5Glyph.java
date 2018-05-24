@@ -19,7 +19,7 @@ import static java.lang.Math.PI;
 public class R_Back_5Glyph extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("RBack", AutoParams.AUTO, true);
+        waitForStart("RBack", AutoParams.AUTO);
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();

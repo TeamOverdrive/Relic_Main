@@ -20,7 +20,7 @@ public class R_Back_3Glyph extends AutoModeBase {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("RBack", AutoParams.AUTO, true);
+        waitForStart("RBack", AutoParams.AUTO);
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();

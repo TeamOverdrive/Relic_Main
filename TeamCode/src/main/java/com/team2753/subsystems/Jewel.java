@@ -2,11 +2,8 @@ package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.team2753.Team2753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-import static java.lang.Thread.sleep;
 
 /**
  * Created by joshua9889 on 12/10/2017.
@@ -80,34 +77,6 @@ public class Jewel implements Subsystem {
 
     public void rightHit(){
         wrist.setPosition((CenterJewelWrist+RightJewelWrist)/2);
-    }
-
-    public void hit(Team2753Linear.Jewel_Color scannedJewel, Team2753Linear.Jewel_Color alliance_color){
-        deploy(true);
-        try {
-            sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(scannedJewel==alliance_color){
-            rightHit();
-        } else {
-            leftHit();
-        }
-
-        try {
-            sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        retract(false);
-        try {
-            sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

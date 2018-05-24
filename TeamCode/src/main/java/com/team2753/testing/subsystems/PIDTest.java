@@ -12,7 +12,7 @@ public class PIDTest extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("PID Test", AUTO, false);
+        waitForStart("PID Test", AUTO);
 
         int i = 0;
 

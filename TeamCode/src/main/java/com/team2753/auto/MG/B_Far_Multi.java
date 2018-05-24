@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
-import com.team2753.auto.actions.JewelHitColor;
 
 import static com.team2753.subsystems.Drive.WHEEL_BASE;
 import static java.lang.Math.PI;
@@ -17,11 +16,12 @@ import static java.lang.Math.PI;
 public class B_Far_Multi extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("BFar", AutoParams.AUTO, true);
+        waitForStart("BFar", AutoParams.AUTO);
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
-        runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Blue));
+
+        hitJewel(this.jewel_Color, Jewel_Color.Blue);
 
         switch (WhatColumnToScoreIn()){
             case LEFT:

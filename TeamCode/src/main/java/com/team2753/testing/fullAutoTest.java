@@ -21,7 +21,7 @@ public class fullAutoTest extends Team2753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("B1 Multiglyph", AUTO, true);
+        waitForStart("B1 Multiglyph", AUTO);
 
         int i = 0;
 

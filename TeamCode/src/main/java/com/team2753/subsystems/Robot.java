@@ -1,6 +1,7 @@
 package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -48,12 +49,23 @@ public class Robot {
     public void init(LinearOpMode opmode, boolean autonomous) {
         // Init all subsystems
         RobotLog.v("================ Robot Subsystems Init Loop Started =============");
+        ElapsedTime timer = new ElapsedTime();
+        double[] timers = new double[subsystems.size()-1];
+        int time =0;
         for (Subsystem subsystem:subsystems){
-            RobotLog.v("================ Robot Subsystem " + subsystem.toString() + " Init Started =============");
+            RobotLog.v("================ Robot Subsystem " + subsystem.toString() +
+                    " Init Started =============");
+            timer.reset();
             subsystem.init(opmode, autonomous);
-            RobotLog.v("================ Robot Subsystem " + subsystem.toString() + " Init Finished =============");
+            timers[time] = timer.seconds();
+            time++;
+            timer.reset();
+            RobotLog.v("================ Robot Subsystem " + subsystem.toString() +
+                    " Init Finished in " + timers[time] + " =============");
         }
         RobotLog.v("================ Robot Subsystems Init Loop Finished =============");
+        opmode.telemetry.addData("Time", timers);
+        opmode.telemetry.update();
     }
 
     /**

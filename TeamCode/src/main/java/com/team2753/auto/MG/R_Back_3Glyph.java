@@ -2,13 +2,12 @@ package com.team2753.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team2753.Constants;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
-import com.team2753.auto.actions.JewelHitColor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
-import static com.team2753.subsystems.Drive.WHEEL_BASE;
 import static java.lang.Math.PI;
 
 /**
@@ -24,14 +23,13 @@ public class R_Back_3Glyph extends AutoModeBase {
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
-        runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Red));
-
+        hitJewel(this.jewel_Color, Jewel_Color.Red);
 
         switch (RelicRecoveryVuMark.RIGHT){
             case RIGHT:
                 boolean rightFarther = false;
                 Robot.getDrive().encoderDrive(0.6, 21, 21, 3);
-                Robot.getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(90))/180, 3);
+                Robot.getDrive().encoderDrive(0.6, 0, (Constants.WHEEL_BASE*PI*(90))/180, 3);
                 Robot.getDrive().encoderDrive(0.6, 2, 2, 3);
                 Robot.getSlammer().stopperUp();
                 sleep(400);
@@ -85,10 +83,10 @@ public class R_Back_3Glyph extends AutoModeBase {
                 Robot.getIntake().setPower(0.5);
 
                 if(rightFarther){
-                    Robot.getDrive().encoderDrive(0.4, (WHEEL_BASE*PI*(17))/180, 0, 3);
+                    Robot.getDrive().encoderDrive(0.4, (Constants.WHEEL_BASE*PI*(17))/180, 0, 3);
                     Robot.getDrive().encoderDrive(0.4, 36, 36, 4);
                 } else {
-                    Robot.getDrive().encoderDrive(0.4, (WHEEL_BASE*PI*(25))/180, 0, 3);
+                    Robot.getDrive().encoderDrive(0.4, (Constants.WHEEL_BASE*PI*(25))/180, 0, 3);
                     Robot.getDrive().encoderDrive(0.4, 32, 32, 4);
                 }
 
@@ -113,12 +111,12 @@ public class R_Back_3Glyph extends AutoModeBase {
             case CENTER:
                 boolean centerFarther = false;
                 Robot.getDrive().encoderDrive(0.6, 22, 22, 4);
-                Robot.getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(57))/180, 3);
+                Robot.getDrive().encoderDrive(0.6, 0, (Constants.WHEEL_BASE*PI*(57))/180, 3);
                 Robot.getDrive().encoderDrive(0.6, 7, 7, 3);
                 Robot.getSlammer().stopperUp();
                 sleep(400);
                 Robot.getIntake().releaseIntake();
-                Robot.getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*(90-57))/180, 0, 3);
+                Robot.getDrive().encoderDrive(0.6, -(Constants.WHEEL_BASE*PI*(90-57))/180, 0, 3);
                 Robot.getDrive().encoderDrive(0.6, -5, -5, 2);
                 Robot.getSlammer().stopperDown();
                 Robot.getIntake().intake();
@@ -167,10 +165,10 @@ public class R_Back_3Glyph extends AutoModeBase {
                 Robot.getIntake().intake();
 
                 if(centerFarther){
-                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(-7))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 0, (Constants.WHEEL_BASE*PI*(-7))/180, 3);
                     Robot.getDrive().encoderDrive(0.4, 39, 39, 4);
                 } else {
-                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(-3))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 0, (Constants.WHEEL_BASE*PI*(-3))/180, 3);
                     Robot.getDrive().encoderDrive(0.4, 35, 35, 4);
                 }
 
@@ -198,12 +196,12 @@ public class R_Back_3Glyph extends AutoModeBase {
             case LEFT:
                 boolean leftFarther = false;
                 Robot.getDrive().encoderDrive(0.6, 27, 27, 4);
-                Robot.getDrive().encoderDrive(0.6, 0, (WHEEL_BASE*PI*(54))/180, 3);
+                Robot.getDrive().encoderDrive(0.6, 0, (Constants.WHEEL_BASE*PI*(54))/180, 3);
                 Robot.getDrive().encoderDrive(0.6, 7, 7, 3);
                 Robot.getSlammer().stopperUp();
                 sleep(400);
                 Robot.getIntake().releaseIntake();
-                Robot.getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*(90-54))/180, 0, 3);
+                Robot.getDrive().encoderDrive(0.6, -(Constants.WHEEL_BASE*PI*(90-54))/180, 0, 3);
                 Robot.getRelic().setAngles(0,0);
                 Robot.getRelic().setWristPostion(64);
                 Robot.getRelic().close();
@@ -247,10 +245,10 @@ public class R_Back_3Glyph extends AutoModeBase {
                 Robot.getIntake().setPower(0.5);
 
                 if(leftFarther){
-                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(9))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 0, (Constants.WHEEL_BASE*PI*(9))/180, 3);
                     Robot.getDrive().encoderDrive(0.4, 39, 39, 4);
                 } else {
-                    Robot.getDrive().encoderDrive(0.4, 0, (WHEEL_BASE*PI*(10))/180, 3);
+                    Robot.getDrive().encoderDrive(0.4, 0, (Constants.WHEEL_BASE*PI*(10))/180, 3);
                     Robot.getDrive().encoderDrive(0.4, 35, 35, 4);
                 }
 

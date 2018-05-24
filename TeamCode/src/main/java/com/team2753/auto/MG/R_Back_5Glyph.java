@@ -3,11 +3,10 @@ package com.team2753.auto.MG;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team2753.Constants;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
-import com.team2753.auto.actions.JewelHitColor;
 
-import static com.team2753.subsystems.Drive.WHEEL_BASE;
 import static java.lang.Math.PI;
 
 /**
@@ -23,7 +22,7 @@ public class R_Back_5Glyph extends AutoModeBase {
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
-        runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Red));
+        hitJewel(this.jewel_Color, Jewel_Color.Red);
 
         Robot.getDrive().encoderDrive(0.5, 34.5, 34.5, 3);
         Robot.getDrive().turnCW(90, 0.5, 3);
@@ -52,7 +51,7 @@ public class R_Back_5Glyph extends AutoModeBase {
         }
 
         Robot.getIntake().intake();
-//        getDrive().encoderDrive(1, 0, (WHEEL_BASE*PI*7)/180, 2);
+//        getDrive().encoderDrive(1, 0, (Constants.WHEEL_BASE*PI*7)/180, 2);
         Robot.getDrive().encoderDrive(1, 37, 37, 3);
         Robot.getSlammer().autoSlam();
         Robot.getDrive().encoderDrive(1, -5, -5, 2);
@@ -62,7 +61,7 @@ public class R_Back_5Glyph extends AutoModeBase {
         Robot.getSlammer().stopperDown();
         Robot.getIntake().intake();
         Robot.getDrive().encoderDrive(1, -37, -37, 3);
-        Robot.getDrive().encoderDrive(1, (WHEEL_BASE*PI*9)/180, 0, 2);
+        Robot.getDrive().encoderDrive(1, (Constants.WHEEL_BASE*PI*9)/180, 0, 2);
         Robot.getDrive().encoderDrive(1, 40, 40, 3);
         Robot.getSlammer().autoSlam();
         Robot.getDrive().encoderDrive(1, -4, -4, 2);

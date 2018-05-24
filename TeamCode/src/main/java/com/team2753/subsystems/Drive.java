@@ -3,6 +3,7 @@ package com.team2753.subsystems;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -68,16 +69,10 @@ public class Drive implements Subsystem {
                 gyroRight.setI2cAddress(I2cAddr.create8bit(0x20));
 
                 gyroLeft.calibrate();
-                while (gyroLeft.isCalibrating()){
-                    Thread.yield();
-                }
-
                 gyroRight.calibrate();
-                while (gyroLeft.isCalibrating()){
+                while (gyroLeft.isCalibrating() && gyroLeft.isCalibrating()){
                     Thread.yield();
                 }
-
-
                 gyroLeft.resetZAxisIntegrator();
                 gyroRight.resetZAxisIntegrator();
             }
@@ -156,8 +151,15 @@ public class Drive implements Subsystem {
         return getRightCurrentPosition()/COUNTS_PER_INCH;
     }
 
+    public DcMotorController controller(){
+        return leftMotor.getController();
+    }
+
+    /**
+     * @return Angle in Degrees, based on unit circle
+     */
     public double getGyroAngleDegrees(){
-        return (gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
+        return -(gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
     }
 
     public double getGyroAngleRadians(){

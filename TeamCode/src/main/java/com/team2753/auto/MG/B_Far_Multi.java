@@ -2,10 +2,10 @@ package com.team2753.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team2753.Constants;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
 
-import static com.team2753.subsystems.Drive.WHEEL_BASE;
 import static java.lang.Math.PI;
 
 /**
@@ -26,7 +26,7 @@ public class B_Far_Multi extends AutoModeBase {
         switch (WhatColumnToScoreIn()){
             case LEFT:
                 Robot.getDrive().encoderDrive(0.6, -24, -24, 5);
-                Robot.getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*90)/180, 0, 3); // -90
+                Robot.getDrive().encoderDrive(0.6, -(Constants.WHEEL_BASE*PI*90)/180, 0, 3); // -90
                 Robot.getDrive().encoderDrive(0.5, -6, -6, 3);
 
                 Robot.getDrive().turnCW(54, 0.3, 3); // -90-52
@@ -79,12 +79,12 @@ public class B_Far_Multi extends AutoModeBase {
                 Robot.getIntake().reverse();
 
                 if(left){
-                    Robot.getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*10)/180, 3);
+                    Robot.getDrive().encoderDrive(1.0, 0, (Constants.WHEEL_BASE*PI*10)/180, 3);
                     Robot.getIntake().intake();
 
                     Robot.getDrive().encoderDrive(0.8, 53, 53, 3);
                 } else {
-                    Robot.getDrive().encoderDrive(1.0, 0, (WHEEL_BASE*PI*8)/180, 3);
+                    Robot.getDrive().encoderDrive(1.0, 0, (Constants.WHEEL_BASE*PI*8)/180, 3);
                     Robot.getIntake().intake();
 
                     Robot.getDrive().encoderDrive(0.8, 49, 49, 3);
@@ -102,7 +102,7 @@ public class B_Far_Multi extends AutoModeBase {
                 break;
             case CENTER:
                 Robot.getDrive().encoderDrive(0.6, -24, -24, 5);
-                Robot.getDrive().encoderDrive(0.6, -(WHEEL_BASE*PI*90)/180, 0, 3); // -90
+                Robot.getDrive().encoderDrive(0.6, -(Constants.WHEEL_BASE*PI*90)/180, 0, 3); // -90
                 Robot.getDrive().encoderDrive(0.5, -13, -13, 3);
 
                 Robot.getDrive().turnCW(54, 0.3, 3); // -90-52

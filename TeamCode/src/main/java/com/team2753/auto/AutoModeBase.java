@@ -6,9 +6,9 @@ import com.team2753.Team2753Linear;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
+import static com.team2753.Constants.COUNTS_PER_INCH;
 import static com.team2753.auto.AutoParams.autoSpeed;
 import static com.team2753.auto.AutoParams.autoTurnSpeed;
-import static com.team2753.subsystems.Drive.COUNTS_PER_INCH;
 
 /**
  * Created by joshua9889 on 3/23/2018.

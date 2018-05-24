@@ -13,6 +13,7 @@ import static com.team2753.auto.AutoParams.AUTO;
 
 @Autonomous(name = "Red 1 Multiglyph", group = "multiglyph")
 @Disabled
+@Deprecated
 public class R1_Multi extends Team2753Linear{
 
     @Override
@@ -26,11 +27,11 @@ public class R1_Multi extends Team2753Linear{
 
             //score cryptokey
             SetStatus("Cryptokey");
-            glyphScoreR1(this);
+            //glyphScoreR1(this);
 
             //grab more glyphs
             SetStatus("Multiglyph");
-            multiGlyphPos1();
+           // multiGlyphPos1();
 
             //score extra glyphs
 

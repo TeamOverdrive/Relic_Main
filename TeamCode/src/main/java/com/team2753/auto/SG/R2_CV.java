@@ -13,6 +13,7 @@ import static com.team2753.auto.AutoParams.AUTO;
 
 @Autonomous(name = "Red 2 CV", group = "CV")
 @Disabled
+@Deprecated
 public class R2_CV extends Team2753Linear {
 
     @Override
@@ -25,7 +26,7 @@ public class R2_CV extends Team2753Linear {
 
         //score cryptokey
         SetStatus("Cryptokey");
-        glyphScoreR2();
+        //glyphScoreR2();
 
         //grab more glyphs
         SetStatus("Multiglyph");

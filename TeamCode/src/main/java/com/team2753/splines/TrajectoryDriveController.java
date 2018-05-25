@@ -7,6 +7,8 @@ import com.team2753.subsystems.Drive;
 
 /**
  * Created by joshua9889 on 5/22/2018.
+ *
+ * Used to control the Drivetrain when following a Trajectory
  */
 
 public class TrajectoryDriveController{
@@ -20,25 +22,27 @@ public class TrajectoryDriveController{
     private Drive mDrive;
     private FollowerConfig followerConfig;
 
-    Trajectory trajectory;
-    TrajectoryFollower followerLeft = new TrajectoryFollower("left");
-    TrajectoryFollower followerRight = new TrajectoryFollower("right");
-    double direction;
-    double heading;
-    double kTurn = -0.0001;
+    // Used to display on the Driverstation
+    public double wantedLeftSpeed = 0;
+    public double wantedRightSpeed = 0;
+
+    private Trajectory trajectory;
+    private TrajectoryFollower followerLeft = new TrajectoryFollower("left");
+    private TrajectoryFollower followerRight = new TrajectoryFollower("right");
+    private double direction, heading, kTurn;
 
     public boolean onTarget() {
         return followerLeft.isFinishedTrajectory();
     }
 
     private void init() {
-        followerLeft.configure(followerConfig.get()[0], followerConfig.get()[1],
-                followerConfig.get()[2], followerConfig.get()[3],
-                followerConfig.get()[4]);
-        followerRight.configure(followerConfig.get()[0], followerConfig.get()[1],
-                followerConfig.get()[2], followerConfig.get()[3],
-                followerConfig.get()[4]);
-        kTurn = followerConfig.get()[5];
+        followerLeft.configure(followerConfig.get()[0], 0, followerConfig.get()[1],
+                followerConfig.get()[2], followerConfig.get()[3]);
+
+        followerRight.configure(followerConfig.get()[0], 0, followerConfig.get()[1],
+                followerConfig.get()[2], followerConfig.get()[3]);
+
+        kTurn = followerConfig.get()[4];
     }
 
     public void loadProfile(Trajectory leftProfile, Trajectory rightProfile,
@@ -77,19 +81,26 @@ public class TrajectoryDriveController{
         if (onTarget()) {
             mDrive.setLeftRightPower(0.0, 0.0);
         } else  {
-            double distanceL = direction * mDrive.getLeftDistanceInches();
+            double distanceL = direction * mDrive.getLeftDistanceInches(); // inches
             double distanceR = direction * mDrive.getRightDistanceInches();
 
+            // Calculate the PIDVA here based on the current position
             double speedLeft = direction * followerLeft.calculate(distanceL);
             double speedRight = direction * followerRight.calculate(distanceR);
+            wantedLeftSpeed = speedLeft;
+            wantedRightSpeed = speedRight;
 
-            double goalHeading = followerLeft.getHeading();
-            double observedHeading = mDrive.getGyroAngleRadians();
+            // Gyro correction
+            double goalHeading = followerLeft.getHeading(); // Radians
+            double observedHeading = mDrive.getGyroAngleRadians(); // Radians
 
             double angleDiffRads = ChezyMath.getDifferenceInAngleRadians(observedHeading, goalHeading);
-            double angleDiff = Math.toDegrees(angleDiffRads);
+            double angleDiff = Math.toDegrees(angleDiffRads); // Easier to tune
 
+            // Calculate the Proportional value
             double turn = kTurn * angleDiff;
+
+            // Steer like a car, but with two pedals
             mDrive.setLeftRightPower(speedLeft + turn, speedRight - turn);
         }
     }

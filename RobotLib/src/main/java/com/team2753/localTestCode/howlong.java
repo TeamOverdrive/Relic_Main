@@ -3,8 +3,6 @@ package com.team2753.localTestCode;
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
-import com.team254.lib_2014.util.MultiLooper;
-import com.team254.lib_2014.util.io.TextFileSerializer;
 
 /**
  * Created by joshua9889 on 5/22/2018.
@@ -55,11 +53,7 @@ public class howlong {
             leftProfile.scale(slower);
             rightProfile.scale(faster);
         }
-        Path path = new Path("Test", new Trajectory.Pair(leftProfile, rightProfile));
 
-
-        TextFileSerializer serializer = new TextFileSerializer();
-        serializer.serialize(path);
         System.out.println((System.currentTimeMillis()-starttime)/1000);
     }
 }

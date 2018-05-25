@@ -39,6 +39,8 @@ public class TrajectoryFollower {
     profile_ = profile;
   }
 
+  // This is where the PIDVA is calculated
+  // TODO: What is the problem?
   public double calculate(double distance_so_far) {
     if (current_segment < profile_.getNumSegments()) {
       Trajectory.Segment segment = profile_.getSegment(current_segment);
@@ -56,6 +58,7 @@ public class TrajectoryFollower {
     }
   }
 
+  // Radians
   public double getHeading() {
     return current_heading;
   }

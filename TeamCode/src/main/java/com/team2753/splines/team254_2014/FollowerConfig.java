@@ -1,4 +1,4 @@
-package com.team2753.splines;
+package com.team2753.splines.team254_2014;
 
 /**
  * Created by joshua9889 on 5/22/2018.
@@ -15,6 +15,12 @@ public class FollowerConfig {
 
     public FollowerConfig(double encoderP, double encoderD, double encoderV, double encoderA,
                           double gyroP){
+
+        this.set(encoderP, encoderD, encoderV, encoderA, gyroP);
+    }
+
+    public void set(double encoderP, double encoderD, double encoderV, double encoderA,
+                      double gyroP){
 
         this.encoderP = encoderP;
         this.encoderD = encoderD;

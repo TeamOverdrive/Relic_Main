@@ -88,6 +88,11 @@ public class Drive implements Subsystem {
         while(leftMotor.getCurrentPosition()!=0 && rightMotor.getCurrentPosition()!=0)
             setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        try {
+            gyroLeft.resetZAxisIntegrator();
+            gyroRight.resetZAxisIntegrator();
+        } catch (Exception e){}
+
         Thread.yield();
     }
 

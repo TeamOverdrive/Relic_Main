@@ -1,6 +1,7 @@
-package com.team2753.splines;
+package com.team2753.splines.team254_2014;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -8,14 +9,14 @@ import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryFollower;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team2753.Constants;
-import com.team2753.Team2753Linear;
-import com.team2753.subsystems.AutoDrive;
 import com.team2753.subsystems.Drive;
 
 /**
  * Created by joshua9889 on 5/22/2018.
  */
 @Autonomous
+@Disabled
+@Deprecated
 public class TestingSplinesSingleTrajectory extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {

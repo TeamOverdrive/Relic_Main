@@ -1,5 +1,6 @@
-package com.team2753.splines;
+package com.team2753.splines.team254_2014;
 
+import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryFollower;
 import com.team254.lib_2014.util.ChezyMath;
@@ -45,6 +46,11 @@ public class TrajectoryDriveController{
         kTurn = followerConfig.get()[4];
     }
 
+    public void loadPath(Path path, double direction, double heading){
+        loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(),
+                direction, heading);
+    }
+
     public void loadProfile(Trajectory leftProfile, Trajectory rightProfile,
                             double direction, double heading) {
         reset();
@@ -84,7 +90,7 @@ public class TrajectoryDriveController{
             double distanceL = direction * mDrive.getLeftDistanceInches(); // inches
             double distanceR = direction * mDrive.getRightDistanceInches();
 
-            // Calculate the PIDVA here based on the current position
+            // Calculate the PDVA here based on the current position
             double speedLeft = direction * followerLeft.calculate(distanceL);
             double speedRight = direction * followerRight.calculate(distanceR);
             wantedLeftSpeed = speedLeft;
@@ -95,10 +101,10 @@ public class TrajectoryDriveController{
             double observedHeading = mDrive.getGyroAngleRadians(); // Radians
 
             double angleDiffRads = ChezyMath.getDifferenceInAngleRadians(observedHeading, goalHeading);
-            double angleDiff = Math.toDegrees(angleDiffRads); // Easier to tune
+            double angleDiff = Math.toDegrees(angleDiffRads);
 
             // Calculate the Proportional value
-            double turn = kTurn * angleDiff;
+            double turn = kTurn * angleDiffRads;
 
             // Steer like a car, but with two pedals
             mDrive.setLeftRightPower(speedLeft + turn, speedRight - turn);

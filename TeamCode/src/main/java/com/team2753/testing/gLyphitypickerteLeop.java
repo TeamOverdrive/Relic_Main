@@ -15,25 +15,136 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class gLyphitypickerteLeop extends Team2753Linear{
 
-    String[] map = {"+--------+--------+--------+",
-                    "|\\       |        |       /|",
-                    "| \\      |        |      / |",
-                    "|  \\     |        |     /  |",
-                    "|   \\    |        |    /   |",
-                    "|    \\   |        |   /    |",
-                    "|     \\  |        |  /     |",
-                    "|      \\ |        | /      |",
-                    "|       \\|        |/       |",
-                    "+--------+--------+--------+",
+    String[] glyphMap = {"+--------+--------+--------+",
+            "|\\       |        |       /|",
+            "| \\      |        |      / |",
+            "|  \\     |        |     /  |",
+            "|   \\    |        |    /   |",
+            "|    \\   |        |   /    |",
+            "|     \\  |        |  /     |",
+            "|      \\ |        | /      |",
+            "|       \\|        |/       |",
+            "+--------+--------+--------+"
     };
 
+    //pointerMap probably unneeded
 
+    /*
+    String[] pointerMap = {"+--------+--------+--------+",
+            "|\\       |        |       /|",
+            "| \\      |        |      / |",
+            "|  \\     |        |     /  |",
+            "|   \\    |        |    /   |",
+            "|    \\   |        |   /    |",
+            "|     \\  |        |  /     |",
+            "|      \\ |        | /      |",
+            "|       \\|        |/       |",
+            "+--------+--------+--------+"
+    };
+    */
+
+    String[] map = {"+--------+--------+--------+",
+            "|\\       |        |       /|",
+            "| \\      |        |      / |",
+            "|  \\     |        |     /  |",
+            "|   \\    |        |    /   |",
+            "|    \\   |        |   /    |",
+            "|     \\  |        |  /     |",
+            "|      \\ |        | /      |",
+            "|       \\|        |/       |",
+            "+--------+--------+--------+"
+    };
 
     private static final char POINTER = 'X';
     private static final char GLYPH = 'G';
 
     private int pointerX = 0;
     private int pointerY = 0;
+
+    public void drawMap(String[] args){
+        for (String row : args) {
+            //System.out.println(row);
+            telemetry.addLine(row);
+        }
+        telemetry.update();
+    }
+
+    public void clearMap(String[] clearThisMap){
+        String[] mapCleared = {"+--------+--------+--------+",
+                "|\\       |        |       /|",
+                "| \\      |        |      / |",
+                "|  \\     |        |     /  |",
+                "|   \\    |        |    /   |",
+                "|    \\   |        |   /    |",
+                "|     \\  |        |  /     |",
+                "|      \\ |        | /      |",
+                "|       \\|        |/       |",
+                "+--------+--------+--------+",
+        };
+
+        for(int copyIteration = 0; copyIteration < clearThisMap.length; ++copyIteration){
+            clearThisMap[copyIteration] = mapCleared[copyIteration];
+        }
+
+        drawMap(clearThisMap);
+    }
+
+    public static void drawPoint(String[] drawTo, String[] drawOn, int pointX, int pointY, char pointChar){
+
+        char[] rowToArray = drawOn[pointY].toCharArray();
+        rowToArray[pointX] = pointChar;
+
+        drawTo[pointY] = new String(rowToArray);
+
+        //System.out.println("Point Drawn");
+    }
+
+    public static void clearPoint(String[] map, int pointX, int pointY){
+
+        String[] mapCleared = {"+--------+--------+--------+",
+                "|\\       |        |       /|",
+                "| \\      |        |      / |",
+                "|  \\     |        |     /  |",
+                "|   \\    |        |    /   |",
+                "|    \\   |        |   /    |",
+                "|     \\  |        |  /     |",
+                "|      \\ |        | /      |",
+                "|       \\|        |/       |",
+                "+--------+--------+--------+",
+        };
+
+        char[] clearedRowToArray = mapCleared[pointY].toCharArray();
+        char replacingChar = clearedRowToArray[pointX];
+        char[] rowToArray = map[pointY].toCharArray();
+        rowToArray[pointX] = replacingChar;
+        map[pointY] = new String(rowToArray);
+
+        //System.out.println("Point Removed");
+    }
+
+    public static void drawPointer(String[] drawTo, String[] drawOn){
+
+    }
+
+    public static void copyMapTo(String[] copyFrom, String[] copyTo){
+
+        if(copyFrom.length == copyTo.length) {
+            for (int copyIteration = 0; copyIteration < copyFrom.length; ++copyIteration) {
+                copyTo[copyIteration] = copyFrom[copyIteration];
+            }
+        }
+    }
+
+    public static void clearPointer(String[] map, int pointX, int pointY){
+
+        char[] clearedRowToArray = map[pointY].toCharArray();
+        char replacingChar = clearedRowToArray[pointX];
+        char[] rowToArray = map[pointY].toCharArray();
+        rowToArray[pointX] = replacingChar;
+        map[pointY] = new String(rowToArray);
+
+        //System.out.println("Point Removed");
+    }
 
     @Override
     public void runOpMode(){
@@ -75,20 +186,26 @@ public class gLyphitypickerteLeop extends Team2753Linear{
                 pointerX = 0;
             }
 
-            //Draw Pointer
-            //everything past this point is broken
-            //need to add layer for pointer
-            drawPoint(map, pointerX, -pointerY, POINTER);
-            clearPoint(map, lastPointerX, -lastPointerY);
-
+            //Glyph controls
 
             if(gamepad1.x){
-                drawPoint(map, pointerX, -pointerY, GLYPH);
+                drawPoint(glyphMap, glyphMap, pointerX, -pointerY, GLYPH);
             }
             if(gamepad1.b){
-                clearPoint(map, pointerX, -pointerY);
+                clearPoint(glyphMap, pointerX, -pointerY);
             }
 
+            //Clear last Pointer if we moved
+            if((lastPointerX != pointerX) || (lastPointerY != pointerY)){
+                //clear pointer
+                clearPoint(map, lastPointerX, -lastPointerY);
+            }
+
+            //place glyphs on displayed map
+            copyMapTo(glyphMap, map);
+
+            //Draw Pointer onto displayed map
+            drawPoint(map, map, pointerX, -pointerY, POINTER);
 
             drawMap(map);
             telemetry.update();
@@ -98,80 +215,8 @@ public class gLyphitypickerteLeop extends Team2753Linear{
         telemetry.clearAll();
         //output points
 
-        sleep(400);
-    }
 
-    public void drawMap(String[] args){
-        for (String row : args) {
-            //System.out.println(row);
-            telemetry.addLine(row);
-        }
-        telemetry.update();
-    }
-
-    public void clearMap(String[] map){
-        String[] mapCleared = {"+--------+--------+--------+",
-                "|\\       |        |       /|",
-                "| \\      |        |      / |",
-                "|  \\     |        |     /  |",
-                "|   \\    |        |    /   |",
-                "|    \\   |        |   /    |",
-                "|     \\  |        |  /     |",
-                "|      \\ |        | /      |",
-                "|       \\|        |/       |",
-                "+--------+--------+--------+",
-        };
-
-        for(int copyIteration = 0; copyIteration < map.length; ++copyIteration){
-            map[copyIteration] = mapCleared[copyIteration];
-        }
-
-        //System.out.println("Map Cleared");
-
-        drawMap(map);
-    }
-
-    public static void drawPoint(String[] map, int pointX, int pointY, char pointChar){
-
-        char[] rowToArray = map[pointY].toCharArray();
-        rowToArray[pointX] = pointChar;
-
-        map[pointY] = new String(rowToArray);
-
-        //System.out.println("Point Drawn");
-    }
-
-    public static void clearPoint(String[] map, int pointX, int pointY){
-
-        String[] mapCleared = {"+--------+--------+--------+",
-                "|\\       |        |       /|",
-                "| \\      |        |      / |",
-                "|  \\     |        |     /  |",
-                "|   \\    |        |    /   |",
-                "|    \\   |        |   /    |",
-                "|     \\  |        |  /     |",
-                "|      \\ |        | /      |",
-                "|       \\|        |/       |",
-                "+--------+--------+--------+",
-        };
-
-        char[] clearedRowToArray = mapCleared[pointY].toCharArray();
-        char replacingChar = clearedRowToArray[pointX];
-        char[] rowToArray = map[pointY].toCharArray();
-        rowToArray[pointX] = replacingChar;
-        map[pointY] = new String(rowToArray);
-
-        //System.out.println("Point Removed");
-    }
-
-    public static void clearPointer(String[] map, int pointX, int pointY){
-
-        char[] clearedRowToArray = map[pointY].toCharArray();
-        char replacingChar = clearedRowToArray[pointX];
-        char[] rowToArray = map[pointY].toCharArray();
-        rowToArray[pointX] = replacingChar;
-        map[pointY] = new String(rowToArray);
-
-        //System.out.println("Point Removed");
+        sleep(5000);
+        requestOpModeStop();
     }
 }

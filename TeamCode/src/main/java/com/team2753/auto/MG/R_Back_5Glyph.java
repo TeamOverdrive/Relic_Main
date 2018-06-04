@@ -33,7 +33,7 @@ public class R_Back_5Glyph extends AutoModeBase {
         Robot.getIntake().releaseIntake();
         Robot.getDrive().encoderDrive(1, -8, -8, 1.6);
         Robot.getIntake().intake();
-        Robot.getRelic().setAngles(0,0);
+//        Robot.getRelic().setAngles(0,0);
         Robot.getSlammer().stopperDown();
         sleep(200);
 
@@ -55,9 +55,9 @@ public class R_Back_5Glyph extends AutoModeBase {
         Robot.getDrive().encoderDrive(1, 37, 37, 3);
         Robot.getSlammer().autoSlam();
         Robot.getDrive().encoderDrive(1, -5, -5, 2);
-        Robot.getSlammer().setPower(-1);
+        Robot.getSlammer().score();
         sleep(1000);
-        Robot.getSlammer().stop();
+        Robot.getSlammer().retract();
         Robot.getSlammer().stopperDown();
         Robot.getIntake().intake();
         Robot.getDrive().encoderDrive(1, -37, -37, 3);

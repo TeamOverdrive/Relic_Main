@@ -2,14 +2,11 @@ package com.team2753;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.widget.Toast;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
-import com.team2753.libs.AutoTransitioner;
-import com.team2753.libs.CameraBlinker;
 import com.team2753.libs.subsystems.VuMark;
 import com.team2753.subsystems.Robot;
 
@@ -85,7 +82,7 @@ public abstract class Team2753Linear extends LinearOpMode {
             vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
 
             RobotLog.v("================ AutoTransitioner =============");
-            AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
+            //AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
             RobotLog.v("================ VuCam Loop =============");
             while (!isStarted() && !isStopRequested()) {
@@ -175,7 +172,7 @@ public abstract class Team2753Linear extends LinearOpMode {
     //Telemetry
     public void updateTelemetry() {
         telemetry.addData("Gyro Position", Robot.getDrive().getGyroAngleDegrees());
-        telemetry.addData("Follower Wheel Position", Robot.getSlammer().followerWheel());
+//        telemetry.addData("Follower Wheel Position", Robot.getSlammer().followerWheel());
 
         if (isAuton) {
             telemetry.addData("Match Time", 30 - getRuntime());

@@ -37,8 +37,8 @@ public class B_Far_Multi extends AutoModeBase {
 
                 Robot.getIntake().releaseIntake();
                 Robot.getDrive().encoderDrive(0.5, -10, -10, 2);
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(50);
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(50);
                 sleep(400);
 
                 Robot.getSlammer().stopperDown();
@@ -96,9 +96,9 @@ public class B_Far_Multi extends AutoModeBase {
                     Robot.getDrive().encoderDrive(0.3, 3, 3, 2);
                     Robot.getDrive().encoderDrive(0.3, -4, -4, 2);
                 }
-                Robot.getSlammer().setPower(-1);
-                sleep(100);
-                Robot.getSlammer().stop();
+//                Robot.getSlammer().setPower(-1);
+//                sleep(100);
+//                Robot.getSlammer().stop();
                 break;
             case CENTER:
                 Robot.getDrive().encoderDrive(0.6, -24, -24, 5);
@@ -113,8 +113,8 @@ public class B_Far_Multi extends AutoModeBase {
 
                 Robot.getIntake().releaseIntake();
                 Robot.getDrive().encoderDrive(0.5, -10, -10, 2);
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(50);
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(50);
                 sleep(400);
 
                 Robot.getSlammer().stopperDown();
@@ -155,9 +155,9 @@ public class B_Far_Multi extends AutoModeBase {
                     Robot.getDrive().encoderDrive(0.3, -4, -4, 2);
                 }
 
-                Robot.getSlammer().setPower(-1);
-                sleep(100);
-                Robot.getSlammer().stop();
+//                Robot.getSlammer().setPower(-1);
+//                sleep(100);
+//                Robot.getSlammer().stop();
                 break;
             case RIGHT:
                 // Drive off
@@ -183,9 +183,9 @@ public class B_Far_Multi extends AutoModeBase {
                 Robot.getDrive().encoderDrive(0.6, -10, -10, 3);
 
                 // Relic
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(64);
-                Robot.getRelic().close();
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(64);
+//                Robot.getRelic().close();
                 Robot.getSlammer().stopperDown();
 
                 // Start intaking
@@ -194,7 +194,7 @@ public class B_Far_Multi extends AutoModeBase {
                 Robot.getDrive().turnCCW(28, 0.5, 2);
 
                 Robot.getDrive().encoderDrive(0.5, -25, -25, 5);
-                Robot.getRelic().lock();
+//                Robot.getRelic().lock();
                 sleep(200);
 
                 boolean farther = false;

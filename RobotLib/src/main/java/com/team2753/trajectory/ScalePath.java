@@ -1,4 +1,4 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.trajectory;
 
 import com.team254.lib_2014.trajectory.Path;
 

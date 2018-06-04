@@ -25,9 +25,6 @@ public class Intake implements Subsystem{
 
 
     private ModernRoboticsI2cRangeSensor intakeDistanceLeft, intakeDistanceRight = null;
-//
-//    private I2cAddr leftAddr = new I2cAddr(0x28);
-//    private I2cAddr rightAddr = new I2cAddr(0x30);
 
     private DeviceInterfaceModule cdi = null;
 

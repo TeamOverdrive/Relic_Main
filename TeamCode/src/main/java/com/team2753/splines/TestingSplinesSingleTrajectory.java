@@ -1,4 +1,4 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -10,6 +10,7 @@ import com.team254.lib_2014.trajectory.TrajectoryFollower;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team2753.Constants;
 import com.team2753.subsystems.Drive;
+import com.team2753.trajectory.FollowerConfig;
 
 /**
  * Created by joshua9889 on 5/22/2018.

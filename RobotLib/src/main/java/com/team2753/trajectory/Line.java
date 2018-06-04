@@ -1,4 +1,4 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.trajectory;
 
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
@@ -13,7 +13,9 @@ public class Line {
                                  double start_velocity, double heading, double distance,
                                  double goal_velocity){
         Path reference = Arc.calculate(config, strategy,
-                start_velocity, heading, distance, goal_velocity, heading);
+                start_velocity, heading, Math.abs(distance), goal_velocity, heading);
+        if(distance<0)
+            InvertY.calculate(reference);
 
         return reference;
     }

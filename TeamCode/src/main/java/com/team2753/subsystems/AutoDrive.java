@@ -1,64 +1,72 @@
 package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team254.lib_2014.trajectory.Path;
+import com.team254.lib_2014.trajectory.Trajectory;
 import com.team2753.Constants;
-import com.team2753.controllers.SynchronousPIDF;
+import com.team2753.splines.TrajectoryDriveController;
+import com.team2753.trajectory.FollowerConfig;
+
+import static com.team2753.Constants.defaultTrajectoryConfig;
 
 /**
  * Created by joshua9889 on 5/19/2018.
  */
 
 public class AutoDrive{
-    public AutoDrive(Drive drive, double max_speed){
+    public AutoDrive(Drive drive){
         mDrive = drive;
-        this.max_speed = max_speed;
     }
 
     public AutoDrive(){}
 
-    private double max_speed=1.0;
     private Drive mDrive;
 
     public void configureForSpeedControl(){
-        max_speed = 0.7;
         mDrive.setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void setLeftRightPower(double left, double right) {
-        double right_adjusted = Math.copySign(Math.min(Math.max(Math.abs(right), 0), max_speed), right);
-        double left_adjusted = Math.copySign(Math.min(Math.max(Math.abs(left), 0), max_speed), left);
+    private FollowerConfig followerConfig;
+    private TrajectoryDriveController controller;
 
-        mDrive.setLeftRightPower(left_adjusted, right_adjusted);
+    public void configureForPathFollowing(Path pathToFollow, double direction, double angles){
+        followerConfig = new FollowerConfig(Constants.p.getDouble(), Constants.d.getDouble(),
+                Constants.v.getDouble(), Constants.a.getDouble(), Constants.headingP.getDouble());
+        controller = new TrajectoryDriveController(mDrive, followerConfig);
+        controller.loadPath(pathToFollow, direction, angles);
     }
 
-    public void gotToDistance(double leftDistance, double rightDistance){
-        configureForSpeedControl();
+    public void loadPathNoReset(Trajectory left, Trajectory right, double direction, double angles){
+        followerConfig = new FollowerConfig(Constants.p.getDouble(), Constants.d.getDouble(),
+                Constants.v.getDouble(), Constants.a.getDouble(), Constants.headingP.getDouble());
+        controller = new TrajectoryDriveController(mDrive, followerConfig);
+        controller.loadProfileNoReset(left,right, direction, angles);
 
-        double leftEncoderDistance = Constants.COUNTS_PER_INCH * leftDistance;
-        double rightEncoderDistance = Constants.COUNTS_PER_INCH * rightDistance;
+    }
 
-        SynchronousPIDF left = new SynchronousPIDF(10, 0, 2);
-        SynchronousPIDF right = new SynchronousPIDF(10, 0, 2);
-        left.setOutputRange(-1, 1);
-        right.setOutputRange(-1, 1);
-        left.setSetpoint(leftEncoderDistance);
-        right.setSetpoint(rightEncoderDistance);
+    private ElapsedTime dtTimer = new ElapsedTime();
+    public void update(){
+        if (dtTimer.seconds()> defaultTrajectoryConfig.dt && !controller.isOnTarget()) {
+            // Update our controller
+            controller.update();
+            Thread.yield();
+            dtTimer.reset();
+        } else if(controller.isOnTarget()){
+            mDrive.setLeftRightPower(0,0);
 
-        double lastTime = System.nanoTime();
-
-        while (Math.abs(left.getError())>3){
-            double dt = System.nanoTime() - lastTime;
-            setLeftRightPower(left.calculate(mDrive.getLeftCurrentPosition(), dt),
-                    right.calculate(mDrive.getRightCurrentPosition(), dt));
-
-            lastTime = System.nanoTime();
         }
     }
 
-    public void setSpeedTurnPower(double speed, double turn){
-        double left = speed+turn;
-        double right = speed-turn;
+    public boolean isDone(){
+        return controller.isOnTarget();
+    }
 
-        setLeftRightPower(left, right);
+    @Override
+    public String toString(){
+        return "Number of Segments: " + controller.getNumSegments() + "\n"+
+                "Current Segment: " + controller.getFollowerCurrentSegment() + "\n"+
+                "dt: " + dtTimer.seconds() + "\n" +
+                "Gyro: " + mDrive.getGyroAngleRadians() + "\n";
     }
 }

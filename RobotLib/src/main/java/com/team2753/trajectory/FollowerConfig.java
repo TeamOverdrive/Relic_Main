@@ -1,4 +1,4 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.trajectory;
 
 /**
  * Created by joshua9889 on 5/22/2018.

@@ -1,7 +1,6 @@
 package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -27,11 +26,12 @@ public class Robot {
     private Jewel mJewel = new Jewel();
     private Lift mLift = new Lift();
     private Phone mPhone = new Phone();
-    private Relic mRelic = new Relic();
+//    private Relic mRelic = new Relic();
     private Slammer mSlammer = new Slammer();
+    private FollowerWheel mFollowerWheel = new FollowerWheel();
 
     private List<Subsystem> subsystems = Arrays.asList(
-            mDrive, mJewel, mLift, mIntake, mSlammer, mPhone, mRelic);
+            mDrive, mJewel, mLift, mIntake, mSlammer, mPhone, mFollowerWheel);//, mRelic);
 
     /**
      * @param telemetry Opmode Telemetry object
@@ -49,23 +49,12 @@ public class Robot {
     public void init(LinearOpMode opmode, boolean autonomous) {
         // Init all subsystems
         RobotLog.v("================ Robot Subsystems Init Loop Started =============");
-        ElapsedTime timer = new ElapsedTime();
-        double[] timers = new double[subsystems.size()-1];
-        int time =0;
         for (Subsystem subsystem:subsystems){
             RobotLog.v("================ Robot Subsystem " + subsystem.toString() +
                     " Init Started =============");
-            timer.reset();
             subsystem.init(opmode, autonomous);
-            timers[time] = timer.seconds();
-            time++;
-            timer.reset();
-            RobotLog.v("================ Robot Subsystem " + subsystem.toString() +
-                    " Init Finished in " + timers[time] + " =============");
         }
         RobotLog.v("================ Robot Subsystems Init Loop Finished =============");
-        opmode.telemetry.addData("Time", timers);
-        opmode.telemetry.update();
     }
 
     /**
@@ -113,11 +102,15 @@ public class Robot {
         return mPhone;
     }
 
-    public Relic getRelic(){
-        return mRelic;
-    }
+//    public Relic getRelic(){
+//        return mRelic;
+//    }
 
     public Slammer getSlammer() {
         return mSlammer;
+    }
+
+    public FollowerWheel getFollowerWheel(){
+        return mFollowerWheel;
     }
 }

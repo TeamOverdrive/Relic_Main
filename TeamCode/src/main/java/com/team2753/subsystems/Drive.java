@@ -156,6 +156,14 @@ public class Drive implements Subsystem {
         return getRightCurrentPosition()/COUNTS_PER_INCH;
     }
 
+    public double getLeftDistanceInchesWithOffset(double offset){
+        return getLeftDistanceInches()-offset;
+    }
+
+    public double getRightDistanceInchesWithOffset(double offset){
+        return getRightDistanceInches()-offset;
+    }
+
     public DcMotorController controller(){
         return leftMotor.getController();
     }
@@ -630,7 +638,6 @@ public class Drive implements Subsystem {
     public void proportionControl(double leftTarget, double rightTarget, double speed, double P, double I, double D){
         //double leftError = Math.abs(leftTarget - leftMotor.getCurrentPosition());
         //double rightError = Math.abs(rightTarget - rightMotor.getCurrentPosition());
-
     }
 
     @Override

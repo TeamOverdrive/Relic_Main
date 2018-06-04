@@ -1,6 +1,7 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,8 +10,10 @@ import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team2753.Constants;
 import com.team2753.libs.PhoneLogger;
 import com.team2753.subsystems.Drive;
+import com.team2753.trajectory.FollowerConfig;
+import com.team2753.trajectory.Line;
 
-import static com.team2753.Constants.config;
+import static com.team2753.Constants.defaultTrajectoryConfig;
 
 /**
  * Created by joshua9889 on 5/22/2018.
@@ -19,6 +22,7 @@ import static com.team2753.Constants.config;
  */
 
 @Autonomous
+@Disabled
 public class TestingSplinesDoubleTrajectory extends LinearOpMode{
 
     @Override
@@ -28,7 +32,7 @@ public class TestingSplinesDoubleTrajectory extends LinearOpMode{
         PhoneLogger logger = new PhoneLogger("SpeedPosTimeData.csv");
 
         // Generate a simple path for testing
-        Path path = Line.calculate(config, TrajectoryGenerator.SCurvesStrategy,
+        Path path = Line.calculate(defaultTrajectoryConfig, TrajectoryGenerator.SCurvesStrategy,
                 0, 0, 15, 0);
 
         // Init our drivetrain
@@ -87,7 +91,7 @@ public class TestingSplinesDoubleTrajectory extends LinearOpMode{
             telemetry.update();
 
             // Make sure we only update when we told the controller/trajectory we would
-            if (dtTimer.seconds()>config.dt && !controller.isOnTarget()) {
+            if (dtTimer.seconds()> defaultTrajectoryConfig.dt && !controller.isOnTarget()) {
                 // Update our controller
                 controller.update();
 

@@ -1,4 +1,4 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

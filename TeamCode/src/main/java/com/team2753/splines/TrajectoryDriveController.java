@@ -1,10 +1,11 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.splines;
 
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryFollower;
 import com.team254.lib_2014.util.ChezyMath;
 import com.team2753.subsystems.Drive;
+import com.team2753.trajectory.FollowerConfig;
 
 /**
  * Created by joshua9889 on 5/22/2018.
@@ -60,16 +61,24 @@ public class TrajectoryDriveController{
         this.heading = heading;
     }
 
-    public void loadProfileNoReset(Trajectory leftProfile, Trajectory rightProfile) {
+    public void loadProfileNoReset(Trajectory leftProfile, Trajectory rightProfile, double direction, double heading) {
         followerLeft.setTrajectory(leftProfile);
         followerRight.setTrajectory(rightProfile);
+        this.direction = direction;
+        this.heading = heading;
     }
 
     public void reset() {
         followerLeft.reset();
         followerRight.reset();
-        mDrive.zeroSensors();
+        offsetL = mDrive.getLeftDistanceInches();
+        offsetR = mDrive.getRightDistanceInches();
+        offsetGyro = mDrive.getGyroAngleRadians();
     }
+
+    private double offsetL = 0;
+    private double offsetR = 0;
+    private double offsetGyro = 0;
 
     public boolean isOnTarget() {
         return followerLeft.isFinishedTrajectory();
@@ -87,8 +96,8 @@ public class TrajectoryDriveController{
         if (onTarget()) {
             mDrive.setLeftRightPower(0.0, 0.0);
         } else  {
-            double distanceL = direction * mDrive.getLeftDistanceInches(); // inches
-            double distanceR = direction * mDrive.getRightDistanceInches();
+            double distanceL = direction * mDrive.getLeftDistanceInchesWithOffset(offsetL); // inches
+            double distanceR = direction * mDrive.getRightDistanceInchesWithOffset(offsetR);
 
             // Calculate the PDVA here based on the current position
             double speedLeft = direction * followerLeft.calculate(distanceL);
@@ -98,10 +107,9 @@ public class TrajectoryDriveController{
 
             // Gyro correction
             double goalHeading = followerLeft.getHeading(); // Radians
-            double observedHeading = mDrive.getGyroAngleRadians(); // Radians
+            double observedHeading = mDrive.getGyroAngleRadians()-offsetGyro; // Radians
 
             double angleDiffRads = ChezyMath.getDifferenceInAngleRadians(observedHeading, goalHeading);
-            double angleDiff = Math.toDegrees(angleDiffRads);
 
             // Calculate the Proportional value
             double turn = kTurn * angleDiffRads;

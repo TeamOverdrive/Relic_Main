@@ -34,16 +34,16 @@ public class R_Back_3Glyph extends AutoModeBase {
                 Robot.getSlammer().stopperUp();
                 sleep(400);
                 Robot.getIntake().releaseIntake();
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(64);
-                Robot.getRelic().close();
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(64);
+//                Robot.getRelic().close();
                 Robot.getDrive().encoderDrive(0.7, -4, -4, 3);
                 Robot.getSlammer().stopperDown();
                 Robot.getIntake().intake();
 
                 Robot.getDrive().encoderDrive(0.3, -20, -20, 3);
                 Robot.getDrive().encoderDrive(0.2, -5, -5, 2);
-                Robot.getRelic().lock();
+//                Robot.getRelic().lock();
 
                 telemetry.clearAll();
                 telemetry.addData("Front", Robot.getIntake().frontDetected());
@@ -96,9 +96,9 @@ public class R_Back_3Glyph extends AutoModeBase {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Robot.getSlammer().setPower(-1);
-                        sleep(300);
-                        Robot.getSlammer().setPower(0);
+//                        Robot.getSlammer().setPower(-1);
+//                        sleep(300);
+//                        Robot.getSlammer().setPower(0);
                     }
                 }).start();
 
@@ -120,9 +120,9 @@ public class R_Back_3Glyph extends AutoModeBase {
                 Robot.getDrive().encoderDrive(0.6, -5, -5, 2);
                 Robot.getSlammer().stopperDown();
                 Robot.getIntake().intake();
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(64);
-                Robot.getRelic().close();
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(64);
+//                Robot.getRelic().close();
 
                 Robot.getDrive().encoderDrive(0.3, -20, -20, 3);
                 Robot.getDrive().encoderDrive(0.2, -5, -5, 2);
@@ -181,9 +181,9 @@ public class R_Back_3Glyph extends AutoModeBase {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Robot.getSlammer().setPower(-1);
-                        sleep(300);
-                        Robot.getSlammer().setPower(0);
+//                        Robot.getSlammer().setPower(-1);
+//                        sleep(300);
+//                        Robot.getSlammer().setPower(0);
                     }
                 }).start();
 
@@ -202,16 +202,16 @@ public class R_Back_3Glyph extends AutoModeBase {
                 sleep(400);
                 Robot.getIntake().releaseIntake();
                 Robot.getDrive().encoderDrive(0.6, -(Constants.WHEEL_BASE*PI*(90-54))/180, 0, 3);
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(64);
-                Robot.getRelic().close();
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(64);
+//                Robot.getRelic().close();
                 Robot.getDrive().encoderDrive(0.6, -5, -5, 2);
                 Robot.getSlammer().stopperDown();
                 Robot.getIntake().intake();
 
                 Robot.getDrive().encoderDrive(0.3, -20, -20, 3);
                 Robot.getDrive().encoderDrive(0.2, -5, -5, 2);
-                Robot.getRelic().lock();
+//                Robot.getRelic().lock();
 
                 telemetry.clearAll();
                 telemetry.addData("Front", Robot.getIntake().frontDetected());
@@ -258,9 +258,9 @@ public class R_Back_3Glyph extends AutoModeBase {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Robot.getSlammer().setPower(-1);
-                        sleep(300);
-                        Robot.getSlammer().setPower(0);
+//                        Robot.getSlammer().setPower(-1);
+//                        sleep(300);
+//                        Robot.getSlammer().setPower(0);
                     }
                 }).start();
 

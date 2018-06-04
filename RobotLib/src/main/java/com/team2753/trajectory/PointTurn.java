@@ -1,9 +1,8 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.trajectory;
 
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
-import com.team2753.Constants;
 
 /**
  * Created by joshua9889 on 5/26/2018.
@@ -25,7 +24,7 @@ public class PointTurn {
         // Calculate the radius of the arc
         double radius = Math.abs(Math.abs(1e-10) / (goal_heading * Math.PI / 180.0));
 
-        double width = Constants.WHEEL_BASE;
+        double width = 12.625;
 
         // Find the difference between the left and right motors
         double faster = (radius + (width / 2.0)) / radius;

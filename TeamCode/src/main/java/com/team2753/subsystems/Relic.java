@@ -24,10 +24,10 @@ public class Relic implements Subsystem{
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        turretServo = linearOpMode.hardwareMap.get(Servo.class,"relic_turret");
-        elbowServo = linearOpMode.hardwareMap.get(Servo.class, "relic_elbow");
-        wristServo = linearOpMode.hardwareMap.get(Servo.class, "yellow");
-        fingerServo = linearOpMode.hardwareMap.get(Servo.class, "blue");
+//        turretServo = linearOpMode.hardwareMap.get(Servo.class,"relic_turret");
+//        elbowServo = linearOpMode.hardwareMap.get(Servo.class, "relic_elbow");
+//        wristServo = linearOpMode.hardwareMap.get(Servo.class, "yellow");
+//        fingerServo = linearOpMode.hardwareMap.get(Servo.class, "blue");
 
         turretServo.setDirection(Servo.Direction.REVERSE);
         elbowServo.setDirection(Servo.Direction.REVERSE);

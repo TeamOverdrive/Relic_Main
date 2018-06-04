@@ -1,4 +1,4 @@
-package com.team2753.splines.team254_2014;
+package com.team2753.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -10,8 +10,8 @@ import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team2753.Constants;
 import com.team2753.subsystems.Drive;
 
-import static com.team2753.Constants.config;
-import static com.team2753.Constants.defaultConfig;
+import static com.team2753.Constants.defaultTrajectoryConfig;
+import static com.team2753.Constants.defaultFollowerConfig;
 
 /**
  * Created by joshua9889 on 5/26/2018.
@@ -29,7 +29,7 @@ public class NewTestSplines extends LinearOpMode {
         telemetry.addData("A", Constants.a.getDouble());
         telemetry.update();
 
-//        Path driveOffStone = Line.calculate(config,
+//        Path driveOffStone = Line.calculate(defaultTrajectoryConfig,
 //                SCurvesStrategy,
 //                0.0,
 //                0.00001,
@@ -38,7 +38,7 @@ public class NewTestSplines extends LinearOpMode {
 //        Path fullPath = ScalePath.calculate(driveOffStone,
 //                1.0/Constants.scale.getDouble());
 
-        Trajectory ref = TrajectoryGenerator.generate(config, TrajectoryGenerator.SCurvesStrategy,
+        Trajectory ref = TrajectoryGenerator.generate(defaultTrajectoryConfig, TrajectoryGenerator.SCurvesStrategy,
                 0, 0, 10, 0, 0.000001);
 
         // Init our drivetrain
@@ -56,7 +56,7 @@ public class NewTestSplines extends LinearOpMode {
         telemetry.setAutoClear(true);
 
         // New Drive Controller
-        TrajectoryDriveController controller = new TrajectoryDriveController(mDrive, defaultConfig);
+        TrajectoryDriveController controller = new TrajectoryDriveController(mDrive, defaultFollowerConfig);
         controller.loadProfile(ref, ref, 1, 1);
         ElapsedTime dtTimer = new ElapsedTime();
 
@@ -76,7 +76,7 @@ public class NewTestSplines extends LinearOpMode {
             telemetry.update();
 
             // Make sure we only update when we told the controller/trajectory we would
-            if (dtTimer.seconds()>config.dt) {
+            if (dtTimer.seconds()> defaultTrajectoryConfig.dt) {
                 controller.update();
                 idle();
                 dtTimer.reset();

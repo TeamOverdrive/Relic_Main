@@ -13,6 +13,7 @@ import static com.team2753.auto.AutoParams.AUTO;
 
 @Autonomous(name = "Red 2 Vuforia", group = "Vuforia")
 @Disabled
+@Deprecated
 public class R2_Vuforia extends Team2753Linear{
 
     @Override

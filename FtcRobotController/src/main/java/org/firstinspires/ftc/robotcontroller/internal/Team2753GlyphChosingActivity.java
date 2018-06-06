@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 
 import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class Team2753GlyphChosingActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 position = 24*(progress/100.0);
-                //RobotLog.a("Position: " + position);
+                RobotLog.a("Position: " + position);
             }
 
             @Override
@@ -71,6 +72,15 @@ public class Team2753GlyphChosingActivity extends Activity {
         SharedPreferences.Editor editor = globalPrefs.edit();
 
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+
+        String positionsString = "";
+        for (int i=0;i<positions.size();i++) {
+            if(i+1<positions.size())
+                positionsString += String.valueOf(positions.get(i)) + ",";
+            else
+                positionsString += String.valueOf(positions.get(i));
+        }
+
         int[] list = new int[10];
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < list.length; i++) {

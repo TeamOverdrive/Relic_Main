@@ -1,15 +1,13 @@
 package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODER;
-import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+import static com.team2753.subsystems.Slammer.SLAMMER_State.INTAKING;
+import static com.team2753.subsystems.Slammer.SLAMMER_State.SCORING;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 1/25/2018.
@@ -17,78 +15,143 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 
 public class Slammer implements Subsystem{
 
-    private DcMotor slamMotor = null;
-    private Servo stopServo = null;
+    public enum SLAMMER_State {
+        INTAKING, HOLDING, SCORING, SLIDING
+    }
 
+    private SLAMMER_State currentSlammerState = INTAKING;
+    private ElapsedTime slammerTimer = new ElapsedTime();
+
+    public enum STOPPER_State {
+        CLOSED, OPEN
+    }
+
+    private STOPPER_State currentStopperState = STOPPER_State.CLOSED;
+    private ElapsedTime stopperTimer = new ElapsedTime();
+
+    private Servo left_slammer, right_slammer = null;
+
+    private Servo stopServo = null;
     private static final double ARMUP = 0.35;
     private static final double ARMDOWN = 0.95;
 
-    private int initFollowerPosition = 0;
-
-    protected ElapsedTime runtime = new ElapsedTime();// FORWARD_SPEED was running the robot in reverse to the TeleOp program setup.  Speed is reversed to standardize the robot orientation.
-
-    private static final double COUNTS_PER_MOTOR_REV = 1680; //AndyMark NeveRest 60
-
+    private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
-        slamMotor = linearOpMode.hardwareMap.dcMotor.get("slammer");
-        slamMotor.setDirection(FORWARD);
-        setRunMode(RUN_WITHOUT_ENCODER);
+        left_slammer = linearOpMode.hardwareMap.get(Servo.class, "left_slammer");
+        right_slammer = linearOpMode.hardwareMap.get(Servo.class, "right_slammer");
+        right_slammer.setDirection(Servo.Direction.REVERSE);
 
-        initFollowerPosition = slamMotor.getCurrentPosition();
+        stopServo = linearOpMode.hardwareMap.get(Servo.class, "slammer_stop");
 
-        stopServo = linearOpMode.hardwareMap.servo.get("slammer_stop");
-
-        stop();
-        if(auto)
-            stopperDown();
-        else
-            stopperUp();
+        if(auto) {
+            setStopperState(STOPPER_State.CLOSED);
+            retract();
+        }
     }
 
     @Override
-    public void zeroSensors() {
-        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        initFollowerPosition = followerWheel();
-        Thread.yield();
-    }
+    public void zeroSensors() {}
 
     @Override
-    public void stop() {
-        slamMotor.setZeroPowerBehavior(BRAKE);
-        setPower(0);
-    }
+    public void stop() {}
 
     @Override
-    public void outputToTelemetry(Telemetry telemetry) {}
+    public void outputToTelemetry(Telemetry telemetry) {
+        telemetry.addData("Slammer Position", left_slammer.getPosition());
+    }
 
-    public void setRunMode(DcMotor.RunMode runMode){slamMotor.setMode(runMode);}
+    public boolean setSlammerState(SLAMMER_State state){
+        if(state != currentSlammerState){
+            switch (state){
+                case INTAKING:
+                    if(setStopperState(STOPPER_State.OPEN)) {
+                        retract();
+                        if(slammerTimer.milliseconds()>500) {
+                            setStopperState(STOPPER_State.CLOSED);
+                            currentSlammerState = state;
+                        }
+                    } else {
+                        slammerTimer.reset();
+                    }
+                    break;
+                case HOLDING:
+                    if(setStopperState(STOPPER_State.OPEN)) {
+                        setSlammerPosition(0.45);
+                        currentSlammerState = state;
+                    }
+                    break;
+                case SCORING:
+                    if(setStopperState(STOPPER_State.OPEN)) {
+                        score();
+                        currentSlammerState = state;
+                    }
+                    break;
+                case SLIDING:
+                    if (setStopperState(STOPPER_State.OPEN)) {
+                        setSlammerPosition(0.3);
+                        currentSlammerState = state;
+                    }
+                    break;
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-    public void setPower(double power){slamMotor.setPower(power);}
+    public   boolean setStopperState(STOPPER_State state){
+        if (state != currentStopperState) {
+            switch (state){
+                case OPEN:
+                    stopperUp();
+                    stopperTimer.reset();
+                    break;
+                case CLOSED:
+                    stopperDown();
+                    stopperTimer.reset();
+                    break;
+            }
+            currentStopperState = state;
+            return false;
+        } else {
+            return stopperTimer.milliseconds() > 300;
+        }
+    }
+
+    public void setSlammerPosition(double position){
+        left_slammer.setPosition(Math.min(Math.max(0, position), 1));
+        right_slammer.setPosition(Math.min(Math.max(0, position), 1));
+    }
+
+    public void stopperDown(){
+        stopServo.setPosition(ARMDOWN);
+    }
+
+    public void stopperUp(){
+        stopServo.setPosition(ARMUP);
+    }
+
+    public void score(){
+        setSlammerPosition(0.0);
+    }
+
+    public void retract(){
+        setSlammerPosition(0.51);
+    }
 
     public void autoSlam(){
-        stopperUp();
-        waitForTick(350);
-        setPower(0.6);
-        waitForTick(1200);
-        stop();
+        while (setSlammerState(SCORING))
+            Thread.yield();
+
+        waitForTick(300);
+
+        while (setSlammerState(INTAKING))
+            Thread.yield();
     }
 
-    public void stopperDown(){stopServo.setPosition(ARMDOWN);}
-
-    public void stopperUp(){stopServo.setPosition(ARMUP);}
-
-    public int followerWheel(){
-        return slamMotor.getCurrentPosition()-initFollowerPosition;
-    }
-
-    public void resetFollowerWheel(){
-        initFollowerPosition = slamMotor.getCurrentPosition();
-    }
-
-
-    public void waitForTick(long periodMs) {
+    private void waitForTick(long periodMs) {
 
         long  remaining = periodMs - (long)runtime.milliseconds();
 

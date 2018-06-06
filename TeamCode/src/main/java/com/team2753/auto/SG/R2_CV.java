@@ -13,6 +13,7 @@ import static com.team2753.auto.AutoParams.AUTO;
 
 @Autonomous(name = "Red 2 CV", group = "CV")
 @Disabled
+@Deprecated
 public class R2_CV extends Team2753Linear {
 
     @Override

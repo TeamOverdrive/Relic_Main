@@ -26,7 +26,7 @@ public class R1_Vuforia extends Team2753Linear{
 
             //score cryptokey
             SetStatus("Cryptokey");
-            glyphScoreR1(this);
+            //glyphScoreR1(this);
 
             //grab more glyphs
             SetStatus("Multiglyph");

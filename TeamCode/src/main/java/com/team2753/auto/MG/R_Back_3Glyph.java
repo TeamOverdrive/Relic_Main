@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
-import com.team2753.auto.actions.JewelHitColor;
+
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
@@ -24,7 +24,7 @@ public class R_Back_3Glyph extends AutoModeBase {
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
-        runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Red));
+        //runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Red));
 
 
         switch (RelicRecoveryVuMark.RIGHT){

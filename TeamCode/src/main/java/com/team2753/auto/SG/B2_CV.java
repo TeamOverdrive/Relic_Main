@@ -26,7 +26,7 @@ public class B2_CV extends Team2753Linear {
 
             //score cryptokey
             SetStatus("Cryptokey");
-            glyphScoreB2();
+            //glyphScoreB2();
 
             //grab more glyphs
             SetStatus("Multiglyph");

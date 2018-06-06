@@ -14,3 +14,6 @@ dependencies {
     compile project(':DogeCV')
     compile project(':RobotLib')
 }
+android {
+    compileSdkVersion 23
+}

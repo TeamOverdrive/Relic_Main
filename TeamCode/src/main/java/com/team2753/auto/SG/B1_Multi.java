@@ -26,12 +26,12 @@ public class B1_Multi extends Team2753Linear{
 
 
             SetStatus("Cryptokey");
-            glyphScoreB1(this);
+            //glyphScoreB1(this);
 
 
             //grab more glyphs
             SetStatus("Multiglyph");
-            multiGlyphPos1();
+            //multiGlyphPos1();
 
             //park
             SetStatus("Parking");

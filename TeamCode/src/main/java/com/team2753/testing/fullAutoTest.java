@@ -30,12 +30,12 @@ public class fullAutoTest extends Team2753Linear{
 
             //score cryptokey
             SetStatus("Cryptokey");
-            glyphScoreB1(this);
+            //glyphScoreB1(this);
 
             //grab more glyphs
             SetStatus("Multiglyph");
             telemetry.update();
-            multiGlyphPos1();
+            //multiGlyphPos1();
 
             Robot.getDrive().encoderDrive(autoSpeed, -4, -4, 3);
 

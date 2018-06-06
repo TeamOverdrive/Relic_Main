@@ -22,11 +22,11 @@ public class R2_Vuforia extends Team2753Linear{
 
             //score cryptokey
         SetStatus("Cryptokey");
-        glyphScoreR2();
+        //glyphScoreR2();
 
         //grab more glyphs
         SetStatus("Multiglyph");
-        multiGlyphR2();
+        //multiGlyphR2();
 
         //score extra glyphs
 

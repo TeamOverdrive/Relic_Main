@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
-import com.team2753.auto.actions.JewelHitColor;
 
 /**
  * Created by joshua9889 on 3/15/2018.
@@ -19,7 +18,6 @@ public class R_Far_Multi extends AutoModeBase {
 
         ElapsedTime t = new ElapsedTime();
         boolean farther = false;
-        runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Red));
 
         switch (WhatColumnToScoreIn()){
             case LEFT:

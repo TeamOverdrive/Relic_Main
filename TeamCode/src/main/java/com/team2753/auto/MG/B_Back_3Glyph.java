@@ -3,9 +3,6 @@ package com.team2753.auto.MG;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
-import com.team2753.auto.actions.DriveEncoderDrive;
-import com.team2753.auto.actions.JewelHitColor;
-import com.team2753.auto.actions.TrackPosition;
 
 import static com.team2753.subsystems.Drive.WHEEL_BASE;
 import static java.lang.Math.PI;
@@ -33,8 +30,7 @@ public class B_Back_3Glyph extends AutoModeBase {
         sleep(600);
         Robot.getDrive().encoderDrive(0.3, -10, -10, 3000);
 
-        telemetry.addData("X", trackPosition.currentVectorX);
-        telemetry.addData("Y",  trackPosition.currentVectorY);
+
         telemetry.update();
         sleep(10000);
     }

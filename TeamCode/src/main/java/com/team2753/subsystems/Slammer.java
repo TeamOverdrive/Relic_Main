@@ -26,7 +26,7 @@ public class Slammer implements Subsystem{
         CLOSED, OPEN
     }
 
-    private STOPPER_State currentStopperState = STOPPER_State.CLOSED;
+    private STOPPER_State currentStopperState = STOPPER_State.OPEN;
     private ElapsedTime stopperTimer = new ElapsedTime();
 
     private Servo left_slammer, right_slammer = null;
@@ -101,7 +101,7 @@ public class Slammer implements Subsystem{
         }
     }
 
-    public   boolean setStopperState(STOPPER_State state){
+    public boolean setStopperState(STOPPER_State state){
         if (state != currentStopperState) {
             switch (state){
                 case OPEN:

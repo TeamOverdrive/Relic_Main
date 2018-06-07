@@ -6,6 +6,7 @@ import com.team2753.splines.FollowPath;
 import com.team2753.splines.FollowerDrive;
 import com.team2753.splines.PathStorage;
 import com.team2753.splines.field.JoshuaField;
+import com.team2753.subsystems.Slammer;
 
 import static com.team2753.splines.PathStorage.pathFromFarRedRightToGlyphPit;
 import static com.team2753.splines.PathStorage.pathFromGlyphPitToCenterRedFar;
@@ -51,13 +52,13 @@ public class RED_FAR extends Team2753Linear {
         followerUpdateThread.setPriority(Thread.NORM_PRIORITY);
         followerUpdateThread.start();
 
-        Robot.getSlammer().stopperUp();
-        Robot.getIntake().releaseIntake();
-        sleep(200);
+        while(!Robot.getSlammer().setStopperState(Slammer.STOPPER_State.OPEN))
+            Robot.getIntake().releaseIntake();
 
+        sleep(100);
         pathFromFarRedRightToGlyphPit.goLeft();
 
-        Robot.getSlammer().stopperDown();
+        Robot.getSlammer().setStopperState(Slammer.STOPPER_State.CLOSED);
         Thread intake = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -68,18 +69,20 @@ public class RED_FAR extends Team2753Linear {
                     sleep(200);
                     Thread.yield();
                 }
-                Robot.getIntake().reverse();
-                Robot.getSlammer().setSlammerPosition(0.45);
+
+                while (!Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING) && opModeIsActive())Thread.yield();
             }
         });
         intake.start();
 
         new FollowPath(this, Robot.getDrive(), pathFromFarRedRightToGlyphPit, -1, 1);
-        intake.interrupt();
 
         new FollowPath(this, Robot.getDrive(), pathFromGlyphPitToCenterRedFar, 1, 1);
-        Robot.getSlammer().score();
+        intake.interrupt();
+
         Robot.getDrive().encoderDrive(0.1, -3, -3, 3);
+
+        while (!Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING) && opModeIsActive())Thread.yield();
 
         followerUpdateThread.interrupt();
     }

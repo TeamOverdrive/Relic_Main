@@ -40,20 +40,6 @@ public class Teleop extends Team2753Linear {
         waitForStart("Teleop", TELEOP);
         SetStatus("Teleop");
 
-        Robot.getRelic().setAngles(0,0);
-        Robot.getRelic().setWristPostion(65);
-        Robot.getRelic().close();
-
-        if(opModeIsActive()){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sleep(700);
-                    Robot.getRelic().lock();
-                }
-            }).start();
-        }
-
         waitForStart();
 
 
@@ -64,53 +50,38 @@ public class Teleop extends Team2753Linear {
 
             /* Drivetrain Controls */ //Gamepad 1 joysticks
 
-            if(true){
-                //D-pad controls for slower movement
-                if (Math.abs(Ryan.right_stick_y) < 0.01 && Math.abs(Ryan.left_stick_y) < 0.01) {
-                    if (Ryan.dpad_up) {
-                        Robot.getDrive().setLeftRightPower(-0.3, -0.3);
-                    } else if (Ryan.dpad_down) {
-                        Robot.getDrive().setLeftRightPower(0.3, 0.3);
-                    } else if (Ryan.dpad_left) {
-                        Robot.getDrive().setLeftRightPower(-0.35, 0.35);
-                    } else if (Ryan.dpad_right) {
-                        Robot.getDrive().setLeftRightPower(0.35, -0.35);
-                    } else {
-                        Robot.getDrive().setLeftRightPower(0, 0);
-                    }
+            //D-pad controls for slower movement
+            if (Math.abs(Ryan.right_stick_y) < 0.01 && Math.abs(Ryan.left_stick_y) < 0.01) {
+                if (Ryan.dpad_up) {
+                    Robot.getDrive().setLeftRightPower(-0.3, -0.3);
+                } else if (Ryan.dpad_down) {
+                    Robot.getDrive().setLeftRightPower(0.3, 0.3);
+                } else if (Ryan.dpad_left) {
+                    Robot.getDrive().setLeftRightPower(-0.35, 0.35);
+                } else if (Ryan.dpad_right) {
+                    Robot.getDrive().setLeftRightPower(0.35, -0.35);
                 } else {
-                    float leftThrottle = Ryan.left_stick_y;
-                    float rightThrottle = Ryan.right_stick_y;
-
-                    /* Clip the left and right throttle values so that they never exceed +/- 1.  */
-                    leftThrottle = Range.clip(leftThrottle, -1, 1);
-                    rightThrottle = Range.clip(rightThrottle, -1, 1);
-
-                    /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
-                    leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
-                    rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
-
-                    Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
+                    Robot.getDrive().setLeftRightPower(0, 0);
                 }
             } else {
-                double speed = Ryan.left_stick_y;
-                double turn = -Ryan.right_stick_x;
+                float leftThrottle = Ryan.left_stick_y;
+                float rightThrottle = Ryan.right_stick_y;
 
-                speed = Range.clip(speed, -1, 1);
-                turn = Range.clip(turn, -1, 1);
+                    /* Clip the left and right throttle values so that they never exceed +/- 1.  */
+                leftThrottle = Range.clip(leftThrottle, -1, 1);
+                rightThrottle = Range.clip(rightThrottle, -1, 1);
 
-                double left = speed + turn;
-                double right = speed - turn;
+                    /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
+                leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
+                rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
 
-                Robot.getDrive().setLeftRightPower(left, right);
+                Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
             }
 
             /* Intake Controls */
 
             //Both Gamepad 1 and 2
             //Press and hold control
-
-
             if (Ryan.left_bumper)
                 Robot.getIntake().reverse();
             else if (Ryan.right_bumper)
@@ -164,73 +135,8 @@ public class Teleop extends Team2753Linear {
             //Apply power to motor
             Robot.getLift().setLiftPower(liftThrottle);
 
-            //Slammer
-            if (Seth.y) {
-                Robot.getSlammer().setPower(0.35);
-            } else if (Seth.a) {
-                Robot.getSlammer().setPower(-0.2);
-            } else
-                Robot.getSlammer().setPower(0);
-
-
-
-            //Stopper
-            if(Seth.right_bumper){
-                if(lastPressed!=stopper){
-                    if(deploy) {
-                        Robot.getSlammer().stopperDown();
-                        if(isRelicDeployed){
-                            Robot.getRelic().open();
-                        }
-                        deploy = false;
-                    } else {
-                        Robot.getSlammer().stopperUp();
-                        if(isRelicDeployed)
-                            Robot.getRelic().close();
-                        deploy = true;
-                    }
-                }
-                lastPressed = stopper;
-            } else {
-                lastPressed = !stopper;
-            }
-
             SetStatus("Running OpMode");
             updateTelemetry();
-
-            if(gamepad2.dpad_down){
-                Robot.getRelic().setAngles(0, 190);
-                Robot.getRelic().setWristPostion(34);
-                Robot.getRelic().open();
-                current = Relic.Retract;
-                isRelicDeployed = true;
-            } else if(gamepad2.dpad_up){
-                Robot.getRelic().setAngles(140, 190);
-                Robot.getRelic().setWristPostion(50);
-                Robot.getRelic().close();
-                current = Relic.Extend;
-                isRelicDeployed = true;
-            } else if(gamepad2.dpad_right){
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(50);
-                Robot.getRelic().close();
-                current = Relic.Retract;
-                isRelicDeployed = true;
-            } else if(gamepad2.dpad_left){
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(70);
-                isRelicDeployed = false;
-            }
-
-            if(current == Relic.Extend){
-                if(t.milliseconds()<2000){
-                    Robot.getRelic().setWristPostion(50);
-                }else if(t.milliseconds()>2000) {
-                    Robot.getRelic().setWristPostion(35);
-                }
-            } else {
-                t.reset();
-            }
 
             SetStatus("Running OpMode");
 

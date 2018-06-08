@@ -62,6 +62,10 @@ public class Slammer implements Subsystem{
         telemetry.addData("Slammer Position", left_slammer.getPosition());
     }
 
+    /**
+     * @param state Set the wanted state of the slammer and stopper
+     * @return if the slammer is finished
+     */
     public boolean setSlammerState(SLAMMER_State state){
         if(state != currentSlammerState){
             switch (state){

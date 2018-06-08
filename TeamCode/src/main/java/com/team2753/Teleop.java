@@ -35,8 +35,6 @@ public class Teleop extends Team2753Linear {
             /*Gamepad 1 Controls*/
 
             /* Drivetrain Controls */ //Gamepad 1 joysticks
-
-
             //D-pad controls for slower movement
             if (Math.abs(Ryan.right_stick_y) < 0.01 && Math.abs(Ryan.left_stick_y) < 0.01) {
                 if (Ryan.dpad_up) {
@@ -54,13 +52,14 @@ public class Teleop extends Team2753Linear {
                 float leftThrottle = Ryan.left_stick_y;
                 float rightThrottle = Ryan.right_stick_y;
 
-                    /* Clip the left and right throttle values so that they never exceed +/- 1.  */
+                /* Clip the left and right throttle values so that they never exceed +/- 1.  */
                 leftThrottle = Range.clip(leftThrottle, -1, 1);
                 rightThrottle = Range.clip(rightThrottle, -1, 1);
 
-                    /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
+                /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
                 leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
                 rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
+
                 Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
             }
 
@@ -68,6 +67,7 @@ public class Teleop extends Team2753Linear {
 
             //Both Gamepad 1 and 2
 
+            //Press and hold control
             if (Ryan.left_bumper)
                 Robot.getIntake().reverse();
             else if (Ryan.right_bumper)
@@ -106,7 +106,6 @@ public class Teleop extends Team2753Linear {
                 Robot.getSlammer().setStopperState(Slammer.STOPPER_State.OPEN);
 
 
-
             if(Seth.y && sethScoreTimer.milliseconds()>200) { // Scoring Sequence
                 isScoringGlyphs = true;
                 Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
@@ -119,10 +118,6 @@ public class Teleop extends Team2753Linear {
             SetStatus("Running OpMode");
             updateTelemetry();
 
-
-            SetStatus("Running OpMode");
-
-            updateTelemetry();
         }
 
 

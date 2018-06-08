@@ -4,7 +4,6 @@ import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryFollower;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 
-
 /**
  * Created by joshua9889 on 4/24/2018.
  */

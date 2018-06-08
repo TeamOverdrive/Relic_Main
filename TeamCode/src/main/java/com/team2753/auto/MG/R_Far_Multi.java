@@ -19,6 +19,9 @@ public class R_Far_Multi extends AutoModeBase {
         ElapsedTime t = new ElapsedTime();
         boolean farther = false;
 
+        hitJewel(this.jewel_Color, Jewel_Color.Red);
+
+
         switch (WhatColumnToScoreIn()){
             case LEFT:
                 // Drive off
@@ -44,9 +47,9 @@ public class R_Far_Multi extends AutoModeBase {
                 Robot.getDrive().encoderDrive(0.6, -10, -10, 3);
 
                 // Relic
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(64);
-                Robot.getRelic().close();
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(64);
+//                Robot.getRelic().close();
                 Robot.getSlammer().stopperDown();
 
                 // Start intaking
@@ -120,9 +123,9 @@ public class R_Far_Multi extends AutoModeBase {
                 Robot.getDrive().encoderDrive(0.6, -5, -5, 3);
 
                 // Relic
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(64);
-                Robot.getRelic().close();
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(64);
+//                Robot.getRelic().close();
                 Robot.getSlammer().stopperDown();
 
                 // Start intaking
@@ -205,9 +208,9 @@ public class R_Far_Multi extends AutoModeBase {
                 Robot.getSlammer().stopperDown();
 
                 // Relic
-                Robot.getRelic().setAngles(0,0);
-                Robot.getRelic().setWristPostion(64);
-                Robot.getRelic().close();
+//                Robot.getRelic().setAngles(0,0);
+//                Robot.getRelic().setWristPostion(64);
+//                Robot.getRelic().close();
 
                 // Start intaking
                 Robot.getIntake().setPower(0.6);

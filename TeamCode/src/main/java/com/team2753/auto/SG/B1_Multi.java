@@ -13,6 +13,7 @@ import static com.team2753.auto.AutoParams.AUTO;
 
 @Autonomous(name = "Blue 1 Multiglyph", group = "multiglyph")
 @Disabled
+@Deprecated
 public class B1_Multi extends Team2753Linear{
 
     @Override
@@ -31,7 +32,9 @@ public class B1_Multi extends Team2753Linear{
 
             //grab more glyphs
             SetStatus("Multiglyph");
-            //multiGlyphPos1();
+
+           // multiGlyphPos1();
+
 
             //park
             SetStatus("Parking");

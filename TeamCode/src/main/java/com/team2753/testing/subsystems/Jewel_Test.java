@@ -2,7 +2,7 @@ package com.team2753.testing.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team2753.auto.AutoModeBase;
-//import com.team2753.auto.actions.JewelHitColor;
+
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 1/27/2018.
@@ -17,7 +17,6 @@ public class Jewel_Test extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart("Jewel Test", true);
-
-        //runAction(new JewelHitColor(this.jewel_Color, Jewel_Color.Red));
+        hitJewel(this.jewel_Color, Jewel_Color.Red);
     }
 }

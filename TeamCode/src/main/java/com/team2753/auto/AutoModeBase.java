@@ -6,9 +6,10 @@ import com.team2753.Team2753Linear;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
+import static com.team2753.Constants.COUNTS_PER_INCH;
 import static com.team2753.auto.AutoParams.autoSpeed;
 import static com.team2753.auto.AutoParams.autoTurnSpeed;
-import static com.team2753.subsystems.Drive.COUNTS_PER_INCH;
+
 
 /**
  * Created by joshua9889 on 3/23/2018.
@@ -234,12 +235,16 @@ public abstract class AutoModeBase extends Team2753Linear {
     public void scoreGlyphDropIntake(){
         Robot.getSlammer().stopperUp();
         waitForTick(350);
-        Robot.getSlammer().setPower(0.35);
+
+//        Robot.getSlammer().setPower(0.35);
+
         waitForTick(450);
         Robot.getSlammer().stop();
         Robot.getIntake().releaseIntake();
         Robot.getDrive().encoderDirectDrive(autoSpeed, -3, -3, 1);
-        Robot.getSlammer().setPower(-0.3);
+
+//        Robot.getSlammer().setPower(-0.3);
+
         Robot.getDrive().encoderDrive(autoSpeed, 6,6, 1.5);
         Robot.getSlammer().stop();
         Robot.getDrive().encoderDrive(autoSpeed, -6, -6, 3);
@@ -248,13 +253,17 @@ public abstract class AutoModeBase extends Team2753Linear {
     public void scoreGlyph(){
         Robot.getSlammer().stopperUp();
         waitForTick(350);
-        Robot.getSlammer().setPower(0.35);
+
+//        Robot.getSlammer().setPower(0.35);
+
         waitForTick(500);
         Robot.getSlammer().stop();
         Robot.getIntake().releaseLock();
         Robot.getDrive().encoderDirectDrive(autoSpeed, -3, -3, 2);
         Robot.getDrive().encoderDrive(autoSpeed, 6, 6, 1.5);
-        Robot.getSlammer().setPower(-0.3);
+
+//        Robot.getSlammer().setPower(-0.3);
+
         Robot.getDrive().encoderDrive(autoSpeed, -6, -6, 1.5);
         Robot.getSlammer().stop();
     }

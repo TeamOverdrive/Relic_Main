@@ -3,15 +3,18 @@ package com.team2753.subsystems;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-import com.team254.lib.trajectory.Trajectory;
-import com.team254.lib.trajectory.TrajectoryFollower;
-import com.team254.lib.util.ChezyMath;
+import com.team254.lib_2014.trajectory.Trajectory;
+import com.team254.lib_2014.trajectory.TrajectoryFollower;
+import com.team254.lib_2014.util.ChezyMath;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import static com.team2753.Constants.COUNTS_PER_INCH;
+import static com.team2753.Constants.WHEEL_BASE;
 import static java.lang.Math.PI;
 
 /**
@@ -38,22 +41,17 @@ public class Drive implements Subsystem {
     /* Motors */
     private DcMotor leftMotor, rightMotor = null;
 
+    /* Gyros */
     private ModernRoboticsI2cGyro gyroLeft, gyroRight = null;
-    private I2cAddr leftAddr = new I2cAddr(0x98);
-    private I2cAddr rightAddr = new I2cAddr(0x20);
 
     // Used to output telemetry and to stop when stop is pressed
     private LinearOpMode linearOpMode = null;
 
-    private ElapsedTime runtime = new ElapsedTime();
+    // Use to stop motors
+    private ElapsedTime timeout = new ElapsedTime();
 
-    private static double COUNTS_PER_MOTOR_REV = 1120;     // AndyMark NeveRest 40
-    private static final double DRIVE_GEAR_REDUCTION = 0.6666 ;     // This is < 1.0 if geared UP
-    private static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference w/ wheel base
-    public static double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.141592);
-    public static final double WHEEL_BASE = 12.625;
-
-    private boolean gyro = false;
+    // Use gyros?
+    private boolean gyro = true;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
@@ -63,31 +61,21 @@ public class Drive implements Subsystem {
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        // Recalculate value based on configuration
-        COUNTS_PER_MOTOR_REV = leftMotor.getMotorType().getTicksPerRev();
-        COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.141592);
-
-        if(true){
+        if(auto){
             zeroSensors();
             setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            if(true) {
+            if(gyro) {
                 gyroLeft = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_l");
                 gyroRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro_r");
                 gyroLeft.setI2cAddress(I2cAddr.create8bit(0x98));
                 gyroRight.setI2cAddress(I2cAddr.create8bit(0x20));
 
                 gyroLeft.calibrate();
-                while (gyroLeft.isCalibrating()){
-                    Thread.yield();
-                }
-
                 gyroRight.calibrate();
-                while (gyroLeft.isCalibrating()){
+                while (gyroLeft.isCalibrating() && gyroLeft.isCalibrating()){
                     Thread.yield();
                 }
-
-
                 gyroLeft.resetZAxisIntegrator();
                 gyroRight.resetZAxisIntegrator();
             }
@@ -102,6 +90,11 @@ public class Drive implements Subsystem {
     public void zeroSensors() {
         while(leftMotor.getCurrentPosition()!=0 && rightMotor.getCurrentPosition()!=0)
             setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        try {
+            gyroLeft.resetZAxisIntegrator();
+            gyroRight.resetZAxisIntegrator();
+        } catch (Exception e){}
 
         Thread.yield();
     }
@@ -166,14 +159,30 @@ public class Drive implements Subsystem {
         return getRightCurrentPosition()/COUNTS_PER_INCH;
     }
 
+    public double getLeftDistanceInchesWithOffset(double offset){
+        return getLeftDistanceInches()-offset;
+    }
+
+    public double getRightDistanceInchesWithOffset(double offset){
+        return getRightDistanceInches()-offset;
+    }
+
+    public DcMotorController controller(){
+        return leftMotor.getController();
+    }
+
+    /**
+     * @return Angle in Degrees, based on unit circle
+     */
     public double getGyroAngleDegrees(){
-        return (gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
+        return -(gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
     }
 
     public double getGyroAngleRadians(){
         return Math.toRadians(getGyroAngleDegrees());
     }
 
+    //This error should be fine? Are you using it?
     TrajectoryFollower followerLeft = new TrajectoryFollower();
     TrajectoryFollower followerRight = new TrajectoryFollower();
     double direction;
@@ -272,7 +281,6 @@ public class Drive implements Subsystem {
         encoderPIDDrive(linearOpMode, leftDistance, rightDistance, 10, P, I, D, bias);
     }
 
-
     /**
      * Method to perform a Counter-clockwise turn
      *
@@ -280,7 +288,6 @@ public class Drive implements Subsystem {
      * @param speed         The speed that the motors are moving.
      * @param timeoutS      The amount of time this method is allowed to execute.
      */
-
     @Deprecated
     public void turnCCW(double degrees, double speed, double timeoutS){
 
@@ -330,7 +337,6 @@ public class Drive implements Subsystem {
      * @param rightInches The distance that the robot should move to the right.
      * @param timeoutS    The amount of time this method is allowed to execute.
      */
-
     @Deprecated
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
@@ -351,12 +357,12 @@ public class Drive implements Subsystem {
             setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
-            runtime.reset();
+            timeout.reset();
             setLeftRightPower(Math.abs(speed), Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
+                    (timeout.seconds() < timeoutS) &&
                     (leftMotor.isBusy() || rightMotor.isBusy())) {
                 //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
                 if ((Math.abs(newLeftTarget - leftMotor.getCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
@@ -396,12 +402,13 @@ public class Drive implements Subsystem {
             setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
-            runtime.reset();
+            timeout.reset();
+
             setLeftRightPower(Math.abs(speed), Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
+                    (timeout.seconds() < timeoutS) &&
                     (leftMotor.isBusy() || rightMotor.isBusy())) {
                 //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
                 if ((Math.abs(leftTarget - leftMotor.getCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
@@ -463,12 +470,13 @@ public class Drive implements Subsystem {
             newRightSpeed = Range.clip(newRightSpeed, -1, 1);
 
             // reset the timeout time and start motion.
-            runtime.reset();
+            timeout.reset();
+
             setLeftRightPower(Math.abs(newLeftSpeed), Math.abs(newRightSpeed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
+                    (timeout.seconds() < timeoutS) &&
                     (leftMotor.isBusy() || rightMotor.isBusy())) {
 
                 leftDistanceLeft = Math.abs(newLeftTarget - leftMotor.getCurrentPosition());
@@ -530,12 +538,13 @@ public class Drive implements Subsystem {
             double newRightSpeed = Math.abs(Math.pow(Kp2*rightDistanceLeft,2) + (Kp*rightDistanceLeft) + (Kd*rightDerivative) + bias);
 
             // reset the timeout time and start motion.
-            runtime.reset();
+            timeout.reset();
+
             setLeftRightPower(Math.abs(newLeftSpeed), Math.abs(newRightSpeed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
+                    (timeout.seconds() < timeoutS) &&
                     (leftMotor.isBusy() || rightMotor.isBusy())) {
 
                 iteration_time = Math.abs(linearOpMode.getRuntime() - startIteration);
@@ -583,12 +592,13 @@ public class Drive implements Subsystem {
             setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
-            runtime.reset();
+            timeout.reset();
+
             setLeftRightPower(Math.abs(speed), Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
+                    (timeout.seconds() < timeoutS) &&
                     (leftMotor.isBusy() || rightMotor.isBusy())) {}
 
             // Stop all motion;
@@ -634,14 +644,14 @@ public class Drive implements Subsystem {
             double derivativeR = (right_error - right_error_prior)/iterationtimeS;
             double outputR = P*right_error + I*integralR + D*derivativeR + bias;
 
-            runtime.reset();
+            timeout.reset();
 
             outputL = Range.clip(outputL, -1, 1);
             outputR = Range.clip(outputR, -1,1);
             setLeftRightPower(Math.abs(outputL), Math.abs(outputR));
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (linearOpMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
+                    (timeout.seconds() < timeoutS) &&
                     (leftMotor.isBusy() || rightMotor.isBusy())) {
 
                 iterationtimeS = Math.abs(iterationStartS-linearOpMode.getRuntime());
@@ -691,7 +701,6 @@ public class Drive implements Subsystem {
     public void proportionControl(double leftTarget, double rightTarget, double speed, double P, double I, double D){
         //double leftError = Math.abs(leftTarget - leftMotor.getCurrentPosition());
         //double rightError = Math.abs(rightTarget - rightMotor.getCurrentPosition());
-
     }
 
     @Override

@@ -1,10 +1,10 @@
 package com.team2753.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.team2753.Constants;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
 
-import static com.team2753.subsystems.Drive.WHEEL_BASE;
 import static java.lang.Math.PI;
 
 /**
@@ -22,16 +22,14 @@ public class B_Back_3Glyph extends AutoModeBase {
 
         Robot.getDrive().encoderDrive(0.3, -36, -36, 4000);
 
-        Robot.getDrive().encoderDrive(0.3, 0, (WHEEL_BASE*PI*(82))/180, 4000);
+
+        Robot.getDrive().encoderDrive(0.3, 0, (Constants.WHEEL_BASE*PI*(82))/180, 4000);
+
 
         Robot.getDrive().encoderDrive(0.3, 7, 7, 3000);
 
         Robot.getSlammer().stopperUp();
         sleep(600);
         Robot.getDrive().encoderDrive(0.3, -10, -10, 3000);
-
-
-        telemetry.update();
-        sleep(10000);
     }
 }

@@ -1,10 +1,10 @@
 package com.team2753.testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.team254.lib.trajectory.Path;
-import com.team254.lib.trajectory.PathGenerator;
-import com.team254.lib.trajectory.TrajectoryGenerator;
-import com.team254.lib.trajectory.WaypointSequence;
+import com.team254.lib_2014.trajectory.Path;
+import com.team254.lib_2014.trajectory.PathGenerator;
+import com.team254.lib_2014.trajectory.TrajectoryGenerator;
+import com.team254.lib_2014.trajectory.WaypointSequence;
 import com.team2753.auto.AutoModeBase;
 
 /**

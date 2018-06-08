@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team2753.libs.OverdriveLib;
+import com.team2753.subsystems.Slammer;
 
 import static com.team2753.auto.AutoParams.TELEOP;
 
@@ -17,22 +18,8 @@ import static com.team2753.auto.AutoParams.TELEOP;
 @TeleOp(name = "Teleop")
 public class Teleop extends Team2753Linear {
 
-    private boolean stopper = true;
-    private boolean lastPressed = false;
-    private boolean deploy = false;
-
-    private boolean intakeRelease = true;
-    private boolean releaseLastPressed = false;
-    private boolean release = true;
-
-    private enum Relic{
-        Retract, Extend
-    }
-
-    private Relic current = Relic.Retract;
-    private boolean isRelicDeployed = false;
-
-    private ElapsedTime t = new ElapsedTime();
+    private boolean isScoringGlyphs = false;
+    private ElapsedTime sethScoreTimer = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -42,14 +29,12 @@ public class Teleop extends Team2753Linear {
 
         waitForStart();
 
-
         // Loop while we are running Teleop
         while (opModeIsActive()) {
 
             /*Gamepad 1 Controls*/
 
             /* Drivetrain Controls */ //Gamepad 1 joysticks
-
             //D-pad controls for slower movement
             if (Math.abs(Ryan.right_stick_y) < 0.01 && Math.abs(Ryan.left_stick_y) < 0.01) {
                 if (Ryan.dpad_up) {
@@ -67,11 +52,11 @@ public class Teleop extends Team2753Linear {
                 float leftThrottle = Ryan.left_stick_y;
                 float rightThrottle = Ryan.right_stick_y;
 
-                    /* Clip the left and right throttle values so that they never exceed +/- 1.  */
+                /* Clip the left and right throttle values so that they never exceed +/- 1.  */
                 leftThrottle = Range.clip(leftThrottle, -1, 1);
                 rightThrottle = Range.clip(rightThrottle, -1, 1);
 
-                    /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
+                /* Scale the throttle values to make it easier to control the robot more precisely at slower speeds.  */
                 leftThrottle = (float) OverdriveLib.scaleInput(leftThrottle);
                 rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
 
@@ -81,43 +66,25 @@ public class Teleop extends Team2753Linear {
             /* Intake Controls */
 
             //Both Gamepad 1 and 2
+
             //Press and hold control
             if (Ryan.left_bumper)
                 Robot.getIntake().reverse();
             else if (Ryan.right_bumper)
                 Robot.getIntake().intake();
-
             else if (Ryan.left_trigger > 0)
                 Robot.getIntake().shiftLeft();
-
             else if (Ryan.right_trigger > 0)
                 Robot.getIntake().shiftRight();
             else
                 Robot.getIntake().stop();
 
-            if(Ryan.x){
-                Robot.getJewel().deploy(true);
-            }
-            else{
-                Robot.getJewel().retract(true);
-            }
 
-            //Intake Release
-            if (Ryan.y) {
-                if (releaseLastPressed != intakeRelease) {
-                    if (release) {
-                        Robot.getIntake().releaseIntake();
-                        release = false;
-                    } else {
-                        Robot.getIntake().releaseLock();
-                        release = true;
-                    }
-                }
-                releaseLastPressed = intakeRelease;
-            }
-            else {
-                releaseLastPressed = !intakeRelease;
-            }
+            if(Ryan.x)
+                Robot.getJewel().deploy(true);
+            else
+                Robot.getJewel().retract(true);
+
 
 
             /*  Gamepad 2 Controls  */
@@ -135,12 +102,22 @@ public class Teleop extends Team2753Linear {
             //Apply power to motor
             Robot.getLift().setLiftPower(liftThrottle);
 
+            if(Robot.getLift().getPosition()>100 && !isScoringGlyphs)
+                Robot.getSlammer().setStopperState(Slammer.STOPPER_State.OPEN);
+
+
+            if(Seth.y && sethScoreTimer.milliseconds()>200) { // Scoring Sequence
+                isScoringGlyphs = true;
+                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
+                sethScoreTimer.reset();
+            } else if(Seth.y && sethScoreTimer.milliseconds()>100){
+                isScoringGlyphs = true;
+                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING);
+            }
+
             SetStatus("Running OpMode");
             updateTelemetry();
 
-            SetStatus("Running OpMode");
-
-            updateTelemetry();
         }
 
 

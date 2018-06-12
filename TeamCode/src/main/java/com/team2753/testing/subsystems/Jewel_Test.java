@@ -17,6 +17,6 @@ public class Jewel_Test extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart("Jewel Test", true);
-        hitJewel(this.jewel_Color, Jewel_Color.Red);
+        DefaultHitJewel(this.jewel_Color, Jewel_Color.Red);
     }
 }

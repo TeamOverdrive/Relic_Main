@@ -45,6 +45,9 @@ public class Slammer implements Subsystem{
 
         stopServo = linearOpMode.hardwareMap.get(Servo.class, "slammer_stop");
 
+        currentStopperState = STOPPER_State.OPEN;
+        currentSlammerState = SLAMMER_State.INTAKING;
+
         if(auto) {
             setStopperState(STOPPER_State.CLOSED);
             retract();
@@ -66,18 +69,21 @@ public class Slammer implements Subsystem{
      * @param state Set the wanted state of the slammer and stopper
      * @return if the slammer is finished
      */
+    private boolean firstIntakeRun = true;
     public boolean setSlammerState(SLAMMER_State state){
         if(state != currentSlammerState){
             switch (state){
                 case INTAKING:
-                    if(setStopperState(STOPPER_State.OPEN)) {
+                    if(setStopperState(STOPPER_State.OPEN) && !firstIntakeRun) {
                         retract();
                         if(slammerTimer.milliseconds()>500) {
                             setStopperState(STOPPER_State.CLOSED);
+                            firstIntakeRun = true;
                             currentSlammerState = state;
                         }
                     } else {
                         slammerTimer.reset();
+                        firstIntakeRun = false;
                     }
                     break;
                 case HOLDING:

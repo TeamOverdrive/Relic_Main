@@ -7,7 +7,7 @@ package com.team2753.splines.field;
 public class OverdriveField implements FieldConfig {
     @Override
     public double getFarRedCryptoboxToFarStone() {
-        return 42;
+        return 41;
     }
 
     @Override

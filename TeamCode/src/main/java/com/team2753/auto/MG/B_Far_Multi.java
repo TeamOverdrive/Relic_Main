@@ -21,7 +21,7 @@ public class B_Far_Multi extends AutoModeBase {
 
         ElapsedTime t = new ElapsedTime();
 
-        hitJewel(this.jewel_Color, Jewel_Color.Blue);
+        DefaultHitJewel(this.jewel_Color, Jewel_Color.Blue);
 
         switch (WhatColumnToScoreIn()){
             case LEFT:

@@ -23,7 +23,7 @@ public class R_Back_5Glyph extends AutoModeBase {
 
         ElapsedTime t = new ElapsedTime();
 
-        hitJewel(this.jewel_Color, Jewel_Color.Red);
+        DefaultHitJewel(this.jewel_Color, Jewel_Color.Red);
 
 
         Robot.getDrive().encoderDrive(0.5, 34.5, 34.5, 3);

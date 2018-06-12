@@ -183,8 +183,8 @@ public class Drive implements Subsystem {
     }
 
     //This error should be fine? Are you using it?
-    TrajectoryFollower followerLeft = new TrajectoryFollower();
-    TrajectoryFollower followerRight = new TrajectoryFollower();
+    TrajectoryFollower followerLeft = new TrajectoryFollower("left");
+    TrajectoryFollower followerRight = new TrajectoryFollower("right");
     double direction;
     double heading;
     double kTurn = -3.0/80.0;
@@ -701,6 +701,21 @@ public class Drive implements Subsystem {
     public void proportionControl(double leftTarget, double rightTarget, double speed, double P, double I, double D){
         //double leftError = Math.abs(leftTarget - leftMotor.getCurrentPosition());
         //double rightError = Math.abs(rightTarget - rightMotor.getCurrentPosition());
+    }
+
+    private int counter = 0;
+    public boolean turnToAngle(double degrees){
+        double error = this.getGyroAngleDegrees()-degrees;
+
+        if(Math.abs(error)==0.0) {
+            setLeftRightPower(0, 0);
+            counter++;
+            return counter>6;
+        } else {
+            setLeftRightPower(-error * 0.012, error * 0.012);
+            counter = 0;
+            return false;
+        }
     }
 
     @Override

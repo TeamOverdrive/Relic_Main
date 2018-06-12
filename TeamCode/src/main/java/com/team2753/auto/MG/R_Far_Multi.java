@@ -19,7 +19,7 @@ public class R_Far_Multi extends AutoModeBase {
         ElapsedTime t = new ElapsedTime();
         boolean farther = false;
 
-        hitJewel(this.jewel_Color, Jewel_Color.Red);
+        DefaultHitJewel(this.jewel_Color, Jewel_Color.Red);
 
 
         switch (WhatColumnToScoreIn()){

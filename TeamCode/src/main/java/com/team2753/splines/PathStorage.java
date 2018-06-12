@@ -29,30 +29,62 @@ public class PathStorage {
     }
 
     public static void calculateRedFar(final FieldConfig field){
-        WaypointSequence waypointSequence = new WaypointSequence(10);
+        WaypointSequence waypointSequence = new WaypointSequence(5);
+
+        // Path from Red Far Stone to Right Column
         waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
         waypointSequence.addWaypoint(
                 new WaypointSequence.Waypoint(
                         field.getFarRedCryptoboxToFarStone() - 21, 23 - field.getFarRedCenterToWall(),
                         Math.toRadians(14)));
-        pathToRightColumnRedFar = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+        pathToRightColumnRedFar =
+                PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
 
-        waypointSequence = new WaypointSequence(10);
+        // Path from Red Fat Stone to Center Column
+        waypointSequence = new WaypointSequence(5);
+        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+        waypointSequence.addWaypoint(
+                new WaypointSequence.Waypoint(
+                        field.getFarRedCryptoboxToFarStone() - 21, 29 - field.getFarRedCenterToWall(),
+                        Math.toRadians(14)));
+        pathToCenterColumnRedFar =
+                PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+
+        // Path from Right Column to Glyph Pit
+        waypointSequence = new WaypointSequence(5);
         waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0,0,0));
         waypointSequence.addWaypoint(new WaypointSequence.Waypoint(12, -3, 0));
         waypointSequence.addWaypoint(new WaypointSequence.Waypoint(25, 0, Math.toRadians(-10)));
         waypointSequence.addWaypoint(new WaypointSequence.Waypoint(35, -2, Math.toRadians(-10)));
-        pathFromFarRedRightToGlyphPit = PathGenerator.makePath(waypointSequence, aggressiveTrajectoryConfig, WHEEL_BASE, "");
+        pathFromFarRedRightToGlyphPit =
+                PathGenerator.makePath(waypointSequence, aggressiveTrajectoryConfig, WHEEL_BASE, "");
 
-        waypointSequence = new WaypointSequence(10);
+        // Path from Glyph Pit to Center Column
+        waypointSequence = new WaypointSequence(5);
         waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0,0,0));
-        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(45, -2, Math.toRadians(5)));
-        pathFromGlyphPitToCenterRedFar = PathGenerator.makePath(waypointSequence, aggressiveTrajectoryConfig, WHEEL_BASE, "");
+        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(25, -20, Math.toRadians(0)));
+        pathFromGlyphPitToCenterRedFar =
+                PathGenerator.makePath(waypointSequence, aggressiveTrajectoryConfig, WHEEL_BASE, "");
+    }
 
-//        waypointSequence = new WaypointSequence(10);
-//        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-//        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(30, -6, 0));
-//        pathFromCenterColumnToGlyphPitRedFar = PathGenerator.makePath(waypointSequence, aggressiveTrajectoryConfig, WHEEL_BASE, "");
+    public static Path pathFromBlueCloseToGlyphPit = null;
+    public static Path pathFromBlueCloseGlyphPitToLeftColumn = null;
+
+    public static void calculateBlueClose(final FieldConfig fieldConfig){
+        if (pathFromBlueCloseToGlyphPit == null) {
+            WaypointSequence waypointSequence = new WaypointSequence(5);
+            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(5, 0, 0));
+            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(24, 20, -89.4));
+            pathFromBlueCloseToGlyphPit =
+                    PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+
+            waypointSequence = new WaypointSequence(5);
+            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0,0,0));
+            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(25, 0, 5));
+            pathFromBlueCloseGlyphPitToLeftColumn =
+                    PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+        }
     }
 
     static {

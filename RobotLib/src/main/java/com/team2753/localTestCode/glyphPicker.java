@@ -39,22 +39,7 @@ public class glyphPicker {
             drawMap(map);
             //clearMap(map);
         }
-
-        /*
-        System.out.println("+--------+--------+--------+");
-        System.out.println("|\\       |        |       /|");
-        System.out.println("| \\      |        |      / |");
-        System.out.println("|  \\     |        |     /  |");
-        System.out.println("|   \\    |        |    /   |");
-        System.out.println("|    \\   |        |   /    |");
-        System.out.println("|     \\  |        |  /     |");
-        System.out.println("|      \\ |        | /      |");
-        System.out.println("|       \\|        |/       |");
-        System.out.println("+--------+--------+--------+");
-        */
     }
-
-
 
     public static void drawMap(String[] args){
         for (String row : args) {

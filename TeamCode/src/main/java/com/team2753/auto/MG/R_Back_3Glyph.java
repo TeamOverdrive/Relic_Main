@@ -24,7 +24,7 @@ public class R_Back_3Glyph extends AutoModeBase {
 
         ElapsedTime t = new ElapsedTime();
 
-        hitJewel(this.jewel_Color, Jewel_Color.Red);
+        DefaultHitJewel(this.jewel_Color, Jewel_Color.Red);
 
 
         switch (RelicRecoveryVuMark.RIGHT){

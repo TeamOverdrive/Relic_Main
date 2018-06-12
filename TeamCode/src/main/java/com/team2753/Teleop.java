@@ -102,7 +102,7 @@ public class Teleop extends Team2753Linear {
             //Apply power to motor
             Robot.getLift().setLiftPower(liftThrottle);
 
-            if(Robot.getLift().getPosition()>100 && !isScoringGlyphs)
+            if(Robot.getLift().getPosition()>100 || isScoringGlyphs)
                 Robot.getSlammer().setStopperState(Slammer.STOPPER_State.OPEN);
 
 
@@ -110,7 +110,7 @@ public class Teleop extends Team2753Linear {
                 isScoringGlyphs = true;
                 Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
                 sethScoreTimer.reset();
-            } else if(Seth.y && sethScoreTimer.milliseconds()>100){
+            } else if(Seth.y && sethScoreTimer.milliseconds()>400){
                 isScoringGlyphs = true;
                 Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING);
             }

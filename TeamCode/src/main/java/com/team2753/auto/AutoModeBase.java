@@ -17,10 +17,47 @@ import static com.team2753.auto.AutoParams.autoTurnSpeed;
 
 public abstract class AutoModeBase extends Team2753Linear {
 
-    public void hitJewel(Team2753Linear.Jewel_Color scannedJewel, Team2753Linear.Jewel_Color alliance_color){
+    public void SuperHitJewel(Team2753Linear.Jewel_Color scannedJewel,  Team2753Linear.Jewel_Color alliance_color){
+        Robot.getJewel().deploy(true);
+
+        if(alliance_color == Jewel_Color.Red){
+            if(scannedJewel==Jewel_Color.Blue) {
+                sleep(200);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sleep(1000);
+                        Robot.getJewel().retract(true);
+                    }
+                }).start();
+            } else {
+                sleep(300);
+                Robot.getJewel().right();
+                sleep(200);
+                Robot.getJewel().retract(false);
+            }
+        } else { // Blue
+            if (scannedJewel == Jewel_Color.Red) {
+                sleep(200);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sleep(1000);
+                        Robot.getJewel().retract(true);
+                    }
+                }).start();
+            } else {
+                sleep(300);
+                Robot.getJewel().right();
+                sleep(200);
+                Robot.getJewel().retract(false);
+            }
+        }
+    }
+
+    public void DefaultHitJewel(Team2753Linear.Jewel_Color scannedJewel, Team2753Linear.Jewel_Color alliance_color){
         Robot.getJewel().deploy(true);
         sleep(500);
-
 
         if(scannedJewel==alliance_color){
             Robot.getJewel().rightHit();

@@ -1,10 +1,7 @@
 package com.team2753.testing;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team2753.Team2753Linear;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 /**
@@ -28,27 +25,23 @@ public class gLyphitypickerteLeop extends Team2753Linear {
     #________#________#________#
      */
 
+
+    /*
+    ++++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++*+
+    ++++++++++++++++++++++++++++
+
+     */
+
     private static final char POINTER = '^';
     private static final char GLYPH = 'g';
 
-
-    //pointerMap probably unneeded
-
-    /*
-    String[] pointerMap = {"+--------+--------+--------+",
-            "|\\       |        |       /|",
-            "| \\      |        |      / |",
-            "|  \\     |        |     /  |",
-            "|   \\    |        |    /   |",
-            "|    \\   |        |   /    |",
-            "|     \\  |        |  /     |",
-            "|      \\ |        | /      |",
-            "|       \\|        |/       |",
-            "+--------+--------+--------+"
-    };
-    */
-
-    String[] glyphMap = {"#________#________#________#",
+    private String[] glyphMap = {"#________#________#________#",
             "11_______1________1_______11",
             "1_1______1________1______1_1",
             "1__1_____1________1_____1__1",
@@ -59,7 +52,7 @@ public class gLyphitypickerteLeop extends Team2753Linear {
             "1_______11________11_______1",
             "#________#________#________#",
     };
-    String[] map = {"#________#________#________#",
+    private String[] map = {"#________#________#________#",
             "11_______1________1_______11",
             "1_1______1________1______1_1",
             "1__1_____1________1_____1__1",
@@ -70,6 +63,21 @@ public class gLyphitypickerteLeop extends Team2753Linear {
             "1_______11________11_______1",
             "#________#________#________#",
     };
+
+
+    private String[] newMap = {
+            "+++++++++#++++++++++++++++++++++++#+++++++++",
+            "+1++++++++11++++++++++++++++++++11++++++++1+",
+            "++1+++++++11++++++++++++++++++++11+++++++1++",
+            "+++1++++++11++++++++++++++++++++11++++++1+++" ,
+            "++++1+++++11++++++++++++++++++++11+++++1++++" ,
+            "+++++1++++11++++++++++++++++++++11++++1+++++" ,
+            "++++++1+++11++++++++++++++++++++11+++1++++++" ,
+            "+++++++1++11++++++++++++++++++++11++1+++++++" ,
+            "++++++++1+11++++++++++++++++++++11+1++++++++" ,
+            "+++++++++11111111111111111111111111+++++++++"
+    };
+
     private int pointerX = 0;
     private int pointerY = 0;
 
@@ -79,8 +87,6 @@ public class gLyphitypickerteLeop extends Team2753Linear {
         rowToArray[pointX] = pointChar;
 
         drawTo[pointY] = new String(rowToArray);
-
-        //System.out.println("Point Drawn");
     }
 
     public static void clearPoint(String[] map, int pointX, int pointY) {
@@ -102,8 +108,6 @@ public class gLyphitypickerteLeop extends Team2753Linear {
         char[] rowToArray = map[pointY].toCharArray();
         rowToArray[pointX] = replacingChar;
         map[pointY] = new String(rowToArray);
-
-        //System.out.println("Point Removed");
     }
 
     public static void drawPointer(String[] drawTo, String[] drawOn) {
@@ -161,7 +165,7 @@ public class gLyphitypickerteLeop extends Team2753Linear {
     public void runOpMode() {
 
         //Init
-        drawMap(map);
+        drawMap(newMap);
 
         int lastPointerX, lastPointerY;
 
@@ -176,13 +180,12 @@ public class gLyphitypickerteLeop extends Team2753Linear {
 
         boolean leftPressed = true;
         boolean leftLastPressed = false;
-        ;
 
         boolean rightPressed = true;
         boolean rightLastPressed = false;
 
         //navigation and draw/clear points
-        while (!opModeIsActive()) {
+        while (!opModeIsActive() && !isStopRequested()) {
 
             lastPointerX = pointerX;
             lastPointerY = pointerY;
@@ -255,13 +258,13 @@ public class gLyphitypickerteLeop extends Team2753Linear {
                 clearPoint(map, lastPointerX, -lastPointerY);
             }
 
-            //place glyphs on displayed map
-            copyMapTo(glyphMap, map);
-
-            //Draw Pointer onto displayed map
-            drawPoint(map, map, pointerX, -pointerY, POINTER);
-
-            drawMap(map);
+//            //place glyphs on displayed map
+//            copyMapTo(glyphMap, map);
+//
+//            //Draw Pointer onto displayed map
+//            drawPoint(map, map, pointerX, -pointerY, POINTER);
+//
+//            drawMap(map);
             telemetry.update();
         }
 

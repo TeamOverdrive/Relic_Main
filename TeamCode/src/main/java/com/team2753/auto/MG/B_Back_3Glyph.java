@@ -18,7 +18,7 @@ public class B_Back_3Glyph extends AutoModeBase {
         waitForStart("BBack", AutoParams.AUTO);
         Robot.getDrive().zeroSensors();
 
-        hitJewel(this.jewel_Color, Jewel_Color.Blue);
+        DefaultHitJewel(this.jewel_Color, Jewel_Color.Blue);
 
         Robot.getDrive().encoderDrive(0.3, -36, -36, 4000);
 

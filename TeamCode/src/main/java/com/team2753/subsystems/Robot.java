@@ -26,12 +26,12 @@ public class Robot {
     private Jewel mJewel = new Jewel();
     private Lift mLift = new Lift();
     private Phone mPhone = new Phone();
-//    private Relic mRelic = new Relic();
+    private Relic mRelic = new Relic();
     private Slammer mSlammer = new Slammer();
     private FollowerWheel mFollowerWheel = new FollowerWheel();
 
     private List<Subsystem> subsystems = Arrays.asList(
-            mDrive, mJewel, mLift, mIntake, mSlammer, mPhone, mFollowerWheel);//, mRelic);
+            mDrive, mJewel, mLift, mIntake, mSlammer, mPhone, mFollowerWheel, mRelic);
 
     /**
      * @param telemetry Opmode Telemetry object
@@ -102,9 +102,9 @@ public class Robot {
         return mPhone;
     }
 
-//    public Relic getRelic(){
-//        return mRelic;
-//    }
+    public Relic getRelic(){
+        return mRelic;
+    }
 
     public Slammer getSlammer() {
         return mSlammer;

@@ -48,10 +48,10 @@ public class Slammer implements Subsystem{
         currentStopperState = STOPPER_State.OPEN;
         currentSlammerState = SLAMMER_State.INTAKING;
 
-        if(auto) {
-            setStopperState(STOPPER_State.CLOSED);
-            retract();
-        }
+
+        setStopperState(STOPPER_State.CLOSED);
+        retract();
+
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Slammer implements Subsystem{
                     break;
                 case HOLDING:
                     if(setStopperState(STOPPER_State.OPEN)) {
-                        setSlammerPosition(0.45);
+                        setSlammerPosition(0.37);
                         currentSlammerState = state;
                     }
                     break;

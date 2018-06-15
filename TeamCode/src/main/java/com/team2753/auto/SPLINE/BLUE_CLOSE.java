@@ -3,7 +3,6 @@ package com.team2753.auto.SPLINE;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.splines.FollowPath;
-import com.team2753.splines.PathStorage;
 import com.team2753.splines.field.JoshuaField;
 import com.team2753.subsystems.Slammer;
 

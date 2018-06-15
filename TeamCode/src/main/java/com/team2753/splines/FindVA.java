@@ -16,7 +16,7 @@ import com.team2753.subsystems.Drive;
 
 @TeleOp
 @Disabled
-public class FindPDVA extends LinearOpMode {
+public class FindVA extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 

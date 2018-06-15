@@ -1,4 +1,4 @@
-package com.team2753.splines;
+package com.team2753.auto.SPLINE;
 
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.PathGenerator;

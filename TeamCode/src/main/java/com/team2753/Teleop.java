@@ -2,7 +2,6 @@ package com.team2753;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team2753.libs.OverdriveLib;
 import com.team2753.subsystems.Slammer;
@@ -17,10 +16,7 @@ import static com.team2753.auto.AutoParams.TELEOP;
 
 @TeleOp(name = "Teleop")
 public class Teleop extends Team2753Linear {
-
-    private boolean isScoringGlyphs = false;
-    private ElapsedTime sethScoreTimer = new ElapsedTime();
-
+    double angle = 0;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -85,12 +81,9 @@ public class Teleop extends Team2753Linear {
             else
                 Robot.getJewel().retract(true);
 
-
-
             /*  Gamepad 2 Controls  */
 
-            /*Lift Control  Gamepad 2 Left Joystick*/
-
+            // Lift
             Robot.getLift().setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             float liftThrottle = Seth.left_stick_y;
             //CLip
@@ -102,24 +95,46 @@ public class Teleop extends Team2753Linear {
             //Apply power to motor
             Robot.getLift().setLiftPower(liftThrottle);
 
-            if(Robot.getLift().getPosition()>100 || isScoringGlyphs)
-                Robot.getSlammer().setStopperState(Slammer.STOPPER_State.OPEN);
+            // Slammer
+            boolean scoring = Seth.a;
 
-
-            if(Seth.y && sethScoreTimer.milliseconds()>200) { // Scoring Sequence
-                isScoringGlyphs = true;
-                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
-                sethScoreTimer.reset();
-            } else if(Seth.y && sethScoreTimer.milliseconds()>400){
-                isScoringGlyphs = true;
+            if(scoring){
                 Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING);
+            } else if(Robot.getLift().getPosition()>10){
+                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
+            } else {
+                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING);
             }
+
+            // Relic
+            float relicThrottle = -Seth.right_stick_y;
+            relicThrottle = Range.clip(relicThrottle, -1, 1);
+            relicThrottle = (float)OverdriveLib.scaleInput(relicThrottle);
+            Robot.getRelic().setPower(relicThrottle);
+
+
+            if(Seth.dpad_up){
+                angle -= 0.5;
+            } else if (Seth.dpad_down){
+                angle += 0.5;
+            } else if(Seth.dpad_right){
+                angle = 150;
+            } else if(Seth.dpad_left){
+                angle = 100;
+            }
+            Robot.getRelic().setWristAngle(angle*10);
+
+            if (Seth.right_bumper){
+                Robot.getRelic().close();
+            } else if (Seth.left_bumper){
+                Robot.getRelic().open();
+            }
+
 
             SetStatus("Running OpMode");
             updateTelemetry();
 
         }
-
 
         finalAction();
     }

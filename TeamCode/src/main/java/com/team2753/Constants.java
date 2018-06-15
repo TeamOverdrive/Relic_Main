@@ -37,7 +37,7 @@ public class Constants {
         defaultFollowerConfig = new FollowerConfig(Constants.p.getDouble(), Constants.d.getDouble(),
                 Constants.v.getDouble(), Constants.a.getDouble(), Constants.headingP.getDouble());
 
-        // Found by using "FindPDVA" class
+        // Found by using "FindVA" class
         defaultTrajectoryConfig.max_vel = 23.832; // In/s
         defaultTrajectoryConfig.max_acc = 100; // In/s^2
         defaultTrajectoryConfig.max_jerk = 100; // In/s^3

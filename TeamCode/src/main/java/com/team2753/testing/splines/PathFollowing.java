@@ -1,4 +1,4 @@
-package com.team2753.testing;
+package com.team2753.testing.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team254.lib_2014.trajectory.Path;

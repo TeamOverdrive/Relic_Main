@@ -3,7 +3,9 @@ package com.team2753.testing.subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import com.team2753.subsystems.Jewel;
 import com.team2753.subsystems.Relic;
+import com.team2753.subsystems.Slammer;
 
 /**
  * Created by joshua9889 on 3/15/2018.
@@ -22,11 +24,24 @@ public class TestRelicServo extends LinearOpMode{
 //        wristServo.setPosition(180*oneDegree);
 //        sleep(3000);
         Relic mRelic = new Relic();
+        Slammer mSlammer = new Slammer();
+        Jewel mJewel = new Jewel();
+
+        mJewel.init(this, true);
+        mSlammer.init(this, true);
+
         mRelic.init(this, false);
+        mRelic.setWristPostion(0);
         waitForStart();
-        mRelic.setWristPostion(34);// Deploy To Intake
-        sleep(3000);
-        mRelic.setWristPostion(50);//
-        sleep(3000);
+        while (opModeIsActive()){
+
+            if(gamepad1.left_stick_y*90>=0){
+                mRelic.setWristAngle(gamepad1.left_stick_y*90);
+                telemetry.addData("Position", gamepad1.left_stick_y*90);
+                telemetry.update();
+            }
+
+            Thread.yield();
+        }
     }
 }

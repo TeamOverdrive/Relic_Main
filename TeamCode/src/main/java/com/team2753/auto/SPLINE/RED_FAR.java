@@ -4,13 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.splines.FollowPath;
 import com.team2753.splines.FollowerDrive;
-import com.team2753.splines.PathStorage;
 import com.team2753.splines.field.OverdriveField;
 import com.team2753.subsystems.Slammer;
 
-import static com.team2753.splines.PathStorage.pathFromFarRedRightToGlyphPit;
-import static com.team2753.splines.PathStorage.pathFromGlyphPitToCenterRedFar;
-import static com.team2753.splines.PathStorage.pathToRightColumnRedFar;
+import static com.team2753.auto.SPLINE.PathStorage.pathFromFarRedRightToGlyphPit;
+import static com.team2753.auto.SPLINE.PathStorage.pathFromGlyphPitToCenterRedFar;
+import static com.team2753.auto.SPLINE.PathStorage.pathToRightColumnRedFar;
 
 /**
  * Created by joshua9889 on 5/28/2018.

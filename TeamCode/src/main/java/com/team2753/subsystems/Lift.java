@@ -24,6 +24,7 @@ public class Lift implements Subsystem {
 
         liftMotor.setDirection(REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        zeroSensors();
 
         RobotLog.v("============= Lift Init Finished =============");
     }
@@ -31,7 +32,9 @@ public class Lift implements Subsystem {
     @Override
     public void zeroSensors() {
         stop();
-        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        while(getPosition()!=0)
+            setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override

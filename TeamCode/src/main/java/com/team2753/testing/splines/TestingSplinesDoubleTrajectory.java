@@ -1,4 +1,4 @@
-package com.team2753.splines;
+package com.team2753.testing.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -9,6 +9,7 @@ import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team2753.Constants;
 import com.team2753.libs.PhoneLogger;
+import com.team2753.splines.TrajectoryDriveController;
 import com.team2753.subsystems.Drive;
 import com.team2753.trajectory.FollowerConfig;
 import com.team2753.trajectory.Line;

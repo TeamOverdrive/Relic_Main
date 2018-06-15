@@ -2,7 +2,6 @@ package com.team2753.auto.SPLINE;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.team2753.splines.PathStorage;
 import com.team2753.splines.field.JoshuaField;
 
 /**

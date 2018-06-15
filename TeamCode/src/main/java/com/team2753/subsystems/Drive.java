@@ -175,7 +175,12 @@ public class Drive implements Subsystem {
      * @return Angle in Degrees, based on unit circle
      */
     public double getGyroAngleDegrees(){
-        return -(gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
+        try {
+            return -(gyroLeft.getIntegratedZValue()+gyroRight.getIntegratedZValue())/2;
+        } catch (Exception e){
+            return 0;
+        }
+
     }
 
     public double getGyroAngleRadians(){

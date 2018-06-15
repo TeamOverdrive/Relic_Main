@@ -1,4 +1,4 @@
-package com.team2753.splines;
+package com.team2753.testing.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team2753.Constants;
+import com.team2753.splines.TrajectoryDriveController;
 import com.team2753.subsystems.Drive;
 
 import static com.team2753.Constants.defaultTrajectoryConfig;

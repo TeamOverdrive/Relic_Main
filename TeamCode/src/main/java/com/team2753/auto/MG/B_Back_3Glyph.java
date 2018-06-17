@@ -1,6 +1,7 @@
 package com.team2753.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team2753.Constants;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
@@ -12,6 +13,7 @@ import static java.lang.Math.PI;
  */
 
 @Autonomous(name = "Blue Back 3",group = "3 Glyph")
+@Disabled
 public class B_Back_3Glyph extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {

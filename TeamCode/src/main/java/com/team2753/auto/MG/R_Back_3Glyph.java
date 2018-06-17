@@ -1,6 +1,7 @@
 package com.team2753.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team2753.Constants;
 import com.team2753.auto.AutoModeBase;
@@ -15,6 +16,7 @@ import static java.lang.Math.PI;
  */
 
 @Autonomous(name = "Red Back 3", group = "3 Glyph")
+@Disabled
 public class R_Back_3Glyph extends AutoModeBase {
 
     @Override

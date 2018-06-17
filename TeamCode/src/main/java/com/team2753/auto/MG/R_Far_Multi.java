@@ -1,6 +1,7 @@
 package com.team2753.auto.MG;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
@@ -10,6 +11,7 @@ import com.team2753.auto.AutoParams;
  */
 
 @Autonomous(name = "Red Far 3",group = "3 Glyph")
+@Disabled
 public class R_Far_Multi extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {

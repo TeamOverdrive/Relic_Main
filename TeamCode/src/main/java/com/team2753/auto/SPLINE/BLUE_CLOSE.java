@@ -2,6 +2,7 @@ package com.team2753.auto.SPLINE;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team2753.auto.AutoModeBase;
+import com.team2753.auto.SPLINE.paths.BlueClose_Paths;
 import com.team2753.splines.FollowPath;
 import com.team2753.splines.field.JoshuaField;
 import com.team2753.subsystems.Slammer;
@@ -14,7 +15,7 @@ import com.team2753.subsystems.Slammer;
 public class BLUE_CLOSE extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
-        PathStorage.calculateBlueClose(new JoshuaField());
+        BlueClose_Paths.calculateBlueClose(new JoshuaField());
 
         Robot.init(this, true);
 
@@ -41,12 +42,12 @@ public class BLUE_CLOSE extends AutoModeBase {
         });
         intake.start();
 
-        PathStorage.pathFromBlueCloseToGlyphPit.goRight();
-        new FollowPath(this, Robot.getDrive(), PathStorage.pathFromBlueCloseToGlyphPit, -1, -1);
+        BlueClose_Paths.pathFromBlueCloseToGlyphPit.goRight();
+        new FollowPath(this, Robot.getDrive(), BlueClose_Paths.pathFromBlueCloseToGlyphPit, -1, -1);
         while(!Robot.getDrive().turnToAngle(-90) && !isStopRequested()) Thread.yield();
 
         new FollowPath(this, Robot.getDrive(),
-                PathStorage.pathFromBlueCloseGlyphPitToLeftColumn, 1, 1);
+                BlueClose_Paths.pathFromBlueCloseGlyphPitToLeftColumn, 1, 1);
 
         while (!Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING) && !isStopRequested())
             Thread.yield();

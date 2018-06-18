@@ -7,14 +7,22 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.Trajectory;
 import com.team254.lib_2014.trajectory.TrajectoryFollower;
+import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team254.lib_2014.util.ChezyMath;
+import com.team2753.Constants;
+import com.team2753.splines.FollowPath;
+import com.team2753.trajectory.FollowerConfig;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.opencv.core.Mat;
 
 import static com.team2753.Constants.COUNTS_PER_INCH;
 import static com.team2753.Constants.WHEEL_BASE;
+import static com.team2753.Constants.aggressiveTrajectoryConfig;
+import static com.team2753.Constants.defaultTrajectoryConfig;
 import static java.lang.Math.PI;
 
 /**
@@ -186,61 +194,6 @@ public class Drive implements Subsystem {
     public double getGyroAngleRadians(){
         return Math.toRadians(getGyroAngleDegrees());
     }
-
-    //This error should be fine? Are you using it?
-    TrajectoryFollower followerLeft = new TrajectoryFollower("left");
-    TrajectoryFollower followerRight = new TrajectoryFollower("right");
-    double direction;
-    double heading;
-    double kTurn = -3.0/80.0;
-
-    public boolean onTarget() {
-        return followerLeft.isFinishedTrajectory();
-    }
-
-    public void loadProfile(Trajectory leftProfile, Trajectory rightProfile,
-                            double direction, double heading) {
-        reset();
-        followerLeft.setTrajectory(leftProfile);
-        followerRight.setTrajectory(rightProfile);
-        this.direction = direction;
-        this.heading = heading;
-    }
-
-    public void loadProfileNoReset(Trajectory leftProfile, Trajectory rightProfile) {
-        followerLeft.setTrajectory(leftProfile);
-        followerRight.setTrajectory(rightProfile);
-    }
-
-    public void reset() {
-        setLeftRightPower(0,0);
-        followerLeft.reset();
-        followerRight.reset();
-        zeroSensors();
-    }
-
-    public void update() {
-        if (onTarget()) {
-            setLeftRightPower(0.0, 0.0);
-        } else  {
-            double distanceL = direction * getLeftCurrentPosition();
-            double distanceR = direction * getRightCurrentPosition();
-
-            double speedLeft = direction * followerLeft.calculate(distanceL);
-            double speedRight = direction * followerRight.calculate(distanceR);
-
-            double goalHeading = followerLeft.getHeading();
-            double observedHeading = this.getGyroAngleRadians();
-
-            double angleDiffRads = ChezyMath.
-                    getDifferenceInAngleRadians(observedHeading, goalHeading);
-            double angleDiff = Math.toDegrees(angleDiffRads);
-
-            double turn = kTurn * angleDiff;
-            setLeftRightPower(speedLeft + turn, speedRight - turn);
-        }
-    }
-
 
 
     /**
@@ -721,6 +674,80 @@ public class Drive implements Subsystem {
             counter = 0;
             return false;
         }
+    }
+
+    private TrajectoryGenerator.Strategy strategy = TrajectoryGenerator.TrapezoidalStrategy;
+    public void driveTrajectory(double leftDistance, double rightDistance){
+        int lastLeft = getLeftCurrentPosition();
+        int lastRight = getRightCurrentPosition();
+
+        Trajectory left;
+        Trajectory right;
+
+        left = TrajectoryGenerator.generate(aggressiveTrajectoryConfig, strategy,
+                0, 0, Math.abs(leftDistance), 0, 0);
+
+        right = TrajectoryGenerator.generate(aggressiveTrajectoryConfig, strategy,
+                0, 0, Math.abs(rightDistance), 0, 0);
+
+        if(leftDistance<0){
+            left.scale(-1);
+        }
+
+        if(rightDistance<0){
+            right.scale(-1);
+        }
+
+        new FollowPath(linearOpMode, this, new Path("", new Trajectory.Pair(left, right)), 1, 1);
+        setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.setLeftRightTarget((int)((leftDistance * COUNTS_PER_INCH) + lastLeft), (int)((rightDistance * COUNTS_PER_INCH) + lastRight));
+        setLeftRightPower(0.2, 0.2);
+
+        while (linearOpMode.opModeIsActive() && (leftMotor.isBusy() || rightMotor.isBusy()))
+            Thread.yield();
+
+        setLeftRightPower(0,0);
+        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void turnTrajectory(double degrees){
+        double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
+        double rightDistance = (WHEEL_BASE*PI*degrees)/360;
+
+        driveTrajectory(leftDistance, rightDistance);
+    }
+
+    public void driveAction(double distance, double heading){
+        double curHeading = this.getGyroAngleDegrees();
+        double deltaHeading = heading - curHeading;
+        double radius = Math.abs(Math.abs(distance) / (deltaHeading * Math.PI / 180.0));
+
+        TrajectoryGenerator.Strategy strategy = TrajectoryGenerator.SCurvesStrategy;
+        Trajectory reference = TrajectoryGenerator.generate(
+                defaultTrajectoryConfig,
+                strategy,
+                0.0, // start velocity
+                curHeading,
+                Math.abs(distance),
+                0.0, // goal velocity
+                heading);
+
+        Trajectory leftProfile = reference;
+        Trajectory rightProfile = reference.copy(); // Copy
+
+        double faster = (radius + (WHEEL_BASE/ 2.0)) / radius;
+        double slower = (radius - (WHEEL_BASE / 2.0)) / radius;
+        System.out.println("faster " + faster);
+
+        if (deltaHeading > 0) {
+            leftProfile.scale(faster);
+            rightProfile.scale(slower);
+        } else {
+            leftProfile.scale(slower);
+            rightProfile.scale(faster);
+        }
+
+        new FollowPath(linearOpMode, this, new Path("", new Trajectory.Pair(leftProfile, rightProfile)), (distance > 0.0 ? 1.0 : -1.0), heading);
     }
 
     @Override

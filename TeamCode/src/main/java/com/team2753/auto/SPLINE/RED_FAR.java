@@ -1,6 +1,7 @@
 package com.team2753.auto.SPLINE;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team2753.Constants;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.SPLINE.paths.RedFar_Paths;
@@ -20,6 +21,7 @@ import static java.lang.Math.PI;
  */
 
 @Autonomous
+@Disabled
 public class RED_FAR extends AutoModeBase {
 
     private Thread intakeThread = new Thread(new Runnable() {

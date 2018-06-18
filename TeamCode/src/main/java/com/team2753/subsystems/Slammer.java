@@ -35,10 +35,14 @@ public class Slammer implements Subsystem{
     private static final double ARMUP = 0.35;
     private static final double ARMDOWN = 0.95;
 
+    private LinearOpMode ref = null;
+
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
+        this.ref = linearOpMode;
+
         left_slammer = linearOpMode.hardwareMap.get(Servo.class, "left_slammer");
         right_slammer = linearOpMode.hardwareMap.get(Servo.class, "right_slammer");
         right_slammer.setDirection(Servo.Direction.REVERSE);
@@ -152,13 +156,9 @@ public class Slammer implements Subsystem{
     }
 
     public void autoSlam(){
-        while (setSlammerState(SCORING))
-            Thread.yield();
-
-        waitForTick(300);
-
-        while (setSlammerState(INTAKING))
-            Thread.yield();
+        while (ref.opModeIsActive() && !setSlammerState(SCORING)) Thread.yield();
+        waitForTick(400);
+        while (ref.opModeIsActive() && !setSlammerState(INTAKING)) Thread.yield();
     }
 
     private void waitForTick(long periodMs) {

@@ -1,6 +1,7 @@
 package com.team2753.auto.SPLINE;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.SPLINE.paths.BlueClose_Paths;
 import com.team2753.splines.FollowPath;
@@ -12,6 +13,7 @@ import com.team2753.subsystems.Slammer;
  */
 
 @Autonomous
+@Disabled
 public class BLUE_CLOSE extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {

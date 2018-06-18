@@ -98,9 +98,6 @@ public class B_Far_Multi extends AutoModeBase {
                     Robot.getDrive().encoderDrive(0.3, 3, 3, 2);
                     Robot.getDrive().encoderDrive(0.3, -4, -4, 2);
                 }
-//                Robot.getSlammer().setPower(-1);
-//                sleep(100);
-//                Robot.getSlammer().stop();
                 break;
             case CENTER:
                 Robot.getDrive().encoderDrive(0.6, -24, -24, 5);
@@ -115,8 +112,6 @@ public class B_Far_Multi extends AutoModeBase {
 
                 Robot.getIntake().releaseIntake();
                 Robot.getDrive().encoderDrive(0.5, -10, -10, 2);
-//                Robot.getRelic().setAngles(0,0);
-//                Robot.getRelic().setWristPostion(50);
                 sleep(400);
 
                 Robot.getSlammer().stopperDown();

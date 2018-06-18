@@ -2,8 +2,12 @@ package com.team2753.auto.SPLINE.paths;
 
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.PathGenerator;
+import com.team254.lib_2014.trajectory.Trajectory;
+import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team254.lib_2014.trajectory.WaypointSequence;
+import com.team2753.Constants;
 import com.team2753.splines.field.FieldConfig;
+import com.team2753.trajectory.Arc;
 
 import static com.team2753.Constants.WHEEL_BASE;
 import static com.team2753.Constants.aggressiveTrajectoryConfig;
@@ -24,7 +28,7 @@ public class RedFar_Paths {
 
     public static void calculateRedFar(final FieldConfig field){
         if(bsToRight ==null) {
-            WaypointSequence waypointSequence = new WaypointSequence(10);
+            WaypointSequence waypointSequence = new WaypointSequence(5);
 
             /** Right **/
             // Path from Red Far Stone to Right Column
@@ -54,24 +58,26 @@ public class RedFar_Paths {
 
             /** Center **/
             // Path from Red Fat Stone to Center Column
-            waypointSequence = new WaypointSequence(10);
+            waypointSequence = new WaypointSequence(5);
             waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
             waypointSequence.addWaypoint(
                     new WaypointSequence.Waypoint(
                             field.getFarRedCryptoboxToFarStone() - 18,
-                            21 - field.getFarRedCenterToWall(),
-                            Math.toRadians(0)));
-            bsToCenter = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+                            29 - field.getFarRedCenterToWall(),
+                            -15));
+
+            bsToCenter = Arc.calculateAngleRadius(defaultTrajectoryConfig, TrajectoryGenerator.SCurvesStrategy,
+                    0, 0, 10, 0, 15);
+
+//            bsToCenter = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
 
 
-            /** Left **/
-            waypointSequence = new WaypointSequence(10);
+            /** Left To Glyph Pit**/
+            waypointSequence = new WaypointSequence(5);
             waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0,0,0));
-            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(
-                    field.getFarRedCryptoboxToFarStone() - 18,
-                    14-field.getFarRedCenterToWall(),
-                    Math.toRadians(15)));
-            bsToLeft = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(33, -10, 0));
+            leftToGP = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+            leftToGP.goLeft();
         }
     }
 }

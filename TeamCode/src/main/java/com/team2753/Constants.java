@@ -29,7 +29,7 @@ public class Constants {
     public static PhoneFileReader.Constant d = new PhoneFileReader.Constant("d", 0);
     public static PhoneFileReader.Constant v = new PhoneFileReader.Constant("v", 0.0175);
     public static PhoneFileReader.Constant a = new PhoneFileReader.Constant("a", 0.0000002803);
-    public static PhoneFileReader.Constant headingP = new PhoneFileReader.Constant("h", 0);
+    public static PhoneFileReader.Constant headingP = new PhoneFileReader.Constant("h", 0.03);
 
     static{
         PhoneFileReader.readConstantsFromFile();
@@ -47,8 +47,5 @@ public class Constants {
         aggressiveTrajectoryConfig.max_acc = 1000;
         aggressiveTrajectoryConfig.max_jerk = 1000;
         aggressiveTrajectoryConfig.dt = defaultTrajectoryConfig.dt;
-
-
-
     }
 }

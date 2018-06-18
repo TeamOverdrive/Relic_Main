@@ -16,37 +16,11 @@ public class Test {
 
         WaypointSequence waypointSequence = new WaypointSequence(5);
 
-        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-        waypointSequence.addWaypoint(
-                new WaypointSequence.Waypoint(
-                        48.5 - 20,
-                        28 - 36,
-                        Math.toRadians(15)));
-            Path bsToRight =
-                    PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, 12.625, "");
-
-        /** Center **/
-        // Path from Red Fat Stone to Center Column
-        waypointSequence = new WaypointSequence(5);
-        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-        waypointSequence.addWaypoint(
-                new WaypointSequence.Waypoint(
-                        48.5 - 18,
-                        21 - 36,
-                        Math.toRadians(0)));
-         Path bsToCenter =
-                 PathGenerator.makePath(
-                         waypointSequence, defaultTrajectoryConfig, 12.625, "");
-
-        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0,0,0));
-        waypointSequence.addWaypoint(new WaypointSequence.Waypoint(
-                48.5 - 21,
-                13-36.0,
-                Math.toRadians(0)));
-        Path path = PathGenerator.makePath(
-                waypointSequence,defaultTrajectoryConfig, 16.625, "");
+        Path path = Arc.calculate(defaultTrajectoryConfig, TrajectoryGenerator.SCurvesStrategy,
+                0, 0, 10, 0, 15);
 //        System.out.println(path.getLeftWheelTrajectory().toString());
-        System.out.println(path.getLeftWheelTrajectory());
+        System.out.println(path.getLeftWheelTrajectory().toStringEuclidean());
+        System.out.println(path.getRightWheelTrajectory().toStringEuclidean());
 
     }
 }

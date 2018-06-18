@@ -121,7 +121,7 @@ public class Intake implements Subsystem{
         leftIntake.setPower(0.8);
     }
 
-    public void releaseLock(){intakeRelease.setPosition(0.16);}
+    public void releaseLock(){intakeRelease.setPosition(0.19);}
 
     public void releaseIntake(){intakeRelease.setPosition(0.35);}
 

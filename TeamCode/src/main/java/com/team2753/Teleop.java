@@ -111,7 +111,7 @@ public class Teleop extends Team2753Linear {
                 offset = Robot.getLift().getPosition()+20;
 
             // Relic
-            float relicThrottle = -Seth.right_stick_y;
+            float relicThrottle = Seth.right_stick_y;
             relicThrottle = Range.clip(relicThrottle, -1, 1);
             relicThrottle = (float)OverdriveLib.scaleInput(relicThrottle);
             Robot.getRelic().setPower(relicThrottle);
@@ -122,9 +122,9 @@ public class Teleop extends Team2753Linear {
             } else if (Seth.dpad_down){
                 angle += 0.5;
             } else if(Seth.dpad_right){
-                angle = 150;
+                angle = 148;
             } else if(Seth.dpad_left){
-                angle = 100;
+                angle = 80;
             }
             Robot.getRelic().setWristAngle(angle*10);
 

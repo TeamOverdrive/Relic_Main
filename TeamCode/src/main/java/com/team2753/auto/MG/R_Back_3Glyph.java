@@ -15,8 +15,7 @@ import static java.lang.Math.PI;
  * Created by joshua9889 on 3/15/2018.
  */
 
-@Autonomous(name = "Red Back 3", group = "3 Glyph")
-@Disabled
+@Autonomous(name = "Red Back", group = "3 Glyph")
 public class R_Back_3Glyph extends AutoModeBase {
 
     @Override

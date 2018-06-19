@@ -1,6 +1,7 @@
 package com.team2753.auto.SPLINE;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.team2753.splines.field.JoshuaField;
 
@@ -9,6 +10,7 @@ import com.team2753.splines.field.JoshuaField;
  */
 
 @Autonomous
+@Disabled
 public class CalculateSplines extends LinearOpMode {
     @Override
     public void runOpMode(){

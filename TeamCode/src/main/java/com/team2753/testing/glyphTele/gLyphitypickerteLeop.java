@@ -1,5 +1,6 @@
 package com.team2753.testing.glyphTele;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team2753.Team2753Linear;
 
@@ -9,7 +10,7 @@ import com.team2753.Team2753Linear;
  */
 
 @TeleOp(name = "Glyph Picker")
-
+@Disabled
 public class gLyphitypickerteLeop extends Team2753Linear {
 
     /*

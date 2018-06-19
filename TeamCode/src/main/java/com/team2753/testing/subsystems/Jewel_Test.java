@@ -1,6 +1,7 @@
 package com.team2753.testing.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team2753.auto.AutoModeBase;
 
 
@@ -9,7 +10,7 @@ import com.team2753.auto.AutoModeBase;
  */
 
 @Autonomous(name = "Jewel Test",group = "Jewel")
-//@Disabled
+@Disabled
 public class Jewel_Test extends AutoModeBase {
 
     private Jewel_Color alliance_color = Jewel_Color.Red;

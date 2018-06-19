@@ -39,22 +39,6 @@ public class RedFar_Paths {
                             29 - field.getFarRedCenterToWall(),
                             Math.toRadians(15)));
             bsToRight = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
-//
-//            // Path from Right Column to Glyph Pit
-//            waypointSequence = new WaypointSequence(5);
-//            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-//            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(12, -3, 0));
-//            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(25, 0, Math.toRadians(-10)));
-//            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(35, -2, Math.toRadians(-10)));
-//            rightToGP =
-//                    PathGenerator.makePath(waypointSequence, aggressiveTrajectoryConfig, WHEEL_BASE, "");
-//
-//            // Path  from Glyph Pit to Center Column
-//            waypointSequence = new WaypointSequence(5);
-//            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-//            waypointSequence.addWaypoint(new WaypointSequence.Waypoint(25, -20, Math.toRadians(0)));
-//            gpToRight =
-//                    PathGenerator.makePath(waypointSequence, aggressiveTrajectoryConfig, WHEEL_BASE, "");
 
             /** Center **/
             // Path from Red Fat Stone to Center Column
@@ -65,11 +49,7 @@ public class RedFar_Paths {
                             field.getFarRedCryptoboxToFarStone() - 18,
                             29 - field.getFarRedCenterToWall(),
                             -15));
-
-            bsToCenter = Arc.calculateAngleRadius(defaultTrajectoryConfig, TrajectoryGenerator.SCurvesStrategy,
-                    0, 0, 10, 0, 15);
-
-//            bsToCenter = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
+            bsToCenter = PathGenerator.makePath(waypointSequence, defaultTrajectoryConfig, WHEEL_BASE, "");
 
 
             /** Left To Glyph Pit**/

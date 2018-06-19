@@ -1,6 +1,7 @@
 package com.team2753.testing.splines;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.PathGenerator;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
@@ -12,6 +13,8 @@ import com.team2753.auto.AutoModeBase;
  */
 
 @Autonomous
+@Disabled
+@Deprecated
 public class PathFollowing extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,13 +38,12 @@ public class PathFollowing extends AutoModeBase {
 
         Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
 
-        Robot.getDrive().loadProfile(path.getLeftWheelTrajectory(),
-                path.getRightWheelTrajectory(), 0, 0);
-
-        while (opModeIsActive() && !Robot.getDrive().onTarget()){
-
-            Robot.getDrive().update();
-        }
+//        Robot.getDrive().loadProfile(path.getLeftWheelTrajectory(),
+//                path.getRightWheelTrajectory(), 0, 0);
+//
+//        while (opModeIsActive() && !Robot.getDrive().onTarget()){
+//            Robot.getDrive().update(1, 1);
+//        }
         Robot.getDrive().setLeftRightPower(0,0);
     }
 }

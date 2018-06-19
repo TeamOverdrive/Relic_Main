@@ -92,7 +92,7 @@ public class Slammer implements Subsystem{
                     break;
                 case HOLDING:
                     if(setStopperState(STOPPER_State.OPEN)) {
-                        setSlammerPosition(0.37);
+                        setSlammerPosition(190);
                         currentSlammerState = state;
                     }
                     break;
@@ -104,7 +104,7 @@ public class Slammer implements Subsystem{
                     break;
                 case SLIDING:
                     if (setStopperState(STOPPER_State.OPEN)) {
-                        setSlammerPosition(0.3);
+                        setSlammerPosition(110);
                         currentSlammerState = state;
                     }
                     break;
@@ -134,9 +134,11 @@ public class Slammer implements Subsystem{
         }
     }
 
-    public void setSlammerPosition(double position){
-        left_slammer.setPosition(Math.min(Math.max(0, position), 1));
-        right_slammer.setPosition(Math.min(Math.max(0, position), 1));
+    public void setSlammerPosition(double angle){
+        double leftPosition = ((angle+11)/360.0);
+        double rightPosition = ((angle+0)/360.0);
+        left_slammer.setPosition(Math.min(Math.max(0, leftPosition), 1));
+        right_slammer.setPosition(Math.min(Math.max(0, rightPosition), 1));
     }
 
     public void stopperDown(){
@@ -148,11 +150,11 @@ public class Slammer implements Subsystem{
     }
 
     public void score(){
-        setSlammerPosition(0.0);
+        setSlammerPosition(90);
     }
 
     public void retract(){
-        setSlammerPosition(0.51);
+        setSlammerPosition(235);
     }
 
     public void autoSlam(){

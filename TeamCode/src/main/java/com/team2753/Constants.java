@@ -43,9 +43,8 @@ public class Constants {
         defaultTrajectoryConfig.max_jerk = 100; // In/s^3
         defaultTrajectoryConfig.dt = 0.01; // seconds, change of time in each update
 
-        aggressiveTrajectoryConfig.max_vel = defaultTrajectoryConfig.max_vel;
-        aggressiveTrajectoryConfig.max_acc = 1000;
-        aggressiveTrajectoryConfig.max_jerk = 1000;
-        aggressiveTrajectoryConfig.dt = defaultTrajectoryConfig.dt;
+        aggressiveTrajectoryConfig = defaultTrajectoryConfig;
+        aggressiveTrajectoryConfig.max_acc = 2000;
+        aggressiveTrajectoryConfig.max_jerk = 2000;
     }
 }

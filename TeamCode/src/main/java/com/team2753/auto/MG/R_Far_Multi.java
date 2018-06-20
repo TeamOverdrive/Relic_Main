@@ -73,7 +73,6 @@ public class R_Far_Multi extends AutoModeBase {
                 while(opModeIsActive() && !Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING)) idle();
                 Robot.getDrive().encoderDrive(0.3, -4, -4, 3);
                 break;
-
             case CENTER:
                 // Drive off
                 Robot.getDrive().encoderDrive(0.6, 31, 31, 3);
@@ -111,7 +110,6 @@ public class R_Far_Multi extends AutoModeBase {
                 Robot.getDrive().encoderDrive(0.4, 6, 6, 3);
                 Robot.getDrive().encoderDrive(0.3, -5, -5 , 3);
 
-                while (!Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING) && opModeIsActive()) idle();
                 break;
             case RIGHT:
                 // Drive off
@@ -136,10 +134,10 @@ public class R_Far_Multi extends AutoModeBase {
 
                 Robot.getDrive().encoderDrive(0.3, -6, -6, 3);
 
-                while (opModeIsActive() && !Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING)) idle();
-
                 break;
         }
+
+        while (!Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING) && opModeIsActive()) idle();
 
         intakeThread.interrupt();
     }

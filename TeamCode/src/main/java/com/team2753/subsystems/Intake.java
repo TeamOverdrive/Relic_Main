@@ -52,7 +52,7 @@ public class Intake implements Subsystem{
         intakeDistanceRight = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "right_range");
         intakeDistanceRight.setI2cAddress(I2cAddr.create8bit(0x30));
 
-        releaseLock();
+        holdIntake();
 
         if(!auto)
             releaseIntake();
@@ -121,9 +121,13 @@ public class Intake implements Subsystem{
         leftIntake.setPower(0.8);
     }
 
-    public void releaseLock(){intakeRelease.setPosition(0.19);}
+    public void holdIntake(){
+        intakeRelease.setPosition(0.257);
+    }
 
-    public void releaseIntake(){intakeRelease.setPosition(0.35);}
+    public void releaseIntake(){
+        intakeRelease.setPosition(0.5);
+    }
 
     public boolean backDetected(){
         return cdi.getAnalogInputVoltage(1) > 0.02;

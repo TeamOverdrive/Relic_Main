@@ -617,7 +617,7 @@ public class FtcRobotControllerActivity extends Activity
     shutdownRobot();
     requestRobotSetup();
     //
-    AppUtil.getInstance().showToast(UILocation.BOTH, AppUtil.getDefContext().getString(R.string.toastRestartRobotComplete));
+    AppUtil.getInstance().showToast(UILocation.BOTH, "Ready To Rumble");//AppUtil.getDefContext().getString(R.string.toastRestartRobotComplete));
   }
 
   protected void hittingMenuButtonBrightensScreen() {

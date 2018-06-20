@@ -12,6 +12,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 public abstract class AutoModeBase extends Team2753Linear {
 
+    protected ElapsedTime t = new ElapsedTime();
+
+    public void waitForStart(String OpModeName){
+        super.waitForStart(OpModeName, true);
+
+        Robot.getDrive().zeroSensors();
+        
+        t.reset();
+    }
+
     protected Thread intakeThread = new Thread(new Runnable() {
         @Override
         public void run() {

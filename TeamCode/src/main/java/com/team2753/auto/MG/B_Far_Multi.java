@@ -21,12 +21,8 @@ public class B_Far_Multi extends AutoModeBase {
     Thread th;
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("BFar", AutoParams.AUTO);
-
-        Robot.getDrive().zeroSensors();
-
-        ElapsedTime t = new ElapsedTime();
-
+        waitForStart("BFar");
+        
         SuperHitJewel(this.jewel_Color, Jewel_Color.Blue);
 
         switch (RelicRecoveryVuMark.RIGHT){

@@ -16,8 +16,7 @@ import static java.lang.Math.PI;
 public class B_Back_3Glyph extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("BBack", AutoParams.AUTO);
-        Robot.getDrive().zeroSensors();
+        waitForStart("BBack");
 
         DefaultHitJewel(this.jewel_Color, Jewel_Color.Blue);
 

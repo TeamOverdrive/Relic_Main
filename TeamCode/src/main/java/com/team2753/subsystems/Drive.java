@@ -9,15 +9,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.Trajectory;
-import com.team254.lib_2014.trajectory.TrajectoryFollower;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
-import com.team254.lib_2014.util.ChezyMath;
-import com.team2753.Constants;
 import com.team2753.splines.FollowPath;
-import com.team2753.trajectory.FollowerConfig;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.opencv.core.Mat;
 
 import static com.team2753.Constants.COUNTS_PER_INCH;
 import static com.team2753.Constants.WHEEL_BASE;
@@ -677,7 +672,7 @@ public class Drive implements Subsystem {
     }
 
     private TrajectoryGenerator.Strategy strategy = TrajectoryGenerator.TrapezoidalStrategy;
-    public void driveTrajectory(double leftDistance, double rightDistance){
+    public void driveTrajectory(double leftDistance, double rightDistance, long timeout){
         int lastLeft = getLeftCurrentPosition();
         int lastRight = getRightCurrentPosition();
 
@@ -710,11 +705,11 @@ public class Drive implements Subsystem {
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void turnTrajectory(double degrees){
+    public void turnTrajectory(double degrees, long timeOut){
         double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
         double rightDistance = (WHEEL_BASE*PI*degrees)/360;
 
-        driveTrajectory(leftDistance, rightDistance);
+        driveTrajectory(leftDistance, rightDistance, timeOut);
     }
 
     public void driveAction(double distance, double heading){
@@ -748,6 +743,19 @@ public class Drive implements Subsystem {
         }
 
         new FollowPath(linearOpMode, this, new Path("", new Trajectory.Pair(leftProfile, rightProfile)), (distance > 0.0 ? 1.0 : -1.0), heading);
+    }
+
+    public void setLeftRightForTime(double left, double right, long time){
+        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        setLeftRightPower(left, right);
+
+        ElapsedTime currentTime = new ElapsedTime();
+
+        while ((long)(currentTime.milliseconds()) < time && linearOpMode.opModeIsActive() && !linearOpMode.isStopRequested())
+            Thread.yield();
+
+        setLeftRightPower(0,0);
     }
 
     @Override

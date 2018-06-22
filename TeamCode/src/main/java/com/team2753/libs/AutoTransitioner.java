@@ -36,7 +36,7 @@ public class AutoTransitioner extends Thread {
                     //If there is a transition set up and the active op mode is no longer the one
                     //the transition was set up with, proceed with the transition
                     if (onStop != null && opModeManager.getActiveOpMode() != onStop) {
-                        Thread.sleep(1000); //Wait 1 second to prevent weird conditions
+                        Thread.sleep(2000); //Wait 1 second to prevent weird conditions
                         opModeManager.initActiveOpMode(transitionTo); //Request initialization of the teleop
                         reset(); //Reset the AutoTransitioner
                     }

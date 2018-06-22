@@ -1,5 +1,6 @@
 package com.team2753.auto;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team2753.Team2753Linear;
 import com.team2753.subsystems.Slammer;
 
@@ -27,15 +28,18 @@ public abstract class AutoModeBase extends Team2753Linear {
         public void run() {
             sleep(400);
             while(!Thread.interrupted() && opModeIsActive()){
-                Robot.getIntake().setPower(0.8);
+                if(opModeIsActive())
+                    Robot.getIntake().setPower(0.8);
                 sleep(1000);
-                Robot.getIntake().reverse();
+                if (opModeIsActive()) {
+                    Robot.getIntake().reverse();
+                }
                 sleep(200);
                 Thread.yield();
             }
 
             if(opModeIsActive())
-                Robot.getIntake().setPower(-0.1);
+                Robot.getIntake().setPower(-0.2);
         }
     });
 
@@ -47,9 +51,11 @@ public abstract class AutoModeBase extends Team2753Linear {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    sleep(500);
-                    Robot.getSlammer().setStopperState(Slammer.STOPPER_State.CLOSED);
-                    intakeThread.start();
+                    sleep(1000);
+                    if (opModeIsActive() && !isStopRequested()) {
+                        Robot.getSlammer().setStopperState(Slammer.STOPPER_State.CLOSED);
+                        intakeThread.start();
+                    }
                 }
             }).start();
         }
@@ -67,6 +73,8 @@ public abstract class AutoModeBase extends Team2753Linear {
                         public void run() {
                             sleep(1000);
                             Robot.getJewel().retract(true);
+                            sleep(300);
+                            Robot.getJewel().right();
                         }
                     }).start();
                 } else {
@@ -82,7 +90,9 @@ public abstract class AutoModeBase extends Team2753Linear {
                         @Override
                         public void run() {
                             sleep(1000);
-                            Robot.getJewel().retract(true);
+                            Robot.getJewel().retract(false);
+                            sleep(300);
+                            Robot.getJewel().right();
                         }
                     }).start();
                 } else {
@@ -90,6 +100,8 @@ public abstract class AutoModeBase extends Team2753Linear {
                     Robot.getJewel().left();
                     sleep(200);
                     Robot.getJewel().retract(false);
+                    sleep(300);
+                    Robot.getJewel().right();
                 }
             }
 

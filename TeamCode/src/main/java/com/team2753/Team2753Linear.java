@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
+import com.team2753.libs.AutoTransitioner;
 import com.team2753.libs.subsystems.VuMark;
 import com.team2753.subsystems.Robot;
 

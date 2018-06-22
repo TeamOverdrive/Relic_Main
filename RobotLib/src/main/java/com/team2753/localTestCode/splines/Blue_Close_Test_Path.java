@@ -22,12 +22,18 @@ public class Blue_Close_Test_Path {
         WaypointSequence blueClose = new WaypointSequence(5);
         blueClose.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
         blueClose.addWaypoint(new WaypointSequence.Waypoint(36-8, 0, 0));
-//        blueClose.addWaypoint(new WaypointSequence.Waypoint(36, -6, -89));
         blueClose.addWaypoint(new WaypointSequence.Waypoint(36, -6, -89));
-        Path blueFirstPath = PathGenerator.makePath(blueClose, defaultTrajectoryConfig, 12.625, "");
+        //Path blueFirstPath = PathGenerator.makePath(blueClose, defaultTrajectoryConfig, 12.625, "");
 
 
-        System.out.println(blueFirstPath.getLeftWheelTrajectory().toStringEuclidean());
-        System.out.println(blueFirstPath.getRightWheelTrajectory().toStringEuclidean());
+        double WHEEL_BASE = 12.625;
+        WaypointSequence RightColumnToGlyphPit = new WaypointSequence(5);
+        RightColumnToGlyphPit.addWaypoint(new WaypointSequence.Waypoint(0,0,0));
+        RightColumnToGlyphPit.addWaypoint(new WaypointSequence.Waypoint(13, -2, 0));
+        RightColumnToGlyphPit.addWaypoint(new WaypointSequence.Waypoint(39, 4, Math.toRadians(4)));
+        Path farRedRightToGlyphPit = PathGenerator.makePath(RightColumnToGlyphPit, defaultTrajectoryConfig, WHEEL_BASE, "");
+
+//        System.out.println(farRedRightToGlyphPit.getRightWheelTrajectory().toStringEuclidean());
+        System.out.println(farRedRightToGlyphPit.getLeftWheelTrajectory().toString());
     }
 }

@@ -2,6 +2,7 @@ package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -15,6 +16,7 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 public class Lift implements Subsystem {
 
     private DcMotor liftMotor = null;
+    private DeviceInterfaceModule cdi = null;
     private static final double brakepower = 0;
 
     @Override
@@ -24,6 +26,9 @@ public class Lift implements Subsystem {
 
         liftMotor.setDirection(REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        cdi = linearOpMode.hardwareMap.get(DeviceInterfaceModule.class, "Device Interface Module");
+
         zeroSensors();
 
         RobotLog.v("============= Lift Init Finished =============");
@@ -46,6 +51,7 @@ public class Lift implements Subsystem {
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Intake Power", liftMotor.getPower());
         telemetry.addData("Current Lift Position", liftMotor.getCurrentPosition());
+        telemetry.addData("Limit Triggered", cdi.getDigitalChannelState(0));
     }
 
     public void setRunMode(DcMotor.RunMode runMode){
@@ -64,7 +70,7 @@ public class Lift implements Subsystem {
     }
 
     public boolean shouldLiftStop(){
-        return getPosition()>400;
+        return cdi.getDigitalChannelState(0);
     }
 
     public int getPosition(){

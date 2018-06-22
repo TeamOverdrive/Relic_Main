@@ -1,11 +1,9 @@
-package com.team2753.auto.MG;
+package com.team2753.auto.MG.glutenAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-import com.team254.lib_2014.trajectory.Path;
-import com.team254.lib_2014.trajectory.PathGenerator;
-import com.team254.lib_2014.trajectory.WaypointSequence;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.AutoParams;
 import com.team2753.auto.HoldMyPaths;
@@ -14,28 +12,26 @@ import com.team2753.subsystems.Slammer;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
-import static com.team2753.Constants.WHEEL_BASE;
-import static com.team2753.Constants.defaultTrajectoryConfig;
-
 /**
  * Created by joshua9889 on 3/15/2018.
  */
 
-@Autonomous(name = "Red Far",group = "Red")
-public class R_Far_Multi extends AutoModeBase {
+@Autonomous(name = "Red Far Big Boy Defence",group = "Defence")
+@Disabled
+public class Defence_R_Far_Multi extends AutoModeBase {
 
     @Override
     public void runOpMode() throws InterruptedException {
         HoldMyPaths.calculateRedRightToGlyphPit();
 
-        waitForStart("RFar", AutoParams.AUTO);
+        waitForStart("RFar Defence", AutoParams.AUTO);
         Robot.getDrive().zeroSensors();
 
         ElapsedTime t = new ElapsedTime();
 
         SuperHitJewel(this.jewel_Color, Jewel_Color.Red);
 
-        switch (WhatColumnToScoreIn()){
+        switch (RelicRecoveryVuMark.LEFT){
             case LEFT:
                 // Drive off Stone
                 Robot.getDrive().encoderDrive(0.4, 30, 30, 3);
@@ -59,15 +55,21 @@ public class R_Far_Multi extends AutoModeBase {
 
                 Robot.getDrive().turnCW(28, 0.5, 2);
 
-                Robot.getDrive().driveTrajectory(-36, -36, 6 * 1000);
+                double distanceLeftChange = 20;
+                Robot.getDrive().driveTrajectory(-36-distanceLeftChange,
+                        -36-distanceLeftChange, 6 * 1000);
                 sleep(200);
 
                 Robot.getDrive().turnCW(6, 0.3, 2);
 
-                Robot.getDrive().driveTrajectory(48, 48, 5 * 1000);
+                Robot.getDrive().driveTrajectory(48+distanceLeftChange,
+                        48+distanceLeftChange, 5 * 1000);
 
-                while (opModeIsActive() && !Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING))idle();
-                while(opModeIsActive() && !Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING)) idle();
+                while (opModeIsActive() &&
+                        !Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING))idle();
+
+                while(opModeIsActive() &&
+                        !Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING)) idle();
 
                 sleep((long)Range.clip((28000-t.milliseconds()), 0, 30000));
                 Robot.getDrive().setLeftRightForTime(-0.5, -0.5, 400);

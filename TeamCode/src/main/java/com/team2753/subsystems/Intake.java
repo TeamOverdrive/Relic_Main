@@ -122,7 +122,7 @@ public class Intake implements Subsystem{
     }
 
     public void holdIntake(){
-        intakeRelease.setPosition(0.257);
+        intakeRelease.setPosition(0.0);
     }
 
     public void releaseIntake(){

@@ -1,6 +1,7 @@
-package com.team2753.auto.MG;
+package com.team2753.auto.MG.glutenAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.Range;
 import com.team2753.auto.AutoModeBase;
 import com.team2753.auto.HoldMyPaths;
@@ -14,12 +15,13 @@ import static java.lang.Math.PI;
  * Created by joshua9889 on 3/12/2018.
  */
 
-@Autonomous(name = "Blue Far",group = "Blue")
-public class B_Far_Multi extends AutoModeBase {
+@Autonomous(name = "Blue Far Big Boy Defence",group = "Defence")
+@Disabled
+public class Defence_B_Far_Multi extends AutoModeBase {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("BFar");
+        waitForStart("BFar Defence");
         
         SuperHitJewel(this.jewel_Color, Jewel_Color.Blue);
 

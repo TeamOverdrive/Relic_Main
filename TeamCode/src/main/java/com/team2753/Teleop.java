@@ -17,7 +17,7 @@ import static com.team2753.auto.AutoParams.TELEOP;
 @TeleOp(name = "Teleop")
 public class Teleop extends Team2753Linear {
     private double angle = 0;
-    private int offset = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -101,14 +101,11 @@ public class Teleop extends Team2753Linear {
 
             if(scoring){
                 Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING);
-            } else if(Robot.getLift().getPosition()>offset+10){
+            } else if(!Robot.getLift().shouldLiftStop()){
                 Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
             } else {
                 Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING);
             }
-
-            if(Robot.getLift().getPosition()<offset)
-                offset = Robot.getLift().getPosition()+20;
 
             // Relic
             float relicThrottle = Seth.right_stick_y;

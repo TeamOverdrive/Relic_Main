@@ -11,8 +11,8 @@ import com.team2753.Constants;
 import com.team2753.splines.TrajectoryDriveController;
 import com.team2753.subsystems.Drive;
 
-import static com.team2753.Constants.defaultTrajectoryConfig;
 import static com.team2753.Constants.defaultFollowerConfig;
+import static com.team2753.Constants.defaultTrajectoryConfig;
 
 /**
  * Created by joshua9889 on 5/26/2018.

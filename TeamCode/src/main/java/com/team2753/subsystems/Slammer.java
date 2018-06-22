@@ -154,7 +154,7 @@ public class Slammer implements Subsystem{
     }
 
     public void retract(){
-        setSlammerPosition(235);
+        setSlammerPosition(237);
     }
 
     public void autoSlam(){

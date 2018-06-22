@@ -1,4 +1,4 @@
-package com.team2753.auto.MG;
+package com.team2753.testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

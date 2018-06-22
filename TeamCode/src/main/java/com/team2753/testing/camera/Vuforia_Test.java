@@ -2,7 +2,6 @@ package com.team2753.testing.camera;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-
 import com.team2753.Team2753Linear;
 
 /**

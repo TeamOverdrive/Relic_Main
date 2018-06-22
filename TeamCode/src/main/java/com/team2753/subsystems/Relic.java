@@ -41,7 +41,7 @@ public class Relic implements Subsystem{
     }
 
     public void open(){
-        fingerServo.setPosition(1);
+        fingerServo.setPosition(0.9);
     }
 
     public void close(){

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
+import com.team2753.libs.AutoTransitioner;
 import com.team2753.libs.subsystems.VuMark;
 import com.team2753.subsystems.Robot;
 
@@ -63,9 +64,6 @@ public abstract class Team2753Linear extends LinearOpMode {
     //Init Methods
 
     public void waitForStart(String OpModeName, boolean auton) {
-
-//        CameraBlinker cameraBlinker = new CameraBlinker();
-//        cameraBlinker.on();
         Ryan = gamepad1;
         Seth = gamepad2;
 
@@ -77,12 +75,11 @@ public abstract class Team2753Linear extends LinearOpMode {
         Robot.init(this, auton);
 
         if (auton) {
-//            cameraBlinker.off();
             RobotLog.v("================ Start VuCam =============");
             vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
 
             RobotLog.v("================ AutoTransitioner =============");
-            //AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
+            AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
             RobotLog.v("================ VuCam Loop =============");
             while (!isStarted() && !isStopRequested()) {

@@ -2,15 +2,10 @@ package com.team2753.auto.SPLINE.paths;
 
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.PathGenerator;
-import com.team254.lib_2014.trajectory.Trajectory;
-import com.team254.lib_2014.trajectory.TrajectoryGenerator;
 import com.team254.lib_2014.trajectory.WaypointSequence;
-import com.team2753.Constants;
 import com.team2753.splines.field.FieldConfig;
-import com.team2753.trajectory.Arc;
 
 import static com.team2753.Constants.WHEEL_BASE;
-import static com.team2753.Constants.aggressiveTrajectoryConfig;
 import static com.team2753.Constants.defaultTrajectoryConfig;
 
 public class RedFar_Paths {

@@ -1,16 +1,22 @@
 package com.team2753.subsystems;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsUsbDcMotorController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.util.DifferentialControlLoopCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team254.lib_2014.trajectory.Path;
 import com.team254.lib_2014.trajectory.Trajectory;
+import com.team254.lib_2014.trajectory.TrajectoryFollower;
 import com.team254.lib_2014.trajectory.TrajectoryGenerator;
+import com.team2753.Constants;
+import com.team2753.Team2753Linear;
 import com.team2753.splines.FollowPath;
+import com.team2753.splines.FollowerDrive;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -63,6 +69,23 @@ public class Drive implements Subsystem {
         rightMotor  = linearOpMode.hardwareMap.dcMotor.get("right_drive");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
+
+        //Defining our variables
+        ModernRoboticsUsbDcMotorController leftControlloer;
+        DifferentialControlLoopCoefficients newPIDValues;
+
+        ModernRoboticsUsbDcMotorController rightController;
+
+        // Giving them values from the hardwareMap
+        leftControlloer = (ModernRoboticsUsbDcMotorController) linearOpMode.hardwareMap.dcMotorController.get("Left Controller");
+        rightController = (ModernRoboticsUsbDcMotorController) linearOpMode.hardwareMap.dcMotorController.get("Right Controller");
+
+        // The default PID values, this is what you tweak
+        newPIDValues = new DifferentialControlLoopCoefficients(128.0,64.0,184.0);
+
+        //Assigning our new PID values to the motor
+        leftControlloer.setDifferentialControlLoopCoefficients(leftMotor.getPortNumber(), newPIDValues);
+        rightController.setDifferentialControlLoopCoefficients(rightMotor.getPortNumber(), newPIDValues);
 
         if(auto){
             zeroSensors();
@@ -317,6 +340,56 @@ public class Drive implements Subsystem {
             while (linearOpMode.opModeIsActive() &&
                     (timeout.seconds() < timeoutS) &&
                     (leftMotor.isBusy() || rightMotor.isBusy())) {
+                //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
+                if ((Math.abs(newLeftTarget - leftMotor.getCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                        && (Math.abs(newRightTarget - rightMotor.getCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                        && speed > 0.1) {
+                    setLeftRightPower(Math.abs(speed * 0.75), Math.abs(speed * 0.75));
+                }
+                //slow the motors down to 0.35 of the original speed when we get within 2 inches of our target and the speed is greater than 0.1.
+                if ((Math.abs(newLeftTarget - leftMotor.getCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                        && (Math.abs(newRightTarget - rightMotor.getCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                        && speed > 0.1) {
+                    setLeftRightPower(Math.abs(speed * 0.3), Math.abs(speed * 0.3));
+                }
+            }
+            // Stop all motion;
+            setLeftRightPower(0,0);
+
+            // Turn off RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            //  linearOpMode.sleep(250);   // optional pause after each move
+        }
+    }
+
+    public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS, Team2753Linear linearOpMode) {
+        int newLeftTarget;
+        int newRightTarget;
+
+        // Ensure that the opmode is still active
+        if (linearOpMode.opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = leftMotor.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = rightMotor.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            leftMotor.setTargetPosition(newLeftTarget);
+            rightMotor.setTargetPosition(newRightTarget);
+            //int counter1 = 0;
+            //int counter2 = 0;
+
+            // Turn On RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            timeout.reset();
+            setLeftRightPower(Math.abs(speed), Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (linearOpMode.opModeIsActive() &&
+                    (timeout.seconds() < timeoutS) &&
+                    (leftMotor.isBusy() || rightMotor.isBusy())) {
+                linearOpMode.updateTelemetry();
                 //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
                 if ((Math.abs(newLeftTarget - leftMotor.getCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
                         && (Math.abs(newRightTarget - rightMotor.getCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
@@ -679,10 +752,10 @@ public class Drive implements Subsystem {
         Trajectory left;
         Trajectory right;
 
-        left = TrajectoryGenerator.generate(aggressiveTrajectoryConfig, strategy,
+        left = TrajectoryGenerator.generate(defaultTrajectoryConfig, strategy,
                 0, 0, Math.abs(leftDistance), 0, 0);
 
-        right = TrajectoryGenerator.generate(aggressiveTrajectoryConfig, strategy,
+        right = TrajectoryGenerator.generate(defaultTrajectoryConfig, strategy,
                 0, 0, Math.abs(rightDistance), 0, 0);
 
         if(leftDistance<0){
@@ -693,7 +766,7 @@ public class Drive implements Subsystem {
             right.scale(-1);
         }
 
-        new FollowPath(linearOpMode, this, new Path("", new Trajectory.Pair(left, right)), 1, 1);
+        new FollowPath(linearOpMode, this, new Path("", new Trajectory.Pair(left, right)), timeout, 1, 1);
         setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.setLeftRightTarget((int)((leftDistance * COUNTS_PER_INCH) + lastLeft), (int)((rightDistance * COUNTS_PER_INCH) + lastRight));
         setLeftRightPower(0.2, 0.2);
@@ -703,6 +776,35 @@ public class Drive implements Subsystem {
 
         setLeftRightPower(0,0);
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void leftMotorTurn(double degrees){
+        double leftDistance = (WHEEL_BASE*2*PI*degrees)/-360;
+        leftDistance += this.getLeftDistanceInches();
+
+        double sign = Math.abs(leftDistance)/leftDistance;
+
+        Trajectory left;
+
+        left = TrajectoryGenerator.generate(defaultTrajectoryConfig, strategy,
+                0, 0, Math.abs(leftDistance), 0, 0);
+
+        TrajectoryFollower leftFollower = new TrajectoryFollower("");
+        leftFollower.configure(Constants.singleMotorP/2, 0, 0, Constants.singleMotorV/2, Constants.singleMotorA/2);
+        leftFollower.setTrajectory(left);
+
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        ElapsedTime dtTimer = new ElapsedTime();
+        while (linearOpMode.opModeIsActive() && !linearOpMode.isStopRequested() && !leftFollower.isFinishedTrajectory()){
+            if (dtTimer.seconds()> defaultTrajectoryConfig.dt) {
+                // Update our controller
+                setLeftRightPower(sign*leftFollower.calculate(sign*getLeftDistanceInches()), 0);
+                Thread.yield();
+                dtTimer.reset();
+            }
+        }
     }
 
     public void turnTrajectory(double degrees, long timeOut){

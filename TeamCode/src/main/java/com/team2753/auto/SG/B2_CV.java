@@ -10,7 +10,7 @@ import static com.team2753.auto.AutoParams.AUTO;
  * Created by David Zheng | FTC 2753 Team Overdrive on 1/10/2018.
  */
 
-@Autonomous(name = "Blue 2 CV", group = "CV")
+@Autonomous(name = "BlueCloseMTI 2 CV", group = "CV")
 @Disabled
 @Deprecated
 public class B2_CV extends Team2753Linear {

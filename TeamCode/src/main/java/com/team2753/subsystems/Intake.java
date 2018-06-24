@@ -30,7 +30,6 @@ public class Intake implements Subsystem{
 
     private static final double intakePower = 1.0;
 
-
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
         leftIntake = linearOpMode.hardwareMap.dcMotor.get("intake_left");
@@ -112,13 +111,13 @@ public class Intake implements Subsystem{
     public void reverse(){setPower(-intakePower);}
 
     public void shiftLeft(){
-        leftIntake.setPower(intakePower);
-        rightIntake.setPower(0.8);
+        leftIntake.setPower(intakePower/2);
+        rightIntake.setPower(0.8/2);
     }
 
     public void shiftRight(){
-        rightIntake.setPower(intakePower);
-        leftIntake.setPower(0.8);
+        rightIntake.setPower(intakePower/2);
+        leftIntake.setPower(0.8/2);
     }
 
     public void holdIntake(){

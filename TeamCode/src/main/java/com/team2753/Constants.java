@@ -31,6 +31,10 @@ public class Constants {
     public static PhoneFileReader.Constant a = new PhoneFileReader.Constant("a", 0.0000002803);
     public static PhoneFileReader.Constant headingP = new PhoneFileReader.Constant("h", 0.03);
 
+    public static final double singleMotorP = 0.00085;
+    public static final double singleMotorV = 0.0175;
+    public static final double singleMotorA = 0.000000280;
+
     static{
         PhoneFileReader.readConstantsFromFile();
 

@@ -30,11 +30,11 @@ public abstract class AutoModeBase extends Team2753Linear {
             while(!Thread.interrupted() && opModeIsActive()){
                 if(opModeIsActive())
                     Robot.getIntake().setPower(0.8);
-                sleep(1000);
+                sleep(1100);
                 if (opModeIsActive()) {
                     Robot.getIntake().reverse();
                 }
-                sleep(200);
+                sleep(300);
                 Thread.yield();
             }
 
@@ -83,7 +83,7 @@ public abstract class AutoModeBase extends Team2753Linear {
                     sleep(200);
                     Robot.getJewel().retract(false);
                 }
-            } else { // Blue
+            } else { // BlueCloseMTI
                 if (scannedJewel == Jewel_Color.Blue) {
                     sleep(200);
                     new Thread(new Runnable() {

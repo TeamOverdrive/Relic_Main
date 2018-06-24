@@ -3,8 +3,11 @@ package com.team2753;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.util.RobotLog;
 import com.team2753.libs.OverdriveLib;
 import com.team2753.subsystems.Slammer;
+
+import java.util.Set;
 
 import static com.team2753.auto.AutoParams.TELEOP;
 
@@ -17,10 +20,10 @@ import static com.team2753.auto.AutoParams.TELEOP;
 @TeleOp(name = "Teleop")
 public class Teleop extends Team2753Linear {
     private double angle = 0;
+    boolean override = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
-
         waitForStart("Teleop", TELEOP);
         SetStatus("Teleop");
 
@@ -28,6 +31,7 @@ public class Teleop extends Team2753Linear {
 
         // Loop while we are running Teleop
         while (opModeIsActive()) {
+            Robot.getIntake().releaseIntake();
 
             /*Gamepad 1 Controls*/
 
@@ -39,9 +43,9 @@ public class Teleop extends Team2753Linear {
                 } else if (Ryan.dpad_down) {
                     Robot.getDrive().setLeftRightPower(0.3, 0.3);
                 } else if (Ryan.dpad_left) {
-                    Robot.getDrive().setLeftRightPower(-0.35, 0.35);
-                } else if (Ryan.dpad_right) {
                     Robot.getDrive().setLeftRightPower(0.35, -0.35);
+                } else if (Ryan.dpad_right) {
+                    Robot.getDrive().setLeftRightPower(-0.35, 0.35);
                 } else {
                     Robot.getDrive().setLeftRightPower(0, 0);
                 }
@@ -58,6 +62,7 @@ public class Teleop extends Team2753Linear {
                 rightThrottle = (float) OverdriveLib.scaleInput(rightThrottle);
 
                 Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
+                RobotLog.a("Left: " + leftThrottle + " | Right: " + rightThrottle);
             }
 
             /* Intake Controls */
@@ -99,12 +104,26 @@ public class Teleop extends Team2753Linear {
             // Slammer
             boolean scoring = Seth.a;
 
-            if(scoring){
-                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING);
-            } else if(!Robot.getLift().shouldLiftStop()){
-                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
+            if(Seth.y){
+                if(!override)
+                    override = true;
+            }
+
+            if(!override){
+                if(scoring){
+                    Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING);
+                } else if(!Robot.getLift().shouldLiftStop()){
+                    Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
+                } else {
+                    Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING);
+                }
             } else {
-                Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING);
+                if (scoring)
+                    Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.SCORING);
+                else if(Seth.y)
+                    Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.INTAKING);
+                else if(Seth.b)
+                    Robot.getSlammer().setSlammerState(Slammer.SLAMMER_State.HOLDING);
             }
 
             // Relic

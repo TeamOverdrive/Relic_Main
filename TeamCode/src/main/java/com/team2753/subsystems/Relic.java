@@ -24,7 +24,10 @@ public class Relic implements Subsystem{
 
         slideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        setWristAngle(0);
+        if(auto)
+            setWristAngle(0);
+        else
+            hold();
         close();
     }
 
@@ -65,6 +68,10 @@ public class Relic implements Subsystem{
 
     public void setPower(double power){
         slideMotor.setPower(power);
+    }
+
+    public void hold(){
+        setWristAngle(100);
     }
 
     @Override

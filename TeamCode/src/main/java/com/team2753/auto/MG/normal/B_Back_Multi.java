@@ -1,4 +1,4 @@
-package com.team2753.auto.MG;
+package com.team2753.auto.MG.normal;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,12 +16,13 @@ import static java.lang.Math.PI;
  * Created by joshua9889 on 3/15/2018.
  */
 
-@Autonomous(name = "Blue Back",group = "Blue")
+@Autonomous(name = "Blue Back",group = "Normal")
 public class B_Back_Multi extends AutoModeBase {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart("BBack");
 
+        Robot.getRelic().hold();
         SuperHitJewel(this.jewel_Color, Jewel_Color.Blue);
 
         switch (WhatColumnToScoreIn()){

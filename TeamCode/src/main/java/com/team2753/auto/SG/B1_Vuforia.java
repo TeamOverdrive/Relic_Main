@@ -9,7 +9,7 @@ import static com.team2753.auto.AutoParams.AUTO;
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 1/10/2018.
  */
-@Autonomous(name = "Blue 1 Vuforia", group = "Vuforia")
+@Autonomous(name = "BlueCloseMTI 1 Vuforia", group = "Vuforia")
 @Disabled
 @Deprecated
 public class B1_Vuforia extends Team2753Linear{

@@ -13,6 +13,6 @@ public class BLUE_FAR extends AutoModeBase {
     public void runOpMode() throws InterruptedException {
         BlueFar_Paths.calculateBlueFar(new JoshuaField());
 
-        waitForStart("Blue", true);
+        waitForStart("BlueCloseMTI", true);
     }
 }

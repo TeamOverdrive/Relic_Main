@@ -33,7 +33,7 @@ public class Slammer implements Subsystem{
 
     private Servo stopServo = null;
     private static final double ARMUP = 0.35;
-    private static final double ARMDOWN = 0.95;
+    private static final double ARMDOWN = 0.8;
 
     private LinearOpMode ref = null;
 

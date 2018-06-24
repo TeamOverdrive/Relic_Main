@@ -19,8 +19,6 @@ public class AutoDrive{
         mDrive = drive;
     }
 
-    public AutoDrive(){}
-
     private Drive mDrive;
 
     public void configureForSpeedControl(){

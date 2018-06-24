@@ -15,7 +15,7 @@ import static java.lang.Math.PI;
  * Created by joshua9889 on 3/12/2018.
  */
 
-@Autonomous(name = "Blue Far Big Boy Defence",group = "Defence")
+@Autonomous(name = "BlueCloseMTI Far Big Boy Defence",group = "Defence")
 @Disabled
 public class Defence_B_Far_Multi extends AutoModeBase {
 

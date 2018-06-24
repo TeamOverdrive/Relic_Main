@@ -10,7 +10,7 @@ import static com.team2753.auto.AutoParams.AUTO;
  * Created by David Zheng | FTC 2753 Team Overdrive on 2/20/2018.
  */
 
-@Autonomous(name = "Blue 1 Multiglyph", group = "multiglyph")
+@Autonomous(name = "BlueCloseMTI 1 Multiglyph", group = "multiglyph")
 @Disabled
 @Deprecated
 public class B1_Multi extends Team2753Linear{
